@@ -66,7 +66,30 @@ public class Student extends User {
 	public void setOrganisation(Organisation organisation) {
 		this.organisation = organisation;
 	}
-	
+	@Override
+	public String toString() {
+		return "Student{" +
+				"courses=" + courses +
+				", gpa=" + gpa +
+				", transcript=" + transcript +
+				", faculty=" + faculty +
+				", organisation=" + organisation +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Student student)) return false;
+		if (!super.equals(o)) return false;
+        return Objects.equals(courses, student.courses) && Objects.equals(gpa, student.gpa) && Objects.equals(transcript, student.transcript) && faculty == student.faculty && Objects.equals(organisation, student.organisation);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), courses, gpa, transcript, faculty, organisation);
+	}
+
 	public void viewTranscript() {
 		for (Map.Entry<Course, Mark> entry : transcript.entrySet()) {
 		    System.out.println(entry.getKey() + " - " + entry.getValue().toString());
@@ -121,6 +144,7 @@ public class Student extends User {
 	        System.out.println("- " + course.getName());
 	    }
 	}
+
 	public void viewMenu() {
 		while(true) {
 			String[] options = new String[]{
@@ -160,5 +184,24 @@ public class Student extends User {
 	public void viewNews() {
 		// TODO Auto-generated method stub
 		
+	}
+	public void rateTeachers(Map<Teacher,  Integer> ratings) {
+		for (Map.Entry<Teacher, Integer> entry : ratings.entrySet()) {
+			Teacher teacher = entry.getKey();
+			Integer rating = entry.getValue();
+		}
+	}
+	public void joinOrganisation(Organisation organisation) {
+		organisation.addMember(this);
+		this.organisation = organisation;
+	}
+	public void leaveOrganisation(Organisation organisation) {
+		organisation.removeMember(this);
+		this.organisation = null;
+	}
+	public void createOrganisation(String name, Student head) {
+		Organisation organisation = new Organisation(name, head);
+		this.organisation = organisation;
+		organisation.addMember(this);
 	}
 }
