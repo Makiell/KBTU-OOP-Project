@@ -171,6 +171,7 @@ public class Student extends User {
 	public void createOrganisation(String name, Student head) {
 		Organisation organisation = new Organisation(name, head);
 		this.organisation = organisation;
+        Database.addOrganisations(organisation);
 	}
     public void viewMenu() {
         while (true) {
@@ -194,7 +195,7 @@ public class Student extends User {
             if (choice == 1) {
                 viewTranscript();
             }
-            /*
+/*
             else if (choice == 2) {
                 System.out.println("Please select course(1-n):");
                 for(Course c: courses){
@@ -210,8 +211,7 @@ public class Student extends User {
                 }
                 int coursechoice = Integer.parseInt(Scanner.nextLine());
                 registerToCourse(Database.getCourse(coursechoice - 1));
-                */
-			    } /* else if (choice == 4) {
+            }  else if (choice == 4) {
                 System.out.println("Please select course(1-n):");
                 for(Course c: courses){
                     System.out.println(c);

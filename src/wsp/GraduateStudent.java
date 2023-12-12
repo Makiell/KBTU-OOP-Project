@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import enums.*;
 import database.*;
+import utils.Organisation;
 
 public class GraduateStudent extends Student{
     Grade grade;
@@ -46,5 +47,25 @@ public class GraduateStudent extends Student{
                 ", organisation=" + organisation +
                 ", grade=" + grade +
                 "] ";
+    }
+
+    @Override
+    public void joinOrganisation(Organisation organisation) {
+        super.joinOrganisation(organisation);
+    }
+
+    @Override
+    public void leaveOrganisation(Organisation organisation) {
+        super.leaveOrganisation(organisation);
+    }
+
+    @Override
+    public void createOrganisation(String name, Student head) {
+        super.createOrganisation(name, head);
+    }
+
+    @Override
+    public void viewMenu() {
+        super.viewMenu();
     }
 }
