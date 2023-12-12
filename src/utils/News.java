@@ -9,9 +9,6 @@ public class News {
 	private String text;
 	private Vector<String> comments;
 	
-	private int ahe;
-	
-	
 	public News(String topic, String title, String text) {
 		this.topic = topic;
 		this.title = title;

@@ -8,20 +8,29 @@ import java.util.Vector;
 import wsp.*;
 import utils.*;
 
-public class Database {
+public final class Database {
+	
+	private static final Database INSTANCE = new Database();
 	
 	private Vector<User> users = new Vector<User>();
 	
 	private Vector<Student> students = new Vector<Student>();
 //	private Vector<Employee> Employees;
-	private static Vector<Course> courses = new Vector<Course>();
+	private Vector<Course> courses = new Vector<Course>();
 	private Vector<News> news = new Vector<News>();
 	private Vector<Request> requests = new Vector<Request>();
 	private Vector<Order> orders = new Vector<Order>();
 //	private Vector<Log> logs;
 	private Vector<Researcher> researchers = new Vector<Researcher>();
+	private Vector<Organisation> organisations = new Vector<Organisation>();
 	
-	public static Vector<Course> getCourses() {
+	private Database() {}
+	
+	public static Database getInstance() {
+		return INSTANCE;
+	}
+	
+	public Vector<Course> getCourses() {
 		return courses;
 	}
 
@@ -65,5 +74,37 @@ public class Database {
 	public void addUser(User u) {
 		this.users.add(u);
 	}
+	
+	public void addStudent(Student s) {
+		this.students.add(s);
+	}
+	
+	public void addCourse(Course c) {
+		this.courses.add(c);
+	}
+	
+	public void addNews(News n) {
+		this.news.add(n);
+	}
+	
+	public void addRequest(Request r) {
+		this.requests.add(r);
+	}
+	
+	public void addOrder(Order o) {
+		this.orders.add(o);
+	}
+	
+	
+	
+	public void addResearcher(Researcher r) {
+		this.researchers.add(r);
+	}
+	
+	public void addOrganisations(Organisation or) {
+		this.organisations.add(or);
+	}
+	
+	
 
 }

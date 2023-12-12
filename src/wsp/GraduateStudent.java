@@ -1,8 +1,9 @@
 package wsp;
 
-import enums.*;
-
 import java.util.Objects;
+
+import enums.*;
+import database.*;
 
 public class GraduateStudent extends Student{
     Grade grade;
@@ -10,6 +11,7 @@ public class GraduateStudent extends Student{
         super(username, password, firstName, lastName, faculty);
         this.grade = grade;
         Researcher<GraduateStudent> researcher = new Researcher<>(this);
+        Database.getInstance().addResearcher(researcher);
     }
 
     public Grade getGrade() {
