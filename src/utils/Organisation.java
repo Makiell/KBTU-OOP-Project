@@ -23,6 +23,13 @@ public class Organisation {
 	public String toString() {
 		return "Organisation [name=" + name + ", head=" + head + ", members=" + members + "]";
 	}
-	
-	
+
+
+    public void addMember(Student student) {
+        members.add(student);
+    }
+
+    public void removeMember(Student student) {
+        members.remove(student);
+    }
 }

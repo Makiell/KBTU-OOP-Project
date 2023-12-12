@@ -145,40 +145,7 @@ public class Student extends User {
 	    }
 	}
 
-	public void viewMenu() {
-		while(true) {
-			String[] options = new String[]{
-			        "View Transcript",
-			        "View Marks for a Course",
-			        "Register for a Course",
-			        "View Teacher for a Course",
-			        "View All Courses",
-			        "Exit"
-			    };
-				Scanner Scanner = new Scanner(System.in);
-			    System.out.println("\nStudent Menu:");
-			    for (int i = 0; i < options.length; i++) {
-			        System.out.println((i + 1) + ". " + options[i]);
-			    }
-			    System.out.print("Enter your choice: ");
-			    int choice = Integer.parseInt(Scanner.nextLine());
-			    if (choice == 1) {
-			        viewTranscript();
-			    }
-//			    } else if (choice == 2) {
-//			        viewMarks(Course course);
-//			    } else if (choice == 3) {
-//			        registerToCourse(Course course);
-//			    } else if (choice == 4) {
-//			        viewTeacherForCourse(Course course);
-//			    } else if (choice == 5) {
-//			        viewCourses();
-//			    } else if (choice == 6) {
-//			    	
-//			    }
-		}
-		
-	}
+
 
 	@Override
 	public void viewNews() {
@@ -202,6 +169,41 @@ public class Student extends User {
 	public void createOrganisation(String name, Student head) {
 		Organisation organisation = new Organisation(name, head);
 		this.organisation = organisation;
-		organisation.addMember(this);
 	}
+    public void viewMenu() {
+        while(true) {
+            String[] options = new String[]{
+                    "View Transcript",
+                    "View Marks for a Course",
+                    "Register for a Course",
+                    "View Teacher for a Course",
+                    "View All Courses",
+                    "Rate Teachers",
+                    "Organisation",
+                    "Exit"
+            };
+            Scanner Scanner = new Scanner(System.in);
+            System.out.println("\nStudent Menu:");
+            for (int i = 0; i < options.length; i++) {
+                System.out.println((i + 1) + ". " + options[i]);
+            }
+            System.out.print("Enter your choice: ");
+            int choice = Integer.parseInt(Scanner.nextLine());
+            if (choice == 1) {
+                viewTranscript();
+            }
+//			    } else if (choice == 2) {
+//			        viewMarks(Course course);
+//			    } else if (choice == 3) {
+//			        registerToCourse(Course course);
+//			    } else if (choice == 4) {
+//			        viewTeacherForCourse(Course course);
+//			    } else if (choice == 5) {
+//			        viewCourses();
+//			    } else if (choice == 6) {
+//			    	break;
+//			    }
+        }
+
+    }
 }
