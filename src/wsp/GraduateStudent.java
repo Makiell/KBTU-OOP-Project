@@ -9,6 +9,7 @@ public class GraduateStudent extends Student{
     public GraduateStudent(String username, String password, String firstName, String lastName, Faculty faculty, Grade grade) {
         super(username, password, firstName, lastName, faculty);
         this.grade = grade;
+        Researcher<GraduateStudent> researcher = new Researcher<>(this);
     }
 
     public Grade getGrade() {
