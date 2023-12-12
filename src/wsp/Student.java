@@ -68,13 +68,13 @@ public class Student extends User {
 	}
 	@Override
 	public String toString() {
-		return "Student{" +
-				"courses=" + courses +
+		return "Student[" + "username=" + getUsername()  +
+				", courses=" + courses +
 				", gpa=" + gpa +
 				", transcript=" + transcript +
 				", faculty=" + faculty +
 				", organisation=" + organisation +
-				'}';
+				']';
 	}
 
 	@Override
