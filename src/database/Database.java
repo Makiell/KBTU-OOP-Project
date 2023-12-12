@@ -21,6 +21,8 @@ public class Database {
 //	private Vector<Log> logs;
 	private Vector<Researcher> researchers = new Vector<Researcher>();
 	
+	private int age;
+	
 	public static Vector<Course> getCourses() {
 		return courses;
 	}
