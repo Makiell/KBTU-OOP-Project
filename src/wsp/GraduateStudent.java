@@ -1,8 +1,9 @@
 package wsp;
 
-import enums.*;
-
 import java.util.Objects;
+
+import enums.*;
+import
 
 public class GraduateStudent extends Student{
     Grade grade;
