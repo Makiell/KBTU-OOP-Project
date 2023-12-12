@@ -16,7 +16,7 @@ public final class Database {
 	
 	private Vector<Student> students = new Vector<Student>();
 //	private Vector<Employee> Employees;
-	private static Vector<Course> courses = new Vector<Course>();
+	private Vector<Course> courses = new Vector<Course>();
 	private Vector<News> news = new Vector<News>();
 	private Vector<Request> requests = new Vector<Request>();
 	private Vector<Order> orders = new Vector<Order>();
@@ -30,7 +30,7 @@ public final class Database {
 		return INSTANCE;
 	}
 	
-	public static Vector<Course> getCourses() {
+	public Vector<Course> getCourses() {
 		return courses;
 	}
 
@@ -75,8 +75,36 @@ public final class Database {
 		this.users.add(u);
 	}
 	
+	public void addStudent(Student s) {
+		this.students.add(s);
+	}
+	
+	public void addCourse(Course c) {
+		this.courses.add(c);
+	}
+	
+	public void addNews(News n) {
+		this.news.add(n);
+	}
+	
+	public void addRequest(Request r) {
+		this.requests.add(r);
+	}
+	
+	public void addOrder(Order o) {
+		this.orders.add(o);
+	}
+	
+	
+	
 	public void addResearcher(Researcher r) {
 		this.researchers.add(r);
 	}
+	
+	public void addOrganisations(Organisation or) {
+		this.organisations.add(or);
+	}
+	
+	
 
 }
