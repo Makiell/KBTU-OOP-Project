@@ -69,7 +69,7 @@ public class Student extends User {
 	@Override
 	public String toString() {
 		return "Student[" + "username=" + getUsername()  +
-				", courses=" + courses +
+				", password="+ this.getPassword() +", courses=" + courses +
 				", gpa=" + gpa +
 				", transcript=" + transcript +
 				", faculty=" + faculty +
@@ -91,6 +91,7 @@ public class Student extends User {
 	}
 
 	public void viewTranscript() {
+		System.out.println("Transcript:");
 		for (Map.Entry<Course, Mark> entry : transcript.entrySet()) {
 		    System.out.println(entry.getKey() + " - " + entry.getValue().toString());
 		}
