@@ -8,7 +8,9 @@ import java.util.Vector;
 import wsp.*;
 import utils.*;
 
-public class Database {
+public final class Database {
+	
+	private static final Database INSTANCE = new Database();
 	
 	private Vector<User> users = new Vector<User>();
 	
@@ -20,6 +22,13 @@ public class Database {
 	private Vector<Order> orders = new Vector<Order>();
 //	private Vector<Log> logs;
 	private Vector<Researcher> researchers = new Vector<Researcher>();
+	private Vector<Organisation> organisations = new Vector<Organisation>();
+	
+	private Database() {}
+	
+	public static Database getInstance() {
+		return INSTANCE;
+	}
 	
 	public static Vector<Course> getCourses() {
 		return courses;
@@ -64,6 +73,10 @@ public class Database {
 
 	public void addUser(User u) {
 		this.users.add(u);
+	}
+	
+	public void addResearcher(Researcher r) {
+		this.researchers.add(r);
 	}
 
 }
