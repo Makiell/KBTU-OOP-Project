@@ -1,0 +1,72 @@
+package wsp;
+
+import java.util.Objects;
+
+public abstract class User {
+	
+	private static int nextId = 1;
+	
+	private int id;
+	private String username;
+	private String password;
+	private String firstName;
+	private String lastName;
+	
+	
+	public User(String username, String password, String firstName, String lastName) {
+		this.id = nextId++;
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	
+	public void authentification() {
+		this.viewNews();
+		this.viewMenu();
+	}
+	
+	public abstract void viewNews();
+	public abstract void viewMenu();
+	
+//	public void logOut() {
+//		
+//	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + "]";
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(firstName, id, lastName, password, username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(firstName, other.firstName) && id == other.id && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(password, other.password) && Objects.equals(username, other.username);
+	}
+	
+	
+}
