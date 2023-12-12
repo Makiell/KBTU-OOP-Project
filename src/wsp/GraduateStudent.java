@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class GraduateStudent extends Student{
     Grade grade;
-    public GraduateStudent(String username, String password, String firstName, String lastName, Faculty faculty, Grade grade) {
+    public GraduateStudent(String username, String password, String firstName, String lastName, Faculty faculty, Grade grade, Researcher<GraduateStudent> researcher) {
         super(username, password, firstName, lastName, faculty);
         this.grade = grade;
     }
