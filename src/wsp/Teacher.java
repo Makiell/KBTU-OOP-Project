@@ -13,16 +13,14 @@ public class Teacher extends Employee {
     Vector <Course> courses = new Vector<Course>();
     Faculty faculty;
     Map<Course, Vector<Lesson>> lessons = new HashMap <Course, Vector<Lesson>>();
-    double rate;
+    double rate = 0.0;
 
     public Teacher(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,
-                   Vector<Course> courses, Faculty faculty, Map<Course, Vector<Lesson>> lessons, double rate) {
+                   Faculty faculty) {
         super(username, password, firstName, lastName);
         this.typeTeacher = typeTeacher;
-        this.courses = courses;
         this.faculty = faculty;
-        this.lessons = lessons;
-        this.rate = rate;
+
     }
 
 

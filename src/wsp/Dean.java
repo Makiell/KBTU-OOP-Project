@@ -13,8 +13,8 @@ public class Dean extends Teacher {
 
     Vector <Request> requests = new Vector<>();
     public Dean(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,
-                Vector<Course> courses, Faculty faculty, Map<Course, Vector<Lesson>> lessons, double rate) {
-        super(username, password, firstName, lastName, typeTeacher, courses, faculty, lessons, rate);
+                Faculty faculty) {
+        super(username, password, firstName, lastName, typeTeacher, faculty);
         // TODO Auto-generated constructor stub
     }
     public Vector<Request> getRequests(){
@@ -31,10 +31,11 @@ public class Dean extends Teacher {
             System.out.println("Requests is empty");
         }
         System.out.println("Signing requests");
-        request.setTo(this);
         System.out.println("Signed: " + request.toString());
-
-        request.allRequest(requests); // кароч он добавляеть один элемент в список запросов
+        // кароч он добавляеть один элемент в список запросов
+    }
+    public void addRequest(Request request){
+        requests.add(request);
     }
 }
 

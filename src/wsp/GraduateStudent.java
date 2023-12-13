@@ -50,18 +50,18 @@ public class GraduateStudent extends Student{
     }
 
     @Override
-    public void joinOrganisation(Organisation organisation) {
-        super.joinOrganisation(organisation);
+    public void joinOrganisation() {
+        super.joinOrganisation();
     }
 
     @Override
-    public void leaveOrganisation(Organisation organisation) {
-        super.leaveOrganisation(organisation);
+    public void leaveOrganisation() {
+        super.leaveOrganisation();
     }
 
     @Override
-    public void createOrganisation(String name, Student head) {
-        super.createOrganisation(name, head);
+    public void createOrganisation() {
+        super.createOrganisation();
     }
 
     @Override

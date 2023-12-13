@@ -9,7 +9,9 @@ public class Organisation {
 	private String name;
 	private Student head;
 	private Vector<Student> members;
-	
+	public Organisation(){
+
+    }
 	
 	public Organisation(String name, Student head) {
 		this.name = name;
@@ -21,7 +23,7 @@ public class Organisation {
 
 	@Override
 	public String toString() {
-		return "Organisation [name=" + name + ", head=" + head + ", members=" + members + "]";
+		return "Organisation [name=" + name + ", head=" + head.getUsername() + ", members=" + members + "]";
 	}
 
 
@@ -31,5 +33,9 @@ public class Organisation {
 
     public void removeMember(Student student) {
         members.remove(student);
+    }
+
+    public String getName() {
+        return name;
     }
 }
