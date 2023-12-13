@@ -107,7 +107,7 @@ public class Student extends User {
 	        System.out.println("Course doesnt have marks");
 	        return;
 	    }
-	    System.out.println("Course: " + course.getName() + " Mark: " + mark);
+	    System.out.println("Course: " + course.getName() + " Mark: " + mark.toString());
 	}
 	
 	
