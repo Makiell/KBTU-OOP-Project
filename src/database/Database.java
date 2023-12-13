@@ -71,6 +71,7 @@ public final class Database {
 		
 	}
 
+
 	public void addUser(User u) {
 		this.users.add(u);
 	}
