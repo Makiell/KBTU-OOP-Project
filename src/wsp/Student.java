@@ -1,7 +1,7 @@
 package wsp;
 import java.util.*;
 
-import database.Database;
+import database.*;
 import utils.*;
 import wsp.*;
 import enums.*;
@@ -12,9 +12,11 @@ public class Student extends User {
 	Map<Course, Mark> transcript = new HashMap<Course, Mark>();
 	Faculty faculty;
 //	Vector<Journal> journals;
-	Organisation organisation = null;
-	
-	public Student(String username, String password, String firstName, String lastName, Faculty faculty) {
+	Organisation organisation;
+    private int i = 1;
+    private static int nextI = 1;
+
+    public Student(String username, String password, String firstName, String lastName, Faculty faculty) {
 		super(username, password, firstName, lastName);
 		this.faculty = faculty;
 	}
@@ -97,7 +99,16 @@ public class Student extends User {
 		}
 	}
 	
-	public void viewMarks(Course course) {
+	public void viewMarks() {
+        int i = 1;
+        for(Course c: courses){
+            System.out.println(i + " - "+ c);
+            i++;
+        }
+        Scanner s = new Scanner(System.in);
+        System.out.println("Please enter your choice:");
+        int coursechoice = s.nextInt();
+        Course course = courses.get(coursechoice - 1);
 	    if (!courses.contains(course)) {
 	        System.out.println("Student not registered in course");
 	        return;
@@ -109,19 +120,40 @@ public class Student extends User {
 	    }
 	    System.out.println("Course: " + course.getName() + " Mark: " + mark.toString());
 	}
-	
+	public void getCourseFromDB(){
+         Vector<Course> databasecourses = Database.getInstance().getCourses();
+         Vector<Course> aftercourses = new Vector<>();
+         for(Course c: databasecourses){
+            if(!courses.contains(c)){
+                aftercourses.add(c);
+            }
+         }
+         for(Course c: aftercourses){
+            System.out.println(i + " - " + c);
+            this.i = ++nextI;
+         }
+         Scanner s  = new Scanner(System.in);
+         int coursechoice;
+         while(true){
+             coursechoice = s.nextInt();
+             if(coursechoice <= aftercourses.size() && coursechoice >=1){
+                 break;
+             }
+             else{
+                 System.out.println("Введите цифру от 1 до " + aftercourses.size());
+             }
+         }
+         registerToCourse(aftercourses.get(coursechoice-1));
+    }
 	
 	public void registerToCourse(Course course) {
-	    if (courses.contains(course)) {
-	        System.out.println("Already registered");
-	    } else {
-	        courses.add(course);
-	        transcript.put(course, new Mark());
-	        System.out.println("Registration successful");
-	        for(Course c: courses) {
-	        	System.out.println(c);
-	        }
-	    }
+        if(!courses.contains(course)) {
+            this.courses.add(course);
+            System.out.println("Курс " + course.getName() + " успешно зарегитрирован!");
+        }
+        else{
+            System.out.println("You already registered this course");
+        }
 	}
 /*	public void viewTeacherForCourse(Course course) {
 	    if (!courses.contains(course)) {
@@ -140,10 +172,13 @@ public class Student extends User {
 	}
 	*/
 	public void viewCourses() {
-	    Vector<Course> databaseCourses = Database.getCourses();
+	    Vector<Course> databaseCourses = Database.getInstance().getCourses();
 	    System.out.println("Courses:");
 	    for (Course course : databaseCourses) {
-	        System.out.println("- " + course.getName());
+            if(!courses.contains(course)){
+                System.out.println(i + " - " + course.getName());
+                this.i = ++nextI;
+            }
 	    }
 	}
 
@@ -160,18 +195,25 @@ public class Student extends User {
 			Integer rating = entry.getValue();
 		}
 	}
-	public void joinOrganisation(Organisation organisation) {
-		organisation.addMember(this);
-		this.organisation = organisation;
+	public void joinOrganisation() {
+        System.out.println("List of organisation:");
+        Vector<Organisation> dborganisations = Database.getInstance().getOrganisations();
+        for(Organisation o: dborganisations){
+            System.out.println(i + " - "  + o.toString());
+            this.i = ++nextI;
+        }
 	}
 	public void leaveOrganisation(Organisation organisation) {
 		organisation.removeMember(this);
 		this.organisation = null;
 	}
-	public void createOrganisation(String name, Student head) {
-		Organisation organisation = new Organisation(name, head);
-		this.organisation = organisation;
-        Database.addOrganisations(organisation);
+	public void createOrganisation() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Name your organisation:");
+        String name = s.nextLine();
+        Organisation organisation = new Organisation(name, this);
+        this.organisation = organisation;
+        Database.getInstance().addOrganisations(organisation);
 	}
     public void viewMenu() {
         while (true) {
@@ -195,60 +237,50 @@ public class Student extends User {
             if (choice == 1) {
                 viewTranscript();
             }
-/*
-            else if (choice == 2) {
-                System.out.println("Please select course(1-n):");
-                for(Course c: courses){
-                    System.out.println(c);
-                }
-                int coursechoice = Integer.parseInt(Scanner.nextLine());
-                viewMarks(courses.get(coursechoice - 1));
 
-                	    } else if (choice == 3) {
-                System.out.println("Please select course(1-n):");
-                for(Course c: Database.getCourses()){
-                    System.out.println(c);
-                }
-                int coursechoice = Integer.parseInt(Scanner.nextLine());
-                registerToCourse(Database.getCourse(coursechoice - 1));
-            }  else if (choice == 4) {
-                System.out.println("Please select course(1-n):");
-                for(Course c: courses){
-                    System.out.println(c);
-                }
-                int coursechoice = Integer.parseInt(Scanner.nextLine());
-                viewTeacherForCourse(Database.courses(coursechoice-1));
-			    }
-            */
-            // else if (choice == 5) {
-//			        viewCourses();
-//			    } else if (choice == 6) {
+           else if (choice == 2) {
+              viewMarks();
+              }
+           else if (choice == 3) {
+                getCourseFromDB();
+           }
+
+//         else if (choice == 4) {
+//                System.out.println("Please select course(1-n):");
+//                for(Course c: courses){
+//                    System.out.println(c);
+//                }
+//                int coursechoice = Integer.parseInt(Scanner.nextLine());
+//                viewTeacherForCourse(Database.courses(coursechoice-1));
+//			    }
+             else if (choice == 5) {
+			        viewCourses();
+			    }// else if (choice == 6) {
 //			    	rateTeachers(null, null);
 //			    }
-              /*
-              else if (choice == 7) {
 
-			    	System.out.println("Please enter your choice:");
-                    System.out.println("1 - Join in a organisation");
-                    System.out.println("2 - Leave in a organisation");
-                    System.out.println("3 - Create in a organisation");
-                int choiceorg = Integer.parseInt(Scanner.nextLine());
-                if (choiceorg == 1) {
-                    System.out.println("List of organisation:");
-                    int i = 1;
-                    for(Organisation o: Database.getOrganisations()){
-                        System.out.println("i:" + o);
-                        i++;
-                    }
-                    int orgchoice = Integer.parseInt(Scanner.nextLine());
-                    joinOrganisation(Database.getOrganisation(orgchoice - 1));
-                } /*
-                else if (choiceorg == 2) {
-                } else if (choiceorg == 3) {
-                    }
-			    }
+             // else if (choice == 7) {
+//			    	System.out.println("Please enter your choice:");
+//                    System.out.println("1 - Join in a organisation");
+//                    System.out.println("2 - Leave in a organisation");
+//                    System.out.println("3 - Create in a organisation");
+//                int choiceorg = Integer.parseInt(Scanner.nextLine());
+//                if (choiceorg == 1) {
+//                    joinOrganisation();
+//                }
+//                else if (choiceorg == 2) {
+//
+//
+//                }
+//
+//                 else if (choiceorg == 3) {
+//                     createOrganisation();
+//                    }
+			    else if(choice == 8){
+                break;
+            }
 
-            }*/
+            }
 
         }
     }
