@@ -1,11 +1,15 @@
 package utils;
 
 import wsp.*;
+
+import java.io.Serializable;
+
 import enums.*;
 
-public class Order {
+public class Order implements Serializable {
     private Status status;
-    private String message; private TechSupportSpecialist to;
+    private String message; 
+    private TechSupportSpecialist to;
 
     public Order(Status status, String message, TechSupportSpecialist to) {  super();
         this.status = status;  this.message = message;

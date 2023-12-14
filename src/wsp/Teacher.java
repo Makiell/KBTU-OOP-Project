@@ -1,5 +1,6 @@
 package wsp;
 
+import java.io.Serializable;
 import java.util.*;
 
 import database.Database;
@@ -7,7 +8,7 @@ import utils.*;
 import wsp.*;
 import enums.*;
 
-public class Teacher extends Employee {
+public class Teacher extends Employee implements Serializable {
 
     TeacherTitle typeTeacher;
     Vector <Course> courses = new Vector<Course>();

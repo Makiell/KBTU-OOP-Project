@@ -1,12 +1,13 @@
 package wsp;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import enums.*;
 import database.*;
 import utils.Organisation;
 
-public class GraduateStudent extends Student{
+public class GraduateStudent extends Student implements Serializable {
     Grade grade;
     public GraduateStudent(String username, String password, String firstName, String lastName, Faculty faculty, Grade grade) {
         super(username, password, firstName, lastName, faculty);

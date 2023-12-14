@@ -1,5 +1,6 @@
 package wsp;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Vector;
 
@@ -9,7 +10,7 @@ import utils.*;
 import utils.Course;
 import utils.Lesson;
 
-public class Dean extends Teacher {
+public class Dean extends Teacher implements Serializable {
 
     Vector <Request> requests = new Vector<>();
     public Dean(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,

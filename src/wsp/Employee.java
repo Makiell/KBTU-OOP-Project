@@ -1,12 +1,13 @@
 package wsp;
 
+import java.io.Serializable;
 import java.util.*;
 import wsp.*;
 import database.*;
 import enums.*;
 import utils.*;
 
-public class Employee extends User {
+public class Employee extends User implements Serializable {
 
     public Employee(String username, String password, String firstName, String lastName) {
         super(username, password, firstName, lastName);

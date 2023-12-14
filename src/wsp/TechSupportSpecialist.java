@@ -1,5 +1,7 @@
 package wsp;
 
-public class TechSupportSpecialist {
+import java.io.Serializable;
+
+public class TechSupportSpecialist implements Serializable {
 	
 }

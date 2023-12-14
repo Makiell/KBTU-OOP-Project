@@ -1,5 +1,7 @@
 package enums;
 
-public enum Emergency {
+import java.io.Serializable;
+
+public enum Emergency implements Serializable {
 	LOW, MEDIUM, HIGH
 }

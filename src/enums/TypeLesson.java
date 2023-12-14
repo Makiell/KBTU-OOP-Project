@@ -1,5 +1,7 @@
 package enums;
 
-public enum TypeLesson {
+import java.io.Serializable;
+
+public enum TypeLesson implements Serializable {
 	LECTURE, PRACTICE
 }

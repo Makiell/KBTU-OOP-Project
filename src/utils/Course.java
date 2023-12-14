@@ -1,11 +1,12 @@
 package utils;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import enums.*;
 import wsp.*;
 
-public class Course {
+public class Course implements Serializable {
 	private int id;
 	private int credits;
 	private Vector<Teacher> teachers;

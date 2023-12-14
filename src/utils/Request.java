@@ -2,8 +2,10 @@ package utils;
 
 import enums.*;
 import wsp.*;
+
+import java.io.Serializable;
 import java.util.*;
-public class Request {
+public class Request implements Serializable {
 
     private Emergency emergency;
     private String message;

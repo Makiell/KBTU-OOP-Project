@@ -1,9 +1,10 @@
 package wsp;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class User {
-	
+public abstract class User implements Serializable {
+
 	private static int nextId = 1;
 	
 	private int id;
