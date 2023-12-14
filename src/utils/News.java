@@ -16,9 +16,39 @@ public class News {
 		this.comments = new Vector<String>();
 	}
 
+    public String getTopic() {
+        return topic;
+    }
 
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
-	@Override
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Vector<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(Vector<String> comments) {
+        this.comments = comments;
+    }
+
+    @Override
 	public String toString() {
 		return "News [topic=" + topic + ", title=" + title + ", text=" + text + ", comments=" + comments + "]";
 	}
