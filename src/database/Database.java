@@ -164,7 +164,9 @@ public class Database implements Serializable {
 	public void addOrganisation(Organisation or) {
 		this.organisations.add(or);
 	}
-	
-	
 
+
+    public Vector<Organisation> getOrganisations() {
+        return organisations;
+    }
 }
