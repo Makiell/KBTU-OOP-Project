@@ -1,10 +1,11 @@
 package wsp;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import utils.*;
 
-public class Researcher<T> {
+public class Researcher<T> implements Serializable {
 	
 	private T user;
 	private Vector<ResearchProject> projects;

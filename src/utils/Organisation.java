@@ -1,10 +1,11 @@
 package utils;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import wsp.*;
 
-public class Organisation {
+public class Organisation implements Serializable {
 	
 	private String name;
 	private Student head;

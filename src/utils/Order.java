@@ -1,12 +1,20 @@
 package utils;
-import wsp.*;import enums.*;
-public class Order {
+
+import wsp.*;
+
+import java.io.Serializable;
+
+import enums.*;
+
+public class Order implements Serializable {
     private Status status;
-    private String message; private TechSupportSpecialist to;
+    private String message; 
+    private TechSupportSpecialist to;
 
     public Order(Status status, String message, TechSupportSpecialist to) {  super();
         this.status = status;  this.message = message;
-        this.to = to; }
+        this.to = to; 
+    }
 
     public Status getStatus() {
         return status; }

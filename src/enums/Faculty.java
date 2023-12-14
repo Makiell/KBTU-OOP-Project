@@ -1,5 +1,7 @@
 package enums;
 
-public enum Faculty {
+import java.io.Serializable;
+
+public enum Faculty implements Serializable {
 	SITE, ISE, OGS
 }

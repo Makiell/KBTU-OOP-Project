@@ -1,5 +1,7 @@
 package enums;
 
-public enum Grade {
+import java.io.Serializable;
+
+public enum Grade implements Serializable {
 	MASTER, PHD
 }

@@ -1,11 +1,12 @@
 package utils;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Vector;
 
 import wsp.*;
 
-public class ResearchPaper {
+public class ResearchPaper implements Serializable {
 	
 	private String name;
 	private Vector<Researcher> authors;

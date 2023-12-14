@@ -210,23 +210,19 @@ public class Student extends User {
             i = ++nextI;
         }
         Scanner s = new Scanner(System.in);
-
+        if(!dborganisations.isEmpty()) {
             int orgchoice;
             if(!dborganisations.isEmpty()){
             while(true) {
                 orgchoice = s.nextInt();
                 if (orgchoice <= dborganisations.size() && orgchoice >= 1) {
-                    Organisation dborganisation = dborganisations.get(orgchoice - 1);
-                    dborganisation.addMember(this);
-                    this.organisation = organisation;
                     break;
-
                 } else {
                     System.out.println("Please enter number from 1 to " + dborganisations.size());
                 }
             }
             }
-    else {
+        }else {
             System.out.println("At the moment we dont have any organisations");
         }
 	}
@@ -298,13 +294,12 @@ public class Student extends User {
 
                 } else if (choiceorg == 3) {
                     createOrganisation();
-                } else {
                 }
+                else{}
             }
 			    else if(choice == 8){
                 break;
             }
         }
     }
-
 }

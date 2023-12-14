@@ -1,9 +1,10 @@
 package utils;
 
+import java.io.Serializable;
 import java.util.Date;
 import enums.*;
 
-public class Lesson {
+public class Lesson implements Serializable {
 	private TypeLesson type;
 	private Date start;
 	private Date end;

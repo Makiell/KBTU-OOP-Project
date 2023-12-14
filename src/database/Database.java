@@ -1,42 +1,71 @@
 package database;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Vector;
 
 import wsp.*;
 import utils.*;
 
-public final class Database {
+public class Database implements Serializable {
 	
-	private static final Database INSTANCE = new Database();
+	private static final Database INSTANCE = loadDatabase();
 	
-	private Vector<User> users = new Vector<User>();
+//	private static final long serialVersionUID = 1454407583937359068L;
 	
-	private Vector<Student> students = new Vector<Student>();
-//	private Vector<Employee> Employees;
-	private static Vector<Course> courses = new Vector<Course>();
-	private Vector<News> news = new Vector<News>();
-	private Vector<Request> requests = new Vector<Request>();
-	private Vector<Order> orders = new Vector<Order>();
+	private Vector<User> users;
+	
+	private Vector<Student> students;
+	private Vector<Employee> employees;
+	private Vector<Course> courses;
+	private Vector<News> news;
+	private Vector<Request> requests;
+	private Vector<Order> orders;
 //	private Vector<Log> logs;
-	private Vector<Researcher> researchers = new Vector<Researcher>();
-	private static Vector<Organisation> organisations = new Vector<Organisation>();
+	private Vector<Researcher> researchers;
+	private Vector<Organisation> organisations;
 	
-	private Database() {}
+	
+	private Database() {
+		this.users = new Vector<User>();
+		this.students = new Vector<Student>();
+		this.employees = new Vector<Employee>();
+		this.courses = new Vector<Course>();
+		this.news = new Vector<News>();
+		this.requests = new Vector<Request>();
+		this.orders = new Vector<Order>();
+		this.researchers = new Vector<Researcher>();
+		this.organisations = new Vector<Organisation>();
+	}
 	
 	public static Database getInstance() {
 		return INSTANCE;
 	}
 	
-	public static Vector<Course> getCourses() {
-		return courses;
+	private static Database loadDatabase() {
+		Database db = null;
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("database.ser"))){
+			db = (Database) ois.readObject();
+		}
+		catch(FileNotFoundException e){
+			db = new Database();
+		}
+		catch (IOException | ClassNotFoundException e) {
+			System.out.println(2);
+			e.printStackTrace();
+		}
+		return (db != null) ? db : new Database();
 	}
-
-    public static Course getCourse(int i) {
-        return courses.get(i);
-    }
+	
+	public void saveDatabase() {
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.ser"))){
+			oos.writeObject(INSTANCE);
+		}
+		catch(IOException e) {
+			System.out.println(3);
+			e.printStackTrace();
+		}
+	}
+	
 
     public void login() {
 		
@@ -66,6 +95,7 @@ public final class Database {
 			} 
 			catch (IOException e) {
 				// TODO Auto-generated catch block
+				System.out.print(4);
 				e.printStackTrace();
 			}
 			
@@ -75,6 +105,41 @@ public final class Database {
 		
 	}
 
+	public Vector<User> getUsers() {
+		return users;
+	}
+
+	public Vector<Student> getStudents() {
+		return students;
+	}
+
+	public Vector<Employee> getEmployees() {
+		return employees;
+	}
+
+	public Vector<Course> getCourses() {
+		return courses;
+	}
+
+	public Vector<News> getNews() {
+		return news;
+	}
+
+	public Vector<Request> getRequests() {
+		return requests;
+	}
+
+	public Vector<Order> getOrders() {
+		return orders;
+	}
+
+	public Vector<Researcher> getResearchers() {
+		return researchers;
+	}
+
+	public Vector<Organisation> getOrganisations() {
+		return organisations;
+	}
 
 	public void addUser(User u) {
 		this.users.add(u);
@@ -100,14 +165,12 @@ public final class Database {
 		this.orders.add(o);
 	}
 	
-	
-	
 	public void addResearcher(Researcher r) {
 		this.researchers.add(r);
 	}
 	
-	public static void addOrganisations(Organisation or) {
-		organisations.add(or);
+	public void addOrganisation(Organisation or) {
+		this.organisations.add(or);
 	}
 
 
