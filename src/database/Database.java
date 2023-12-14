@@ -109,7 +109,9 @@ public final class Database {
 	public static void addOrganisations(Organisation or) {
 		organisations.add(or);
 	}
-	
-	
 
+
+    public Vector<Organisation> getOrganisations() {
+        return organisations;
+    }
 }

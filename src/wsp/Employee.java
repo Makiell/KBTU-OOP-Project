@@ -35,7 +35,7 @@ public class Employee extends User {
         specialist.addOrder(order);
         System.out.println("Order sent successfully to " + specialist.getUsername());
     }
-}
+
 
 @Override
 public void viewNews() {
