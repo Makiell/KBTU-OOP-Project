@@ -1,5 +1,6 @@
 package wsp;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,7 +13,7 @@ import enums.*;
 public class Student extends User implements Serializable {
 	Vector<Course> courses;
 	Integer gpa = null;
-	Map<Course, Mark> transcript;
+	HashMap<Course, Mark> transcript;
 	Faculty faculty;
 //	Vector<Journal> journals;
 	Organisation organisation;
@@ -140,12 +141,7 @@ public class Student extends User implements Serializable {
 		        .filter(c -> !courses.contains(c))
 		        .collect(Collectors.toCollection(Vector::new));
 		
-		int i = 1;
-		int nextI = 1;
-		for (Course c : coursesToShow) {
-			System.out.println(i + " - " + c);
-			i = ++nextI;
-		}
+		printList(coursesToShow);
 		
 		int coursechoice = validate(coursesToShow.size());
 		
@@ -154,6 +150,7 @@ public class Student extends User implements Serializable {
 
 	public void registerToCourse(Course course) {
 		this.courses.add(course);
+		this.transcript.put(course, new Mark());
 		System.out.println("Course " + course.getName() + " registration successful!");
 	}
 
@@ -169,15 +166,18 @@ public class Student extends User implements Serializable {
 	 */
 	
 	public void viewCourses() {
-		Vector<Course> databaseCourses = Database.getInstance().getCourses();
+		
+		if(Database.getInstance().getCourses().isEmpty()) {
+			System.out.println("No courses yet...");
+		}
+
 		System.out.println("Courses:");
-		int i = 1;
-		int nextI = 1;
-		for (Course course : databaseCourses) {
-			if (!courses.contains(course)) {
-				System.out.println(i + " - " + course.getName());
-				i = ++nextI;
-			}
+		printList(Database.getInstance().getCourses());
+	}
+
+	private void printList(List list) {
+		for(int i = 0; i<list.size(); i++) {
+			System.out.println(i+1+ "." + list.get(i));
 		}
 	}
 
@@ -309,7 +309,12 @@ public class Student extends User implements Serializable {
 				organisationMenu();
 			} 
 			else if (choice == 8) {
-				Database.getInstance().saveDatabase();
+				try {
+					Database.getInstance().saveDatabase();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			}
 		}
