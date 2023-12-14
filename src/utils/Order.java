@@ -1,12 +1,16 @@
 package utils;
-import wsp.*;import enums.*;
+
+import wsp.*;
+import enums.*;
+
 public class Order {
     private Status status;
     private String message; private TechSupportSpecialist to;
 
     public Order(Status status, String message, TechSupportSpecialist to) {  super();
         this.status = status;  this.message = message;
-        this.to = to; }
+        this.to = to; 
+    }
 
     public Status getStatus() {
         return status; }

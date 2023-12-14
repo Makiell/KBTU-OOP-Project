@@ -6,6 +6,7 @@ import database.Database;
 import enums.*;
 import utils.*;
 import java.io.*;
+
 public class Test {
 
 	public static void main(String[] args) throws Exception {
@@ -15,10 +16,10 @@ public class Test {
         Teacher t = new Teacher("bacc", "aa", null, null, TeacherTitle.LECTOR, Faculty.SITE);
         Vector<Teacher>  teacher = new Vector<>();
         teacher.add(t);
-        Course c = new Course(5, teacher, "ALgo", TypeCourse.REQUIRED, Faculty.SITE);
-        Course c2 = new Course(5, teacher, "OOP", TypeCourse.REQUIRED, Faculty.SITE);
-        database.getInstance().addCourse(c);
-        database.getInstance().addCourse(c2);
+        Course c = new Course(5, 21, teacher, "ALgo", TypeCourse.REQUIRED, Faculty.SITE);
+        Course c2 = new Course(5, 20, teacher, "OOP", TypeCourse.REQUIRED, Faculty.SITE);
+        Database.getInstance().addCourse(c);
+        Database.getInstance().addCourse(c2);
 		System.out.println(s);
 		Database.getInstance().addStudent(s);
 		Database.getInstance().addUser(s);

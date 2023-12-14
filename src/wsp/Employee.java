@@ -32,22 +32,19 @@ public class Employee extends User {
         Database.getInstance().addOrder(order);
 
         TechSupportSpecialist specialist = order.getTo();
-        specialist.addOrder(order);
+//        specialist.addOrder(order);
         System.out.println("Order sent successfully to " + specialist.getUsername());
     }
-}
 
-@Override
-public void viewNews() {
-    // TODO Auto-generated method stub
-}
+	@Override
+	public void viewNews() {
+		// TODO Auto-generated method stub
+		
+	}
 
-@Override
-public void viewMenu() {
-    // TODO Auto-generated method stub
-
-}
-
-
-
+	@Override
+	public void viewMenu() {
+		// TODO Auto-generated method stub
+		
+	}
 }
