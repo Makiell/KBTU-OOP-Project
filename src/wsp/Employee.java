@@ -1,12 +1,13 @@
 package wsp;
 
+import java.io.Serializable;
 import java.util.*;
 import wsp.*;
 import database.*;
 import enums.*;
 import utils.*;
 
-public class Employee extends User {
+public class Employee extends User implements Serializable {
 
     public Employee(String username, String password, String firstName, String lastName) {
         super(username, password, firstName, lastName);
@@ -32,22 +33,19 @@ public class Employee extends User {
         Database.getInstance().addOrder(order);
 
         TechSupportSpecialist specialist = order.getTo();
-        specialist.addOrder(order);
+//        specialist.addOrder(order);
         System.out.println("Order sent successfully to " + specialist.getUsername());
     }
 
+	@Override
+	public void viewNews() {
+		// TODO Auto-generated method stub
+		
+	}
 
-@Override
-public void viewNews() {
-    // TODO Auto-generated method stub
-}
-
-@Override
-public void viewMenu() {
-    // TODO Auto-generated method stub
-
-}
-
-
-
+	@Override
+	public void viewMenu() {
+		// TODO Auto-generated method stub
+		
+	}
 }

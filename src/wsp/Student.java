@@ -1,24 +1,28 @@
 package wsp;
+
+import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import database.*;
 import utils.*;
 import wsp.*;
 import enums.*;
 
-public class Student extends User {
-	Vector<Course> courses = new Vector<Course>();
+public class Student extends User implements Serializable {
+	Vector<Course> courses;
 	Integer gpa = null;
-	Map<Course, Mark> transcript = new HashMap<Course, Mark>();
+	Map<Course, Mark> transcript;
 	Faculty faculty;
 //	Vector<Journal> journals;
 	Organisation organisation;
 
-
-    public Student(String username, String password, String firstName, String lastName, Faculty faculty) {
+	public Student(String username, String password, String firstName, String lastName, Faculty faculty) {
 		super(username, password, firstName, lastName);
 		this.faculty = faculty;
-        this.organisation = new Organisation();
+		this.organisation = null;
+		this.courses = new Vector<Course>();
+		this.transcript = new HashMap<Course, Mark>();
 	}
 
 	public Vector<Course> getCourses() {
@@ -68,23 +72,25 @@ public class Student extends User {
 	public void setOrganisation(Organisation organisation) {
 		this.organisation = organisation;
 	}
+
 	@Override
 	public String toString() {
-		return "Student[" + "username=" + getUsername()  +
-				", password="+ this.getPassword() +", courses=" + courses +
-				", gpa=" + gpa +
-				", transcript=" + transcript +
-				", faculty=" + faculty +
-				", organisation=" + organisation.getName() +
-				']';
+		return "Student[" + "username=" + getUsername() + ", password=" + this.getPassword() + ", courses=" + courses
+				+ ", gpa=" + gpa + ", transcript=" + transcript + ", faculty=" + faculty + ", organisation="
+				+ organisation.getName() + ']';
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof Student student)) return false;
-		if (!super.equals(o)) return false;
-        return Objects.equals(courses, student.courses) && Objects.equals(gpa, student.gpa) && Objects.equals(transcript, student.transcript) && faculty == student.faculty && Objects.equals(organisation, student.organisation);
+		if (this == o)
+			return true;
+		if (!(o instanceof Student student))
+			return false;
+		if (!super.equals(o))
+			return false;
+		return Objects.equals(courses, student.courses) && Objects.equals(gpa, student.gpa)
+				&& Objects.equals(transcript, student.transcript) && faculty == student.faculty
+				&& Objects.equals(organisation, student.organisation);
 	}
 
 	@Override
@@ -95,178 +101,196 @@ public class Student extends User {
 	public void viewTranscript() {
 		System.out.println("Transcript:");
 		for (Map.Entry<Course, Mark> entry : transcript.entrySet()) {
-		    System.out.println(entry.getKey() + " - " + entry.getValue().toString());
+			System.out.println(entry.getKey() + " - " + entry.getValue().toString());
 		}
 	}
 
 	public void viewMarks() {
-        int i = 1;
-        int nextI = 1;
-        for(Course c: courses){
-            System.out.println(i + " - "+ c);
-            i = ++nextI;
-        }
-        Scanner s = new Scanner(System.in);
-        System.out.println("Please enter your choice:");
-        int coursechoice = s.nextInt();
-        Course course = courses.get(coursechoice - 1);
-	    if (!courses.contains(course)) {
-	        System.out.println("Student not registered in course");
-	        return;
-	    }
-	    Mark mark = transcript.get(course);
-	    if (mark == null) {
-	        System.out.println("Course doesnt have marks");
-	        return;
-	    }
-	    System.out.println("Course: " + course.getName() + " Mark: " + mark.toString());
+		if(courses.isEmpty()) {
+			System.out.println("No courses");
+			return;
+		}
+		int i = 1;
+		int nextI = 1;
+		for (Course c : courses) {
+			System.out.println(i + " - " + c);
+			i = ++nextI;
+		}
+		
+		System.out.println("Please enter your choice:");
+		
+		int coursechoice = validate(courses.size());
+		
+		Course course = courses.get(coursechoice - 1);
+
+		Mark mark = transcript.get(course);
+		if (mark == null) {
+			System.out.println("Course doesnt have marks");
+			return;
+		}
+		else {
+			System.out.println("Course: " + course.getName() + " Mark: " + mark.toString());
+		}
+		
 	}
-	public void getCourseFromDB(){
-         Vector<Course> databasecourses = Database.getInstance().getCourses();
-         Vector<Course> aftercourses = new Vector<>();
-         for(Course c: databasecourses){
-            if(!courses.contains(c)){
-                aftercourses.add(c);
-            }
-         }
-        int i = 1;
-        int nextI = 1;
-         for(Course c: aftercourses){
-            System.out.println(i + " - " + c);
-            i = ++nextI;
-         }
-         Scanner s  = new Scanner(System.in);
-         int coursechoice;
-         while(true){
-             coursechoice = s.nextInt();
-             if(coursechoice <= aftercourses.size() && coursechoice >=1){
-                 break;
-             }
-             else{
-                 System.out.println("Please enter number from 1 to " + aftercourses.size());
-             }
-         }
-         registerToCourse(aftercourses.get(coursechoice-1));
-    }
+
+	public void getCourseFromDB() {
+		Vector<Course> databasecourses = Database.getInstance().getCourses();
+		Vector<Course> coursesToShow = databasecourses.stream()
+		        .filter(c -> !courses.contains(c))
+		        .collect(Collectors.toCollection(Vector::new));
+		
+		int i = 1;
+		int nextI = 1;
+		for (Course c : coursesToShow) {
+			System.out.println(i + " - " + c);
+			i = ++nextI;
+		}
+		
+		int coursechoice = validate(coursesToShow.size());
+		
+		registerToCourse(coursesToShow.get(coursechoice - 1));
+	}
 
 	public void registerToCourse(Course course) {
-        if(!courses.contains(course)) {
-            this.courses.add(course);
-            System.out.println("Course " + course.getName() + " registration successful!");
-        }
-        else{
-            System.out.println("You already registered this course");
-        }
+		this.courses.add(course);
+		System.out.println("Course " + course.getName() + " registration successful!");
 	}
-/*	public void viewTeacherForCourse(Course course) {
-	    if (!courses.contains(course)) {
-	        System.out.println("Student not registered for this course");
-        return;
-    }
-	   Vector<Teacher> teachers = course.getTeachers();
-	   if (teachers == null || teachers.isEmpty()) {
-	        System.out.println("No teachers");
-	        return;
-	    }
-	    System.out.println("Teachers for course " + course.getName() + ":");
-	    for (Teacher teacher : teachers) {
-        System.out.println(teacher.getName() + " (" + teacher.getRole() + ")");
-	    }
-	}
-	*/
+
+	/*
+	 * public void viewTeacherForCourse(Course course) { if
+	 * (!courses.contains(course)) {
+	 * System.out.println("Student not registered for this course"); return; }
+	 * Vector<Teacher> teachers = course.getTeachers(); if (teachers == null ||
+	 * teachers.isEmpty()) { System.out.println("No teachers"); return; }
+	 * System.out.println("Teachers for course " + course.getName() + ":"); for
+	 * (Teacher teacher : teachers) { System.out.println(teacher.getName() + " (" +
+	 * teacher.getRole() + ")"); } }
+	 */
+	
 	public void viewCourses() {
-	    Vector<Course> databaseCourses = Database.getInstance().getCourses();
-	    System.out.println("Courses:");
-        int i = 1;
-        int nextI = 1;
-	    for (Course course : databaseCourses) {
-            if(!courses.contains(course)){
-                System.out.println(i + " - " + course.getName());
-                i = ++nextI;
-            }
-	    }
+		Vector<Course> databaseCourses = Database.getInstance().getCourses();
+		System.out.println("Courses:");
+		int i = 1;
+		int nextI = 1;
+		for (Course course : databaseCourses) {
+			if (!courses.contains(course)) {
+				System.out.println(i + " - " + course.getName());
+				i = ++nextI;
+			}
+		}
 	}
-
-
 
 	@Override
 	public void viewNews() {
 		// TODO Auto-generated method stub
 
 	}
-	public void rateTeachers(Map<Teacher,  Integer> ratings) {
+
+	public void rateTeachers(Map<Teacher, Integer> ratings) {
 		for (Map.Entry<Teacher, Integer> entry : ratings.entrySet()) {
 			Teacher teacher = entry.getKey();
 			Integer rating = entry.getValue();
 		}
 	}
-	public void joinOrganisation() {
-        int i = 1;
-        int nextI = 1;
-        System.out.println("List of organisation:");
-        Vector<Organisation> dborganisations = Database.getInstance().getOrganisations();
-        for(Organisation o: dborganisations){
-            System.out.println(i + " - "  + o);
-            i = ++nextI;
-        }
-        Scanner s = new Scanner(System.in);
-        if(!dborganisations.isEmpty()) {
-            int orgchoice;
-            if(!dborganisations.isEmpty()){
-            while(true) {
-                orgchoice = s.nextInt();
-                if (orgchoice <= dborganisations.size() && orgchoice >= 1) {
-                    break;
-                } else {
-                    System.out.println("Please enter number from 1 to " + dborganisations.size());
-                }
-            }
-            }
-        }else {
-            System.out.println("At the moment we dont have any organisations");
-        }
+	
+	
+	private int validate(int n) {
+		Scanner s = new Scanner(System.in);
+		int choice = s.nextInt();
+		while (!(1 <= choice && choice <= n)) {
+			System.out.println("Please enter number from 1 to " + n);
+		}
+
+		return choice;
 	}
+	
+	public void organisationMenu() {
+		System.out.println("Please enter your choice:");
+		System.out.println("1 - Join in a organisation");
+		System.out.println("2 - Leave in a organisation");
+		System.out.println("3 - Create in a organisation");
+		int choiceorg = validate(3);
+		if (choiceorg == 1) {
+			joinOrganisation();
+		} 
+		else if (choiceorg == 2) {
+			leaveOrganisation();
+		} 
+		else if (choiceorg == 3) {
+			createOrganisation();
+		}
+	}
+
+	public void joinOrganisation() {
+		int i = 1;
+		int nextI = 1;
+		System.out.println("List of organisation:");
+		Vector<Organisation> organisations = Database.getInstance().getOrganisations();
+		
+		organisations.remove(this.organisation);
+		for (Organisation o : organisations) {
+			System.out.println(i + " - " + o);
+			i = ++nextI;
+		}
+		
+		
+		if (!organisations.isEmpty()) {
+
+			int orgchoice = validate(organisations.size());
+			
+			Organisation organisation = organisations.get(orgchoice - 1);
+
+			if(this.organisation != null) {
+				this.organisation.removeMember(this);
+			}
+			
+			this.organisation = organisation;
+			organisation.addMember(this);
+			
+		} 
+		else {
+			System.out.println("At the moment we dont have any organisations");
+		}
+	}
+
 	public void leaveOrganisation() {
 		organisation.removeMember(this);
 		this.organisation = null;
 	}
-	public void createOrganisation() {
-        Scanner s = new Scanner(System.in);
-        System.out.println("Name your organisation:");
-        String name = s.nextLine();
-        Organisation organisation = new Organisation(name, this);
-        this.organisation = organisation;
-        Database.getInstance().addOrganisations(organisation);
-	}
-    public void viewMenu() {
-        while (true) {
-            String[] options = new String[]{
-                    "View Transcript",
-                    "View Marks for a Course",
-                    "Register for a Course",
-                    "View Teacher for a Course",
-                    "View All Courses",
-                    "Rate Teachers",
-                    "Organisation",
-                    "Exit"
-            };
-            Scanner Scanner = new Scanner(System.in);
-            System.out.println("\nStudent Menu:");
-            for (int i = 0; i < options.length; i++) {
-                System.out.println((i + 1) + ". " + options[i]);
-            }
-            System.out.print("Enter your choice: ");
-            int choice = Integer.parseInt(Scanner.nextLine());
-            if (choice == 1) {
-                viewTranscript();
-            }
 
-           else if (choice == 2) {
-              viewMarks();
-              }
-           else if (choice == 3) {
-                getCourseFromDB();
-           }
+	public void createOrganisation() {
+		Scanner s = new Scanner(System.in);
+		System.out.println("Name your organisation:");
+		String name = s.nextLine();
+		Organisation organisation = new Organisation(name, this);
+		this.organisation = organisation;
+		Database.getInstance().addOrganisation(organisation);
+		s.close();
+	}
+
+	public void viewMenu() {
+		while (true) {
+			String[] options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
+					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "Exit" };
+			
+			System.out.println("\nStudent Menu:");
+			for (int i = 0; i < options.length; i++) {
+				System.out.println((i + 1) + ". " + options[i]);
+			}
+			
+			System.out.print("Enter your choice: ");
+			int choice = this.validate(options.length);
+			
+			if (choice == 1) {
+				viewTranscript();
+			}
+			else if (choice == 2) {
+				viewMarks();
+			} 
+			else if (choice == 3) {
+				getCourseFromDB();
+			}
 
 //         else if (choice == 4) {
 //                System.out.println("Please select course(1-n):");
@@ -276,30 +300,18 @@ public class Student extends User {
 //                int coursechoice = Integer.parseInt(Scanner.nextLine());
 //                viewTeacherForCourse(Database.courses(coursechoice-1));
 //			    }
-             else if (choice == 5) {
-			        viewCourses();
-			    }// else if (choice == 6) {
+			else if (choice == 5) {
+				viewCourses();
+			} // else if (choice == 6) {
 //			    	rateTeachers(null, null);
 //			    }
-              else if (choice == 7) {
-                System.out.println("Please enter your choice:");
-                System.out.println("1 - Join in a organisation");
-                System.out.println("2 - Leave in a organisation");
-                System.out.println("3 - Create in a organisation");
-                int choiceorg = Integer.parseInt(Scanner.nextLine());
-                if (choiceorg == 1) {
-                    joinOrganisation();
-                } else if (choiceorg == 2) {
-                    leaveOrganisation();
-
-                } else if (choiceorg == 3) {
-                    createOrganisation();
-                }
-                else{}
-            }
-			    else if(choice == 8){
-                break;
-            }
-        }
-    }
+			else if (choice == 7) {
+				organisationMenu();
+			} 
+			else if (choice == 8) {
+				Database.getInstance().saveDatabase();
+				break;
+			}
+		}
+	}
 }
