@@ -12,6 +12,8 @@ public class Database implements Serializable {
 	
 //	private static final long serialVersionUID = 1454407583937359068L;
 	
+	private Vector<Admin> admins = new Vector<Admin>();
+	
 	private Vector<User> users = new Vector<User>();
 	
 	private Vector<Student> students = new Vector<Student>();
@@ -36,6 +38,7 @@ public class Database implements Serializable {
 		}
 		else {
 			INSTANCE = new Database();
+			INSTANCE.initializeDefaultAdmin();
 		}
 	}
 	
@@ -58,7 +61,11 @@ public class Database implements Serializable {
 		oos.close();
 	}
 	
-
+	private void initializeDefaultAdmin() {
+		Admin defaultAdmin = new Admin("admin", "admin", "AdminName", "AdminSurname");
+		addAdmin(defaultAdmin);
+	}
+	
     public void login() {
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -73,7 +80,7 @@ public class Database implements Serializable {
 				
 				System.out.println("Введите пароль: ");
 				String password = reader.readLine();
-				System.out.println(username + " " + password);
+//				System.out.println(username + " " + password);
 				
 				for(User u : this.users) {
 					if(u.getUsername().equals(username) && u.getPassword().equals(password)) {
@@ -132,6 +139,10 @@ public class Database implements Serializable {
 	public Vector<Organisation> getOrganisations() {
 		return organisations;
 	}
+	
+	public Vector<Admin> getAdmins(){
+		return admins;
+	}
 
 	public void addUser(User u) {
 		this.users.add(u);
@@ -139,6 +150,7 @@ public class Database implements Serializable {
 	
 	public void addStudent(Student s) {
 		this.students.add(s);
+		addUser(s);
 	}
 	
 	public void addCourse(Course c) {
@@ -165,8 +177,8 @@ public class Database implements Serializable {
 		this.organisations.add(or);
 	}
 
-
-    public Vector<Organisation> getOrganisations() {
-        return organisations;
-    }
+	public void addAdmin(Admin a) {
+		this.admins.add(a);
+		addUser(a);
+	}
 }
