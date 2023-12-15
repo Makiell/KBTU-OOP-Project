@@ -4,21 +4,21 @@ import java.io.Serializable;
 
 public class Mark implements Serializable {
 	
-	private Integer attestation1;
-	private Integer attestation2;
-	private Integer finalExam;
+	private double attestation1;
+	private double attestation2;
+	private double finalExam;
 	
 	
 	
 	
 	public Mark() {
-		this.attestation1 = null;
-		this.attestation2 = null;
-		this.finalExam = null;
+		this.attestation1 = (Double) null;
+		this.attestation2 = (Double) null;
+		this.finalExam = (Double) null;
 	}
 
 
-	public Mark(Integer attestation1, Integer attestation2, Integer finalExam) {
+	public Mark(double attestation1, double attestation2, double finalExam) {
 		this.attestation1 = attestation1;
 		this.attestation2 = attestation2;
 		this.finalExam = finalExam;

@@ -16,11 +16,13 @@ public class Teacher extends Employee implements Serializable {
     Map<Course, Vector<Lesson>> lessons = new HashMap <Course, Vector<Lesson>>();
     double rate = 0.0;
 
+
     public Teacher(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,
                    Faculty faculty) {
         super(username, password, firstName, lastName);
         this.typeTeacher = typeTeacher;
         this.faculty = faculty;
+
 
     }
 
@@ -83,11 +85,99 @@ public class Teacher extends Employee implements Serializable {
 
     }
 
-    public void viewMarks(Course course) {
+    public void viewMarks() {
+        if(courses.isEmpty()) {
+            System.out.println("No courses");
+            return;
+        }
+        int i = 1;
+        int nextI = 1;
+        for (Course c : courses) {
+            System.out.println(i + " - " + c);
+            i = ++nextI;
+        }
+        System.out.println("Please enter your choice:");
+        int courseChoice = validate(courses.size());
+        Course selectedCourse = courses.get(courseChoice - 1);
+        viewMarks(selectedCourse);
     }
 
-    public void putMarks(Course course, Student student, Mark mark) {
+    public void viewMarks(Course selectedCourse) {
 
+        if (!lessons.containsKey(selectedCourse)) {
+            System.out.println("No lessons for this course");
+            return;
+        }
+        System.out.println("Marks for " + selectedCourse.getName() + ":");
+        for (Student student : Database.getInstance().getStudents()) {
+            if (student.getCourses().contains(selectedCourse)) {
+                Mark mark = student.getTranscript().get(selectedCourse);
+                System.out.println(student.getUsername() + ": " + (mark != null ? mark.toString() : "No marks"));
+            }
+        }
+    }
+    private int validate(int n) {
+    	Scanner s = new Scanner(System.in);
+    	int choice = s.nextInt();
+    	while (!(1 <= choice && choice <= n)) {
+    		System.out.println("Please enter number from 1 to " + n);
+    	}
+    	return choice;
+    }
+ 
+    public void putMarks(Course course, Student student, Mark mark) {
+    	Scanner input = new Scanner(System.in);
+    
+    	if (!courses.contains(course)) {
+            System.out.println("Teacher is not assigned to the course: " + course.getName());
+            return;
+        }
+
+        if (!student.getCourses().contains(course)) {
+            System.out.println("Student is not enrolled in the course: " + course.getName());
+            return;
+        }
+
+        if (!lessons.containsKey(course)) {
+            System.out.println("No lessons recorded for the course: " + course.getName());
+            return;
+        }
+
+        Vector<Lesson> courseLessons = lessons.get(course);
+        if (courseLessons == null || courseLessons.isEmpty()) {
+            System.out.println("No lessons recorded for the course: " + course.getName());
+            return;
+        }
+        System.out.println("put marks for Student:" + student.getUsername());
+        
+        Mark previesMark = student.getTranscript().get(course);
+        if (previesMark != null) {
+        	System.out.println("Previous marks Student: " + student.getUsername());
+        }
+        else {
+        	System.out.println("new marks for Student: " + student.getUsername());
+        }
+        
+        while(true) {
+        	System.out.println("First attestation: ");
+        	double attestation1 = input.nextDouble();
+        	
+        	System.out.println("Second attestation: ");
+        	double attestation2 = input.nextDouble();
+        	
+        	System.out.println("Final exam: ");
+        	double finalExam = input.nextDouble();
+        	
+        	if (attestation1 > 30 || attestation2 > 30 || (attestation1 + attestation2) > 60 || finalExam > 40) {
+        		System.out.println("Error: please write marks correctly");
+        	}
+        	else {
+        		Mark newMark = new Mark(attestation1, attestation2, finalExam);
+        		student.getTranscript().put(course, newMark);
+        		System.out.println("The grades have been submitted successfully!");
+        		break;
+        	}
+        }
     }
 
     public void viewRate() {
