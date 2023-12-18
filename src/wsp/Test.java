@@ -22,6 +22,9 @@ public class Test {
 ////		System.out.println(s);
 //		Database.getInstance().addStudent(s);
 //		Database.getInstance().addUser(s);
+        Admin s = new Admin("bac", "a", null, null);
+        Database.getInstance().addAdmin(s);
+		Database.getInstance().addUser(s);
 		Database.getInstance().login();
 	}
 

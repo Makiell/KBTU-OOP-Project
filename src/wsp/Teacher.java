@@ -14,7 +14,7 @@ public class Teacher extends Employee implements Serializable {
     Vector <Course> courses = new Vector<Course>();
     Faculty faculty;
     Map<Course, Vector<Lesson>> lessons = new HashMap <Course, Vector<Lesson>>();
-    double rate = 0.0;
+    Vector<Integer> rating = new Vector<>() ;
 
 
     public Teacher(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,
@@ -43,9 +43,6 @@ public class Teacher extends Employee implements Serializable {
         return lessons;
     }
 
-    public double getRate() {
-        return rate;
-    }
 
     public void setTypeTeacher(TeacherTitle typeTeacher) {
         this.typeTeacher = typeTeacher;
@@ -62,9 +59,17 @@ public class Teacher extends Employee implements Serializable {
     public void setLessons(Map<Course, Vector<Lesson>> lessons) {
         this.lessons = lessons;
     }
+    public double getRate(){
+        int totalRate = 0;
+        for(int i = 0; i<rating.size(); i++){
+            totalRate += rating.get(i);
+        }
+        return totalRate/rating.size();
 
-    public void setRate(double rate) {
-        this.rate = rate;
+    }
+
+    public void setRate(int rate) {
+        rating.add(rate);
     }
 
     public void viewCourses() {
@@ -181,7 +186,7 @@ public class Teacher extends Employee implements Serializable {
     }
 
     public void viewRate() {
-        System.out.println("Teacher's rating: " + rate);
+        System.out.println("Teacher's rating: " + getRate());
     }
 
 

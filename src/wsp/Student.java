@@ -10,6 +10,7 @@ import utils.*;
 import wsp.*;
 import enums.*;
 
+
 public class Student extends User implements Serializable {
 	Vector<Course> courses;
 	Integer gpa = null;
@@ -159,16 +160,28 @@ public class Student extends User implements Serializable {
 		System.out.println("Course " + course.getName() + " registration successful!");
 	}
 
-	/*
-	 * public void viewTeacherForCourse(Course course) { if
-	 * (!courses.contains(course)) {
-	 * System.out.println("Student not registered for this course"); return; }
-	 * Vector<Teacher> teachers = course.getTeachers(); if (teachers == null ||
-	 * teachers.isEmpty()) { System.out.println("No teachers"); return; }
-	 * System.out.println("Teachers for course " + course.getName() + ":"); for
-	 * (Teacher teacher : teachers) { System.out.println(teacher.getName() + " (" +
-	 * teacher.getRole() + ")"); } }
-	 */
+
+    public void viewTeacherForCourse() {
+        System.out.println("All courses:");
+        printList(courses);
+        int coursechoice = validate(courses.size());
+        Course course = courses.get(coursechoice - 1);
+        if (!courses.contains(course)) {
+	        System.out.println("Student not registered for this course");
+            return;
+      }
+	    Vector<Teacher> teachers = course.getTeachers();
+        if (teachers == null || teachers.isEmpty()) {
+            System.out.println("No teachers");
+            return;
+        }
+	    System.out.println("Teachers for course " + course.getName() + ":");
+        for (Teacher teacher : teachers) {
+            System.out.println(teacher.toString() + " (" + teacher.getTypeTeacher() + ")");
+        }
+    }
+
+
 	
 	public void viewCourses() {
 		
@@ -192,11 +205,25 @@ public class Student extends User implements Serializable {
 
 	}
 
-	public void rateTeachers(Map<Teacher, Integer> ratings) {
-		for (Map.Entry<Teacher, Integer> entry : ratings.entrySet()) {
-			Teacher teacher = entry.getKey();
-			Integer rating = entry.getValue();
-		}
+	public void rateTeachers() {
+        System.out.println("All Teachers:");
+        Vector<Employee> dbemployees = Database.getInstance().getEmployees();
+        Vector<Teacher> teachers = new Vector<>();
+        for(Employee e: dbemployees){
+            if(e instanceof Teacher){
+                teachers.add((Teacher) e);
+            }
+        }
+        for(Teacher t : teachers){
+            printList(teachers);
+        }
+
+        System.out.println("Please select the teacher you want to evaluate:");
+        int teacherchoice = validate(teachers.size());
+        Teacher teacher = teachers.get(teacherchoice - 1);
+        System.out.println("Your assessment of this teacher:");
+        int rate = validate(10);
+        teacher.setRate(rate);
 	}
 	
 	
@@ -301,30 +328,20 @@ public class Student extends User implements Serializable {
 				getCourseFromDB();
 			}
 
-//         else if (choice == 4) {
-//                System.out.println("Please select course(1-n):");
-//                for(Course c: courses){
-//                    System.out.println(c);
-//                }
-//                int coursechoice = Integer.parseInt(Scanner.nextLine());
-//                viewTeacherForCourse(Database.courses(coursechoice-1));
-//			    }
+            else if (choice == 4) {
+                viewTeacherForCourse();
+			    }
 			else if (choice == 5) {
 				viewCourses();
-			} // else if (choice == 6) {
-//			    	rateTeachers(null, null);
-//			    }
+			}  else if (choice == 6) {
+			    	rateTeachers();
+			    }
 			else if (choice == 7) {
 				organisationMenu();
 			} 
 			else if (choice == 8) {
-				try {
-					Database.getInstance().saveDatabase();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
+                Database.getInstance().saveDatabase();
+                break;
 			}
 		}
 	}
