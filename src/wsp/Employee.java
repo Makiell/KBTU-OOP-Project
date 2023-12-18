@@ -48,4 +48,8 @@ public class Employee extends User implements Serializable {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public String toString() {
+		return "Employee " + super.toString();
+	}
 }

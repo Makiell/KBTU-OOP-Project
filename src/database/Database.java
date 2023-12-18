@@ -153,6 +153,11 @@ public class Database implements Serializable {
 		addUser(s);
 	}
 	
+	public void addEmployee(Employee e) {
+		this.employees.add(e);
+		addUser(e);
+	}
+	
 	public void addCourse(Course c) {
 		this.courses.add(c);
 	}

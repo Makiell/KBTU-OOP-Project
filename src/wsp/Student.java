@@ -76,9 +76,9 @@ public class Student extends User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Student[" + "username=" + getUsername() + ", password=" + this.getPassword() + ", courses=" + courses
+		return "Student [courses=" + courses
 				+ ", gpa=" + gpa + ", transcript=" + transcript + ", faculty=" + faculty + ", organisation="
-				+ organisation + ']';
+				+ organisation + "] " + super.toString();
 	}
 
 	@Override
@@ -143,8 +143,8 @@ public class Student extends User implements Serializable {
 		
 		Vector<Course> databasecourses = Database.getInstance().getCourses();
 		Vector<Course> coursesToShow = databasecourses.stream()
-		        .filter(c -> !courses.contains(c))
-		        .collect(Collectors.toCollection(Vector::new));
+												      .filter(c -> !courses.contains(c))
+												      .collect(Collectors.toCollection(Vector::new));
 		
 		printList(coursesToShow);
 		
