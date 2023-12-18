@@ -13,9 +13,9 @@ import utils.Lesson;
 public class Dean extends Teacher implements Serializable {
 
     Vector <Request> requests = new Vector<>();
-    public Dean(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,
+    public Dean(String username, String password, String firstName, String lastName,
                 Faculty faculty) {
-        super(username, password, firstName, lastName, typeTeacher, faculty);
+        super(username, password, firstName, lastName, null, faculty);
         // TODO Auto-generated constructor stub
     }
     public Vector<Request> getRequests(){
@@ -37,6 +37,10 @@ public class Dean extends Teacher implements Serializable {
     }
     public void addRequest(Request request){
         requests.add(request);
+    }
+    
+    public String toString() {
+    	return "Dean " + super.toString();
     }
 }
 

@@ -17,6 +17,7 @@ public class StaticMethods {
 		int choice = s.nextInt();
 		while (!(1 <= choice && choice <= n)) {
 			System.out.println("Please enter number from 1 to " + n);
+			choice = s.nextInt();
 		}
 
 		return choice;

@@ -40,14 +40,8 @@ public class GraduateStudent extends Student implements Serializable {
 
     @Override
     public String toString() {
-        return "GraduateStudent[" + "username=" + getUsername()  +
-                "courses=" + courses +
-                ", gpa=" + gpa +
-                ", transcript=" + transcript +
-                ", faculty=" + faculty +
-                ", organisation=" + organisation +
-                ", grade=" + grade +
-                "] ";
+        return "GraduateStudent [grade=" + grade +
+                "] " + super.toString();
     }
 
     @Override
@@ -69,4 +63,6 @@ public class GraduateStudent extends Student implements Serializable {
     public void viewMenu() {
         super.viewMenu();
     }
+    
+    
 }

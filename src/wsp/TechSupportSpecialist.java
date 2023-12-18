@@ -12,4 +12,8 @@ public class TechSupportSpecialist extends Employee implements Serializable {
 
     public void addOrder(Order order) {
     }
+    
+    public String toString() {
+    	return "Tech Support Specialist " + super.toString();
+    }
 }
