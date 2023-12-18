@@ -32,11 +32,6 @@ public class Dean extends Teacher implements Serializable {
     public void setRequests(Vector <Request> requests) {
         this.requests = requests;
     }
-    
-    public void signRequest(Request request) {
-    	System.out.println("Dean signed request: " + request);
-    }
-
 
     public void signRequests() {
     	while(true) {
@@ -51,7 +46,7 @@ public class Dean extends Teacher implements Serializable {
 	    	}
 	    	
 	    	System.out.println("Enter the request number to sign (or 0 to exit):");
-	    	int choice = StaticMethods.validate(requests.size() + 1);
+	    	int choice = StaticMethods.validate(requests.size());
 	    	
 	    	if (choice == 0) {
 	    		break;
@@ -61,7 +56,7 @@ public class Dean extends Teacher implements Serializable {
 	    	
 	    	if (index >= 0 && index < requests.size()) {
 	    		Request selectedRequest = requests.get(index);
-	    		signRequest(selectedRequest);
+	    		System.out.println("Dean signed request: " + selectedRequest);
 	    		
 	    		requests.remove(selectedRequest);
 	    		
