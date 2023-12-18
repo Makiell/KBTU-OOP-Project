@@ -32,9 +32,9 @@ public class Admin extends User implements Serializable {
         System.out.println("Enter password:");
         String password = in.nextLine();
 
-        String firstName = getValidInput("Enter first name:", "[a-zA-Z]+");
+        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
 
-        String lastName = getValidInput("Enter last name:", "[a-zA-Z]+");
+        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
         
         System.out.println("Choose faculty:");
         
@@ -63,9 +63,9 @@ public class Admin extends User implements Serializable {
         System.out.println("Enter password:");
         String password = in.nextLine();
 
-        String firstName = getValidInput("Enter first name:", "[a-zA-Z]+");
+        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
 
-        String lastName = getValidInput("Enter last name:", "[a-zA-Z]+");
+        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
         
         System.out.println("Choose faculty:");
         
@@ -102,9 +102,9 @@ public class Admin extends User implements Serializable {
         System.out.println("Enter password:");
         String password = in.nextLine();
 
-        String firstName = getValidInput("Enter first name:", "[a-zA-Z]+");
+        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
 
-        String lastName = getValidInput("Enter last name:", "[a-zA-Z]+");
+        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
         
         Employee newEmployee = new Employee(username, password, firstName, lastName);
 		
@@ -123,9 +123,9 @@ public class Admin extends User implements Serializable {
         System.out.println("Enter password:");
         String password = in.nextLine();
 
-        String firstName = getValidInput("Enter first name:", "[a-zA-Z]+");
+        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
 
-        String lastName = getValidInput("Enter last name:", "[a-zA-Z]+");
+        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
         
         System.out.println("Choose faculty:");
         
@@ -161,9 +161,9 @@ public class Admin extends User implements Serializable {
         System.out.println("Enter password:");
         String password = in.nextLine();
 
-        String firstName = getValidInput("Enter first name:", "[a-zA-Z]+");
+        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
 
-        String lastName = getValidInput("Enter last name:", "[a-zA-Z]+");
+        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
         
         System.out.println("Choose type:");
         
@@ -192,9 +192,9 @@ public class Admin extends User implements Serializable {
         System.out.println("Enter password:");
         String password = in.nextLine();
 
-        String firstName = getValidInput("Enter first name:", "[a-zA-Z]+");
+        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
 
-        String lastName = getValidInput("Enter last name:", "[a-zA-Z]+");
+        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
         
         TechSupportSpecialist newTechSupport = new TechSupportSpecialist(username, password, firstName, lastName);
 		
@@ -232,29 +232,15 @@ public class Admin extends User implements Serializable {
         System.out.println("Enter password:");
         String password = in.nextLine();
 
-        String firstName = getValidInput("Enter first name:", "[a-zA-Z]+");
+        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
 
-        String lastName = getValidInput("Enter last name:", "[a-zA-Z]+");
+        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
         
         Dean newDean = new Dean(username, password, firstName, lastName, faculty);
 		
         Database.getInstance().addEmployee(newDean);
         
         System.out.println("Dean added " + newDean);
-	}
-	
-	
-	
-	private String getValidInput(String promt, String regex) {
-		Scanner in = new Scanner(System.in);
-		System.out.println(promt);
-		
-		while(!in.hasNext(regex)) {
-			System.out.print("Invalid input. Please enter a valid name (only letters:");
-			in.next();
-		}
-		
-		return in.next();
 	}
 	
 	
@@ -265,9 +251,13 @@ public class Admin extends User implements Serializable {
 		};
 		
 		StaticMethods.printList(List.of(options));
+		System.out.println("Enter 0 to return back.");
 		int choice = StaticMethods.validate(options.length);
 		
-		if(choice == 1) {
+		if(choice == 0) {
+			return;
+		}
+		else if(choice == 1) {
 			addStudent();
 		}
 		else if(choice == 2) {
@@ -299,10 +289,36 @@ public class Admin extends User implements Serializable {
 	
 	public void updateUser() {
 		StaticMethods.printList(Database.getInstance().getUsers());
-		System.out.println("Which user do you want to change?");
+		System.out.println("Which user do you want to change? 0 for return back");
 		
 		int choice = StaticMethods.validate(Database.getInstance().getUsers().size());
-		Database.getInstance().getUsers().elementAt(choice).changeInfo();
+		
+		if(choice == 0) {
+			return;
+		}
+		
+		Database.getInstance().getUsers().elementAt(choice-1).changeInfo();
+	}
+	
+	
+	public void removeUser() {
+		System.out.println("Choose user to delete:");
+		
+		StaticMethods.printList(Database.getInstance().getUsers());
+		
+		System.out.println("Enter 0 to return back");
+		
+		int choice = StaticMethods.validate(Database.getInstance().getUsers().size());
+		
+		if(choice == 0) {
+			return;
+		}
+		
+		System.out.println(Database.getInstance().getUsers().elementAt(choice-1) + " was deleted");
+		
+		Database.getInstance().getUsers().remove(choice-1);
+		
+		
 	}
 
 
@@ -336,6 +352,10 @@ public class Admin extends User implements Serializable {
 				updateUser();
 			}
 			
+			else if(choice == 4) {
+				removeUser();
+			}
+			
 			else if(choice == 6) {
                 Database.getInstance().saveDatabase();
                 break;
@@ -348,6 +368,12 @@ public class Admin extends User implements Serializable {
 	
 	public String toString() {
 		return "Admin " + super.toString();
+	}
+
+
+
+	@Override
+	public void changeInfo() {
 	}
 	
 
