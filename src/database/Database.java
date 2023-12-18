@@ -1,40 +1,72 @@
 package database;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Vector;
 
 import wsp.*;
 import utils.*;
 
-public final class Database {
+public class Database implements Serializable {
 	
-	private static final Database INSTANCE = new Database();
+	private static Database INSTANCE;
+	
+//	private static final long serialVersionUID = 1454407583937359068L;
+	
+	private Vector<Admin> admins = new Vector<Admin>();
 	
 	private Vector<User> users = new Vector<User>();
 	
 	private Vector<Student> students = new Vector<Student>();
-//	private Vector<Employee> Employees;
+	private Vector<Employee> employees = new Vector<Employee>();
 	private Vector<Course> courses = new Vector<Course>();
 	private Vector<News> news = new Vector<News>();
 	private Vector<Request> requests = new Vector<Request>();
 	private Vector<Order> orders = new Vector<Order>();
 //	private Vector<Log> logs;
 	private Vector<Researcher> researchers = new Vector<Researcher>();
-	private Vector<Organisation> organisations = new Vector<Organisation>();
+	private Vector<Organisation> organisations = new Vector<Organisation>();;
 	
-	private Database() {}
+	
+	static{
+		if(new File("database.ser").exists()) {
+			try {
+				INSTANCE = loadDatabase();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			INSTANCE = new Database();
+			INSTANCE.initializeDefaultAdmin();
+		}
+	}
+	
+	
+	private Database() {
+	}
 	
 	public static Database getInstance() {
 		return INSTANCE;
 	}
 	
-	public Vector<Course> getCourses() {
-		return courses;
+	private static Database loadDatabase() throws IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("database.ser"));
+		return (Database) ois.readObject();
 	}
-
-	public void login() {
+	
+	public void saveDatabase() throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.ser"));
+		oos.writeObject(INSTANCE);
+		oos.close();
+	}
+	
+	private void initializeDefaultAdmin() {
+		Admin defaultAdmin = new Admin("admin", "admin", "AdminName", "AdminSurname");
+		addAdmin(defaultAdmin);
+	}
+	
+    public void login() {
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		
@@ -48,7 +80,7 @@ public final class Database {
 				
 				System.out.println("Введите пароль: ");
 				String password = reader.readLine();
-				System.out.println(username + " " + password);
+//				System.out.println(username + " " + password);
 				
 				for(User u : this.users) {
 					if(u.getUsername().equals(username) && u.getPassword().equals(password)) {
@@ -62,6 +94,7 @@ public final class Database {
 			} 
 			catch (IOException e) {
 				// TODO Auto-generated catch block
+				System.out.print(4);
 				e.printStackTrace();
 			}
 			
@@ -71,12 +104,58 @@ public final class Database {
 		
 	}
 
+	public Vector<User> getUsers() {
+		return users;
+	}
+
+	public Vector<Student> getStudents() {
+		return students;
+	}
+
+	public Vector<Employee> getEmployees() {
+		return employees;
+	}
+
+	public Vector<Course> getCourses() {
+		return courses;
+	}
+
+	public Vector<News> getNews() {
+		return news;
+	}
+
+	public Vector<Request> getRequests() {
+		return requests;
+	}
+
+	public Vector<Order> getOrders() {
+		return orders;
+	}
+
+	public Vector<Researcher> getResearchers() {
+		return researchers;
+	}
+
+	public Vector<Organisation> getOrganisations() {
+		return organisations;
+	}
+	
+	public Vector<Admin> getAdmins(){
+		return admins;
+	}
+
 	public void addUser(User u) {
 		this.users.add(u);
 	}
 	
 	public void addStudent(Student s) {
 		this.students.add(s);
+		addUser(s);
+	}
+	
+	public void addEmployee(Employee e) {
+		this.employees.add(e);
+		addUser(e);
 	}
 	
 	public void addCourse(Course c) {
@@ -95,16 +174,16 @@ public final class Database {
 		this.orders.add(o);
 	}
 	
-	
-	
 	public void addResearcher(Researcher r) {
 		this.researchers.add(r);
 	}
 	
-	public void addOrganisations(Organisation or) {
+	public void addOrganisation(Organisation or) {
 		this.organisations.add(or);
 	}
-	
-	
 
+	public void addAdmin(Admin a) {
+		this.admins.add(a);
+		addUser(a);
+	}
 }

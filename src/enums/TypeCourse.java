@@ -1,5 +1,7 @@
 package enums;
 
-public enum TypeCourse {
+import java.io.Serializable;
+
+public enum TypeCourse implements Serializable {
 	REQUIRED, MINOR, MAJOR
 }

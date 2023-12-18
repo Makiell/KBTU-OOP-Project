@@ -1,32 +1,42 @@
 package wsp;
 
-import enums.Emergency;
-import utils.Order;
-import utils.Request;
+import java.io.Serializable;
+import java.util.*;
+import wsp.*;
+import database.*;
+import enums.*;
+import utils.*;
 
-public class Employee extends User {
-	
-	public Employee() {
-		
-	}
+public class Employee extends User implements Serializable {
 
-	public Employee(String username, String password, String firstName, String lastName) {
-		super(username, password, firstName, lastName);
-		// TODO Auto-generated constructor stub
-	}
-	
-	public void sendMessage(String message, User user) {
-		
-	}
-	
-	public void sendRequest(Request req) {
-		
-	}
-	
-	public void sendOrder(Order order) {
-		
-	}
-	
+    public Employee(String username, String password, String firstName, String lastName) {
+        super(username, password, firstName, lastName);
+        // TODO Auto-generated constructor stub
+    }
+
+    public void sendMessage(String message, User user) {
+        System.out.println("Sending message to " + user.getUsername() + ": " + message);
+    }
+
+    public void sendRequest(Request request) {
+
+        Database.getInstance().addRequest(request);
+        Dean dean = request.getTo();
+
+        System.out.println("Response from the dean: " + dean.getUsername());
+        dean.signRequests(request);
+        System.out.println("Request sent successfully");
+
+    }
+
+    public void sendOrder(Order order) {
+        Database.getInstance().addOrder(order);
+
+        TechSupportSpecialist specialist = order.getTo();
+//        specialist.addOrder(order);
+        System.out.println("Order sent successfully to " + specialist.getUsername());
+    }
+
 	@Override
 	public void viewNews() {
 		// TODO Auto-generated method stub
@@ -39,4 +49,7 @@ public class Employee extends User {
 		
 	}
 	
+	public String toString() {
+		return "Employee " + super.toString();
+	}
 }
