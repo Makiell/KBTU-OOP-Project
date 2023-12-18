@@ -10,12 +10,14 @@ public class Request implements Serializable {
     private Emergency emergency;
     private String message;
     private Dean to;
+    private Status status;
 
 
     public Request(Emergency emergency, String message, Dean to) {
         this.emergency = emergency;
         this.message = message;
         this.to = to;
+        this.status = Status.NEW;
     }
 
 
@@ -48,6 +50,10 @@ public class Request implements Serializable {
         this.message = message;
     }
 
+    
+    public void setStatus(Status status) {
+    	this.status = status;
+    }
 
 
     public void setTo(Dean to) {

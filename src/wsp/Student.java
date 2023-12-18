@@ -273,6 +273,10 @@ public class Student extends User implements Serializable {
 		Database.getInstance().addOrganisation(organisation);
 		s.close();
 	}
+	
+	public void changeInfo() {
+		
+	}
 
 	public void viewMenu() {
 		while (true) {

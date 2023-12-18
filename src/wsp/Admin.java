@@ -296,6 +296,14 @@ public class Admin extends User implements Serializable {
 		}
 		
 	}
+	
+	public void updateUser() {
+		StaticMethods.printList(Database.getInstance().getUsers());
+		System.out.println("Which user do you want to change?");
+		
+		int choice = StaticMethods.validate(Database.getInstance().getUsers().size());
+		Database.getInstance().getUsers().elementAt(choice).changeInfo();
+	}
 
 
 
@@ -322,6 +330,10 @@ public class Admin extends User implements Serializable {
 			
 			else if(choice == 2) {
 				seeAllUsers();
+			}
+			
+			else if(choice == 3) {
+				updateUser();
 			}
 			
 			else if(choice == 6) {
