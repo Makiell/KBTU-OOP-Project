@@ -1,7 +1,9 @@
 package utils;
 
+
+import java.util.*;
 import java.io.Serializable;
-import java.util.Date;
+
 import enums.*;
 
 public class Lesson implements Serializable {
@@ -9,6 +11,7 @@ public class Lesson implements Serializable {
 	private Date start;
 	private Date end;
 	private int room;
+
 	
 	
 	public Lesson(TypeLesson type, Date start, Date end, int room) {
@@ -16,7 +19,9 @@ public class Lesson implements Serializable {
 		this.start = start;
 		this.end = end;
 		this.room = room;
+
 	}
+
 
 
 	@Override
