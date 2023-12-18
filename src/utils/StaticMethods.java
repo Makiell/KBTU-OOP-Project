@@ -16,7 +16,7 @@ public class StaticMethods {
 		Scanner s = new Scanner(System.in);
 		int choice = s.nextInt();
 		while (!(0 <= choice && choice <= n)) {
-			System.out.println("Please enter number from 1 to " + n);
+			System.out.println("Please enter number from 0 to " + n);
 			choice = s.nextInt();
 		}
 
