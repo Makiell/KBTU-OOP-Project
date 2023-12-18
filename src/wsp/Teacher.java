@@ -184,4 +184,13 @@ public class Teacher extends Employee implements Serializable {
         System.out.println("Teacher's rating: " + rate);
     }
 
+
+	@Override
+	public String toString() {
+		return "Teacher [typeTeacher=" + typeTeacher + ", faculty=" + this.faculty + "] " + super.toString();
+	}
+
+    
+    
+
 }

@@ -3,11 +3,11 @@ package wsp;
 import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class User implements Serializable {
+import database.Database;
 
-	private static int nextId = 1;
+public abstract class User implements Serializable {
 	
-	private int id;
+	private int id = 1;
 	private String username;
 	private String password;
 	private String firstName;
@@ -15,7 +15,14 @@ public abstract class User implements Serializable {
 	
 	
 	public User(String username, String password, String firstName, String lastName) {
-		this.id = nextId++;
+		if(Database.getInstance().getUsers().isEmpty()) {
+			this.id = 1;
+		}
+		else {
+			System.out.println(Database.getInstance().getUsers().lastElement());
+			int nextid = Database.getInstance().getUsers().lastElement().id;
+			this.id = ++nextid;
+		}
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -46,7 +53,7 @@ public abstract class User implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+		return "[id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + "]";
 	}
 

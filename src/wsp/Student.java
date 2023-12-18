@@ -46,7 +46,7 @@ public class Student extends User implements Serializable {
 		return transcript;
 	}
 
-	public void setTranscript(Map<Course, Mark> transcript) {
+	public void setTranscript(HashMap<Course, Mark> transcript) {
 		this.transcript = transcript;
 	}
 
@@ -76,9 +76,9 @@ public class Student extends User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Student[" + "username=" + getUsername() + ", password=" + this.getPassword() + ", courses=" + courses
+		return "Student [courses=" + courses
 				+ ", gpa=" + gpa + ", transcript=" + transcript + ", faculty=" + faculty + ", organisation="
-				+ organisation.getName() + ']';
+				+ organisation + "] " + super.toString();
 	}
 
 	@Override
@@ -136,10 +136,15 @@ public class Student extends User implements Serializable {
 	}
 
 	public void getCourseFromDB() {
+		if(Database.getInstance().getCourses().isEmpty()) {
+			System.out.println("No courses yet...");
+			return;
+		}
+		
 		Vector<Course> databasecourses = Database.getInstance().getCourses();
 		Vector<Course> coursesToShow = databasecourses.stream()
-		        .filter(c -> !courses.contains(c))
-		        .collect(Collectors.toCollection(Vector::new));
+												      .filter(c -> !courses.contains(c))
+												      .collect(Collectors.toCollection(Vector::new));
 		
 		printList(coursesToShow);
 		
@@ -267,6 +272,10 @@ public class Student extends User implements Serializable {
 		this.organisation = organisation;
 		Database.getInstance().addOrganisation(organisation);
 		s.close();
+	}
+	
+	public void changeInfo() {
+		
 	}
 
 	public void viewMenu() {
