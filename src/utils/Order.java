@@ -11,12 +11,14 @@ public class Order implements Serializable {
     private String message; 
     private TechSupportSpecialist to;
     public boolean isAccept = false;
+    public boolean isReject = false;
 
     public Order(Status status, String message, TechSupportSpecialist to) {  super();
         this.status = status;  this.message = message;
         this.to = to; 
         this.to = to;
         to.viewOrders().add(this);
+        to.getOrders().add(this);
     }
 
     public Status getStatus() {
@@ -24,6 +26,10 @@ public class Order implements Serializable {
     
     public boolean isAccepted() {
     	return isAccept;
+    }
+    
+    public boolean isRejected() {
+    	return isReject;
     }
 
     public String getMessage() {

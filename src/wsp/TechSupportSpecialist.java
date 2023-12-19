@@ -11,22 +11,47 @@ import database.Database;
 
 public class TechSupportSpecialist extends Employee implements Serializable {
 	
-	Vector<Order> orders;
+	private Vector<Order> orders;
 
     public TechSupportSpecialist(String username, String password, String firstName, String lastName) {
         super(username, password, firstName, lastName);
     }
     
-    public Vector<Order> viewOrders() {
+    public Vector<Order> getOrders(){
     	return orders;
     }
     
-    public void acceptOrder(Order o) {
-    	 o.isAccept = true;
+    public void viewOrders() {
+    	int i = 1;
+    	for(Order o : orders) {
+    		System.out.println(i + "-order: "+ o);
+    		i++;
+    	}
     }
     
-    public void rejectOrder(Order o) {
-    	
+    public void acceptOrder() {
+    	this.viewOrders();
+    	int choice = this.validate(getOrders().size());
+    	Order o = getOrders().get(choice);
+    	if(!o.isAccepted() && !o.isRejected()) {
+	    	o.isAccept = true;
+	    	System.out.println("Order has been accepted!");
+    	}
+    	else
+    		System.out.println("ERROR! Order was already rejected!");
+    }
+    
+    public void rejectOrder() {
+    	this.viewOrders();
+    	int choice = this.validate(getOrders().size());
+    	Order o = getOrders().get(choice);
+    	if(!o.isAccepted() && !o.isRejected()) {
+    		o.isReject = true;
+    		System.out.println("Order has been rejected!");
+    	}
+    	else {
+    		System.out.println("ERROR! Order was already accepted");
+    	}
     }
     
     private int validate(int n) {
