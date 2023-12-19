@@ -8,14 +8,12 @@ import enums.*;
 
 public class Order implements Serializable {
     private Status status;
+    public AcceptStatus acceptStatus;
     private String message; 
     private TechSupportSpecialist to;
-    public boolean isAccept = false;
-    public boolean isReject = false;
 
     public Order(Status status, String message, TechSupportSpecialist to) {  super();
         this.status = status;  this.message = message;
-        this.to = to; 
         this.to = to;
         to.getOrders().add(this);
     }
@@ -23,12 +21,8 @@ public class Order implements Serializable {
     public Status getStatus() {
         return status; }
     
-    public boolean isAccepted() {
-    	return isAccept;
-    }
-    
-    public boolean isRejected() {
-    	return isReject;
+    public AcceptStatus getAcceptStatus() {
+    	return acceptStatus;
     }
 
     public String getMessage() {
@@ -49,7 +43,8 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {  return "Order [status=" + status + ", message="
-    + message + ", to=" + to + "order" + (this.isAccepted()? "was not acepted!" : "was accepted")  + "]";
+    + message + ", to=" + to + "order" +
+    		(this.getAcceptStatus() == AcceptStatus.ACCEPTED ? "was not acepted!" : "was accepted")  + "]";
     
     }
 

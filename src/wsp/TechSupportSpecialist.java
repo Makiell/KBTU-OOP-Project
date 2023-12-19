@@ -1,13 +1,13 @@
 package wsp;
 
 import utils.Order;
-
+import utils.StaticMethods;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Scanner;
 import java.util.Vector;
-
 import database.Database;
+import enums.AcceptStatus;
 
 public class TechSupportSpecialist extends Employee implements Serializable {
 	
@@ -22,46 +22,35 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     }
     
     public void viewOrders() {
-    	int i = 1;
-    	for(Order o : orders) {
-    		System.out.println(i + "-order: "+ o);
-    		i++;
-    	}
+    	StaticMethods.printList(this.getOrders());
     }
     
     public void acceptOrder() {
     	this.viewOrders();
-    	int choice = this.validate(getOrders().size());
+    	int choice = StaticMethods.validate(getOrders().size());
     	Order o = getOrders().get(choice);
-    	if(!o.isAccepted() && !o.isRejected()) {
-	    	o.isAccept = true;
+    	if(o.getAcceptStatus() != AcceptStatus.ACCEPTED && o.getAcceptStatus() != AcceptStatus.REJECTED) {
+	    	o.acceptStatus = AcceptStatus.ACCEPTED;
 	    	System.out.println("Order has been accepted!");
     	}
-    	else
+    	else if(o.getAcceptStatus() == AcceptStatus.REJECTED)
     		System.out.println("ERROR! Order was already rejected!");
+    	else if(o.getAcceptStatus() == AcceptStatus.ACCEPTED)
+    		System.out.println("ERROR! Order was already accepted");
     }
     
     public void rejectOrder() {
     	this.viewOrders();
-    	int choice = this.validate(getOrders().size());
+    	int choice = StaticMethods.validate(getOrders().size());
     	Order o = getOrders().get(choice);
-    	if(!o.isAccepted() && !o.isRejected()) {
-    		o.isReject = true;
+    	if(o.getAcceptStatus() != AcceptStatus.ACCEPTED && o.getAcceptStatus() != AcceptStatus.REJECTED) {
+    		o.acceptStatus = AcceptStatus.REJECTED;
     		System.out.println("Order has been rejected!");
     	}
-    	else {
+    	else if(o.getAcceptStatus() == AcceptStatus.REJECTED)
+    		System.out.println("ERROR! Order was already rejected!");
+    	else if(o.getAcceptStatus() == AcceptStatus.ACCEPTED)
     		System.out.println("ERROR! Order was already accepted");
-    	}
-    }
-    
-    private int validate(int n) {
-    	Scanner s = new Scanner(System.in);
-    	int choice = s.nextInt();
-    	while(!(1 <= choice && choice <= n)) {
-    		System.out.println("Please enter number from 1 to n: ");
-    	}
-    	
-    	return choice;
     }
     
     public void viewMenu() {
@@ -74,7 +63,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		}
     		
     		System.out.println("Enter your choice: ");
-    		int choice = this.validate(options.length);
+    		int choice = StaticMethods.validate(options.length);
     		
     		if(choice == 1) {
     			this.viewOrders();
