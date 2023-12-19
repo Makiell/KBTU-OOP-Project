@@ -81,11 +81,11 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		}
     		
     		else if(choice == 2) {
-    			this.acceptOrder(null);
+    			this.acceptOrder();
     		}
     		
     		else if(choice == 3) {
-    			this.rejectOrder(null);
+    			this.rejectOrder();
     		}
     		
     		else if(choice == 4) {

@@ -17,7 +17,6 @@ public class Order implements Serializable {
         this.status = status;  this.message = message;
         this.to = to; 
         this.to = to;
-        to.viewOrders().add(this);
         to.getOrders().add(this);
     }
 
@@ -49,7 +48,6 @@ public class Order implements Serializable {
     }
 
     @Override
-    public String toString() {  return "Order [status=" + status + ", message=" + message + ", to=" + to + "]";
     public String toString() {  return "Order [status=" + status + ", message="
     + message + ", to=" + to + "order" + (this.isAccepted()? "was not acepted!" : "was accepted")  + "]";
     
