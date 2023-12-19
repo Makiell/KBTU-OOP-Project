@@ -10,14 +10,21 @@ public class Order implements Serializable {
     private Status status;
     private String message; 
     private TechSupportSpecialist to;
+    public boolean isAccept = false;
 
     public Order(Status status, String message, TechSupportSpecialist to) {  super();
         this.status = status;  this.message = message;
         this.to = to; 
+        this.to = to;
+        to.viewOrders().add(this);
     }
 
     public Status getStatus() {
         return status; }
+    
+    public boolean isAccepted() {
+    	return isAccept;
+    }
 
     public String getMessage() {
         return message; }
@@ -37,6 +44,9 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {  return "Order [status=" + status + ", message=" + message + ", to=" + to + "]";
+    public String toString() {  return "Order [status=" + status + ", message="
+    + message + ", to=" + to + "order" + (this.isAccepted()? "was not acepted!" : "was accepted")  + "]";
+    
     }
 
 }
