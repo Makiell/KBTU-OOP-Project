@@ -34,6 +34,7 @@ public class Employee extends User implements Serializable {
 
         TechSupportSpecialist specialist = order.getTo();
         specialist.addOrder(order);
+        Database.getInstance().addOrder(order);
         System.out.println("Order sent successfully to " + specialist.getUsername());
     }
 
