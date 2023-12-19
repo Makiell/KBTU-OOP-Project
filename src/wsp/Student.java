@@ -121,7 +121,7 @@ public class Student extends User implements Serializable {
 		
 		System.out.println("Please enter your choice:");
 		
-		int coursechoice = validate(courses.size());
+		int coursechoice = StaticMethods.validate(courses.size());
 		
 		Course course = courses.get(coursechoice - 1);
 
@@ -146,10 +146,10 @@ public class Student extends User implements Serializable {
 		Vector<Course> coursesToShow = databasecourses.stream()
 												      .filter(c -> !courses.contains(c))
 												      .collect(Collectors.toCollection(Vector::new));
+
+        StaticMethods.printList(coursesToShow);
 		
-		printList(coursesToShow);
-		
-		int coursechoice = validate(coursesToShow.size());
+		int coursechoice = StaticMethods.validate(coursesToShow.size());
 		
 		registerToCourse(coursesToShow.get(coursechoice - 1));
 	}
@@ -163,8 +163,8 @@ public class Student extends User implements Serializable {
 
     public void viewTeacherForCourse() {
         System.out.println("All courses:");
-        printList(courses);
-        int coursechoice = validate(courses.size());
+        StaticMethods.printList(courses);
+        int coursechoice = StaticMethods.validate(courses.size());
         Course course = courses.get(coursechoice - 1);
         if (!courses.contains(course)) {
 	        System.out.println("Student not registered for this course");
@@ -190,14 +190,10 @@ public class Student extends User implements Serializable {
 		}
 
 		System.out.println("Courses:");
-		printList(Database.getInstance().getCourses());
+        StaticMethods.printList(Database.getInstance().getCourses());
 	}
 
-	private void printList(List list) {
-		for(int i = 0; i<list.size(); i++) {
-			System.out.println(i+1+ "." + list.get(i));
-		}
-	}
+
 
 	@Override
 	public void viewNews() {
@@ -215,34 +211,26 @@ public class Student extends User implements Serializable {
             }
         }
         for(Teacher t : teachers){
-            printList(teachers);
+            StaticMethods.printList(teachers);
         }
 
         System.out.println("Please select the teacher you want to evaluate:");
-        int teacherchoice = validate(teachers.size());
+        int teacherchoice = StaticMethods.validate(teachers.size());
         Teacher teacher = teachers.get(teacherchoice - 1);
         System.out.println("Your assessment of this teacher:");
-        int rate = validate(10);
+        int rate = StaticMethods.validate(10);
         teacher.setRate(rate);
 	}
 	
 	
-	private int validate(int n) {
-		Scanner s = new Scanner(System.in);
-		int choice = s.nextInt();
-		while (!(1 <= choice && choice <= n)) {
-			System.out.println("Please enter number from 1 to " + n);
-		}
 
-		return choice;
-	}
 	
 	public void organisationMenu() {
 		System.out.println("Please enter your choice:");
 		System.out.println("1 - Join in a organisation");
 		System.out.println("2 - Leave in a organisation");
 		System.out.println("3 - Create in a organisation");
-		int choiceorg = validate(3);
+		int choiceorg = StaticMethods.validate(3);
 		if (choiceorg == 1) {
 			joinOrganisation();
 		} 
@@ -269,7 +257,7 @@ public class Student extends User implements Serializable {
 		
 		if (!organisations.isEmpty()) {
 
-			int orgchoice = validate(organisations.size());
+			int orgchoice = StaticMethods.validate(organisations.size());
 			
 			Organisation organisation = organisations.get(orgchoice - 1);
 
@@ -311,12 +299,9 @@ public class Student extends User implements Serializable {
 					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "Exit" };
 			
 			System.out.println("\nStudent Menu:");
-			for (int i = 0; i < options.length; i++) {
-				System.out.println((i + 1) + ". " + options[i]);
-			}
-			
+            StaticMethods.printList(List.of(options));
 			System.out.print("Enter your choice: ");
-			int choice = this.validate(options.length);
+			int choice = StaticMethods.validate(options.length);
 			
 			if (choice == 1) {
 				viewTranscript();
@@ -339,7 +324,7 @@ public class Student extends User implements Serializable {
 			else if (choice == 7) {
 				organisationMenu();
 			} 
-			else if (choice == 8) {
+			else if (choice == 8 || choice == 0) {
                 Database.getInstance().saveDatabase();
                 break;
 			}

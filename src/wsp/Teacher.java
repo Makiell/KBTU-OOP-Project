@@ -95,12 +95,7 @@ public class Teacher extends Employee implements Serializable {
             System.out.println("No courses");
             return;
         }
-        int i = 1;
-        int nextI = 1;
-        for (Course c : courses) {
-            System.out.println(i + " - " + c);
-            i = ++nextI;
-        }
+        StaticMethods.printList(courses);
         System.out.println("Please enter your choice:");
         System.out.println("Enter 0 for return back");
         int courseChoice = StaticMethods.validate(courses.size());
@@ -145,19 +140,6 @@ public class Teacher extends Employee implements Serializable {
 		else if(choice == 4) {
 			String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
 			this.setLastName(lastName);
-		}
-		else if(choice == 5) {
-			System.out.println("Введите значение:");
-
-			while(true) {
-				if (in.hasNextDouble()) {
-	                double rate = in.nextDouble();
-	                this.rate = rate;
-	                return;
-	            } else {
-	                System.out.println("Enter valid data");
-	            }
-			}
 		}
     }
 
