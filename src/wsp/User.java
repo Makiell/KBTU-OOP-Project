@@ -19,7 +19,6 @@ public abstract class User implements Serializable {
 			this.id = 1;
 		}
 		else {
-			System.out.println(Database.getInstance().getUsers().lastElement());
 			int nextid = Database.getInstance().getUsers().lastElement().id;
 			this.id = ++nextid;
 		}
@@ -37,6 +36,7 @@ public abstract class User implements Serializable {
 	
 	public abstract void viewNews();
 	public abstract void viewMenu();
+	public abstract void changeInfo();
 	
 //	public void logOut() {
 //		
@@ -49,8 +49,26 @@ public abstract class User implements Serializable {
 	public String getPassword() {
 		return password;
 	}
-
 	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
 	@Override
 	public String toString() {
 		return "[id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName

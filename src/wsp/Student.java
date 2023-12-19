@@ -120,7 +120,12 @@ public class Student extends User implements Serializable {
 		
 		System.out.println("Please enter your choice:");
 		
-		int coursechoice = validate(courses.size());
+		System.out.println("Enter 0 to return back");
+		int coursechoice = StaticMethods.validate(courses.size());
+		
+		if(coursechoice == 0) {
+			return;
+		}
 		
 		Course course = courses.get(coursechoice - 1);
 
@@ -146,9 +151,13 @@ public class Student extends User implements Serializable {
 												      .filter(c -> !courses.contains(c))
 												      .collect(Collectors.toCollection(Vector::new));
 		
-		printList(coursesToShow);
+		StaticMethods.printList(coursesToShow);
 		
-		int coursechoice = validate(coursesToShow.size());
+		System.out.println("Enter 0 to return back");
+		int coursechoice = StaticMethods.validate(coursesToShow.size());
+		if(coursechoice == 0) {
+			return;
+		}
 		
 		registerToCourse(coursesToShow.get(coursechoice - 1));
 	}
@@ -177,13 +186,7 @@ public class Student extends User implements Serializable {
 		}
 
 		System.out.println("Courses:");
-		printList(Database.getInstance().getCourses());
-	}
-
-	private void printList(List list) {
-		for(int i = 0; i<list.size(); i++) {
-			System.out.println(i+1+ "." + list.get(i));
-		}
+		StaticMethods.printList(Database.getInstance().getCourses());
 	}
 
 	@Override
@@ -199,24 +202,17 @@ public class Student extends User implements Serializable {
 		}
 	}
 	
-	
-	private int validate(int n) {
-		Scanner s = new Scanner(System.in);
-		int choice = s.nextInt();
-		while (!(1 <= choice && choice <= n)) {
-			System.out.println("Please enter number from 1 to " + n);
-		}
-
-		return choice;
-	}
-	
 	public void organisationMenu() {
 		System.out.println("Please enter your choice:");
 		System.out.println("1 - Join in a organisation");
 		System.out.println("2 - Leave in a organisation");
 		System.out.println("3 - Create in a organisation");
-		int choiceorg = validate(3);
-		if (choiceorg == 1) {
+		System.out.println("Enter 0 to return back");
+		int choiceorg = StaticMethods.validate(3);
+		if(choiceorg == 0) {
+			return;
+		}
+		else if (choiceorg == 1) {
 			joinOrganisation();
 		} 
 		else if (choiceorg == 2) {
@@ -242,7 +238,12 @@ public class Student extends User implements Serializable {
 		
 		if (!organisations.isEmpty()) {
 
-			int orgchoice = validate(organisations.size());
+			System.out.println("Enter 0 to return back");
+			int orgchoice = StaticMethods.validate(organisations.size());
+			
+			if(orgchoice == 0) {
+				return;
+			}
 			
 			Organisation organisation = organisations.get(orgchoice - 1);
 
@@ -275,6 +276,38 @@ public class Student extends User implements Serializable {
 	}
 	
 	public void changeInfo() {
+		System.out.println("What do you want to change?");
+		
+		String[] options = new String[] {
+				"Username", "Password", "First name", "Last name"
+		};
+		
+		StaticMethods.printList(List.of(options));
+		System.out.println("Enter 0 to return back");
+		int choice = StaticMethods.validate(options.length);
+		Scanner in = new Scanner(System.in);
+		
+		if(choice == 0) {
+			return;
+		}
+		else if(choice == 1) {
+			System.out.println("Enter new username");
+			String newUsername = in.nextLine();
+			this.setUsername(newUsername);
+		}
+		else if(choice == 2) {
+			System.out.println("Enter new password");
+			String newPassword = in.nextLine();
+			this.setPassword(newPassword);
+		}
+		else if(choice == 3) {
+			String firstName = StaticMethods.getValidInput("Enter new first name:", "[a-zA-Z]+");
+			this.setFirstName(firstName);
+		}
+		else if(choice == 4) {
+			String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
+			this.setLastName(lastName);
+		}
 		
 	}
 
@@ -289,7 +322,7 @@ public class Student extends User implements Serializable {
 			}
 			
 			System.out.print("Enter your choice: ");
-			int choice = this.validate(options.length);
+			int choice = StaticMethods.validate(options.length);
 			
 			if (choice == 1) {
 				viewTranscript();
@@ -317,7 +350,7 @@ public class Student extends User implements Serializable {
 			else if (choice == 7) {
 				organisationMenu();
 			} 
-			else if (choice == 8) {
+			else if (choice == 8 || choice == 0) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
