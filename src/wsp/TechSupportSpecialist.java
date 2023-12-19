@@ -29,28 +29,26 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
     	Order o = getOrders().get(choice);
-    	if(o.getAcceptStatus() != AcceptStatus.ACCEPTED && o.getAcceptStatus() != AcceptStatus.REJECTED) {
-	    	o.acceptStatus = AcceptStatus.ACCEPTED;
-	    	System.out.println("Order has been accepted!");
-    	}
-    	else if(o.getAcceptStatus() == AcceptStatus.REJECTED)
+    	if(o.getAcceptStatus() == AcceptStatus.REJECTED)
     		System.out.println("ERROR! Order was already rejected!");
     	else if(o.getAcceptStatus() == AcceptStatus.ACCEPTED)
     		System.out.println("ERROR! Order was already accepted");
+    	else
+    		o.acceptStatus = AcceptStatus.ACCEPTED;
+			System.out.println("Order has been accepted!");
     }
     
     public void rejectOrder() {
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
     	Order o = getOrders().get(choice);
-    	if(o.getAcceptStatus() != AcceptStatus.ACCEPTED && o.getAcceptStatus() != AcceptStatus.REJECTED) {
-    		o.acceptStatus = AcceptStatus.REJECTED;
-    		System.out.println("Order has been rejected!");
-    	}
-    	else if(o.getAcceptStatus() == AcceptStatus.REJECTED)
+    	if(o.getAcceptStatus() == AcceptStatus.REJECTED)
     		System.out.println("ERROR! Order was already rejected!");
     	else if(o.getAcceptStatus() == AcceptStatus.ACCEPTED)
     		System.out.println("ERROR! Order was already accepted");
+    	else
+    		o.acceptStatus = AcceptStatus.REJECTED;
+			System.out.println("Order has been rejected!");
     }
     
     public void viewMenu() {
