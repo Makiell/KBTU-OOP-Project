@@ -8,7 +8,6 @@ import enums.*;
 
 public class Order implements Serializable {
     private Status status;
-    public AcceptStatus acceptStatus;
     private String message; 
     private TechSupportSpecialist to;
 
@@ -20,10 +19,6 @@ public class Order implements Serializable {
 
     public Status getStatus() {
         return status; }
-    
-    public AcceptStatus getAcceptStatus() {
-    	return acceptStatus;
-    }
 
     public String getMessage() {
         return message; }
@@ -43,8 +38,7 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {  return "Order [status=" + status + ", message="
-    + message + ", to=" + to + "order" +
-    		(this.getAcceptStatus() == AcceptStatus.ACCEPTED ? "was not acepted!" : "was accepted")  + "]";
+    + message + ", to=" + to;
     
     }
 

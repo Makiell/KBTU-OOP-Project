@@ -4,10 +4,10 @@ import utils.Order;
 import utils.StaticMethods;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Scanner;
+import java.util.List;
 import java.util.Vector;
 import database.Database;
-import enums.AcceptStatus;
+import enums.*;
 
 public class TechSupportSpecialist extends Employee implements Serializable {
 	
@@ -29,12 +29,12 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
     	Order o = getOrders().get(choice);
-    	if(o.getAcceptStatus() == AcceptStatus.REJECTED)
+    	if(o.getStatus() == Status.REJECTED)
     		System.out.println("ERROR! Order was already rejected!");
-    	else if(o.getAcceptStatus() == AcceptStatus.ACCEPTED)
+    	else if(o.getStatus() == Status.ACCEPTED)
     		System.out.println("ERROR! Order was already accepted");
     	else
-    		o.acceptStatus = AcceptStatus.ACCEPTED;
+    		o.setStatus(Status.ACCEPTED);
 			System.out.println("Order has been accepted!");
     }
     
@@ -42,12 +42,12 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
     	Order o = getOrders().get(choice);
-    	if(o.getAcceptStatus() == AcceptStatus.REJECTED)
+    	if(o.getStatus() == Status.REJECTED)
     		System.out.println("ERROR! Order was already rejected!");
-    	else if(o.getAcceptStatus() == AcceptStatus.ACCEPTED)
+    	else if(o.getStatus() == Status.ACCEPTED)
     		System.out.println("ERROR! Order was already accepted");
     	else
-    		o.acceptStatus = AcceptStatus.REJECTED;
+    		o.setStatus(Status.ACCEPTED);
 			System.out.println("Order has been rejected!");
     }
     
@@ -55,10 +55,10 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	while(true) {
     		String[] options = new String[] {"View orders",
     				"Accept order", "Reject order", "Exit" };
+    		
     		System.out.println("/nTech support specialist menu");
-    		for(int i = 0; i < options.length; i++) {
-    			System.out.println(i + 1 + ". " + options[i]);
-    		}
+    		
+    		StaticMethods.printList(List.of(options));
     		
     		System.out.println("Enter your choice: ");
     		int choice = StaticMethods.validate(options.length);
@@ -75,7 +75,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     			this.rejectOrder();
     		}
     		
-    		else if(choice == 4) {
+    		else if(choice == 4 || choice == 0) {
     			try {
     				Database.getInstance().saveDatabase();
     			}
