@@ -18,6 +18,7 @@ public class Request implements Serializable {
         this.message = message;
         this.to = to;
         this.status = Status.NEW;
+        to.addRequest(this);
     }
 
 
@@ -68,7 +69,7 @@ public class Request implements Serializable {
 
     @Override
     public String toString() {
-        return "Request [emergency=" + emergency + ", message=" + message + ", to=" + to + "]";
+        return "Request [emergency=" + emergency + ", status=" + status + ", message=" + message + ", to=" + to + "]";
     }
 
 

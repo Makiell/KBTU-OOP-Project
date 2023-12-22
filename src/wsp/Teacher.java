@@ -1,7 +1,9 @@
 package wsp;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import database.Database;
 import utils.*;
@@ -77,6 +79,8 @@ public class Teacher extends Employee implements Serializable {
             System.out.println("No courses");
             return;
         }
+        
+        System.out.println("Enter the course:");
         for (int i = 0; i<courses.size(); i++) {
     		Course c = courses.get(i);
     		System.out.println((i + 1) + ". " + c.getName());
@@ -91,7 +95,7 @@ public class Teacher extends Employee implements Serializable {
             return;
         }
 
-        Course selectedCourse = courses.get(courseChoice);
+        Course selectedCourse = courses.get(courseChoice-1);
 
         Vector<Student> students = Database.getInstance().getStudents();
 
@@ -108,13 +112,10 @@ public class Teacher extends Employee implements Serializable {
             System.out.println("No courses");
             return;
         }
-        int i = 1;
-        int nextI = 1;
-        for (Course c : courses) {
-            System.out.println(i + " - " + c);
-            i = ++nextI;
-        }
+        
         System.out.println("Please enter your choice:");
+        StaticMethods.printList(courses);
+        
         System.out.println("Enter 0 for return back");
         int courseChoice = StaticMethods.validate(courses.size());
         
@@ -122,7 +123,7 @@ public class Teacher extends Employee implements Serializable {
         	return;
         }
         
-        Course selectedCourse = courses.get(courseChoice);
+        Course selectedCourse = courses.get(courseChoice-1);
         viewMarks(selectedCourse);
     }
 
@@ -182,6 +183,7 @@ public class Teacher extends Employee implements Serializable {
             System.out.println("No lessons for this course");
             return;
         }
+        
         System.out.println("Marks for " + selectedCourse.getName() + ":");
         for (Student student : Database.getInstance().getStudents()) {
             if (student.getCourses().contains(selectedCourse)) {
@@ -210,25 +212,28 @@ public class Teacher extends Employee implements Serializable {
     	if (courseChoice == 0) {
     		return;
     	}
-    	Course selectedCourse = courses.get(courseChoice);
+    	Course selectedCourse = courses.get(courseChoice-1);
     	
     	Vector <Lesson> courseLessons = lessons.get(selectedCourse);
     	if (courseLessons.isEmpty()) {
     		System.out.println("No lessons recorded for the course");
     		return;
     	}
-    	System.out.println("Select a student to input marks:");
     	
-    	Vector <Student> students = Database.getInstance().getStudents();
     	
-    	System.out.println("Students enrolled in " + selectedCourse.getName() + ":");
-    	int i = 1;
-    	for (Student student : students) {
-    		if (student.getCourses().contains(selectedCourse)) {
-    			System.out.println(i + ". " + student.getUsername());
-    			i++;
-    		}
+    	Vector <Student> students = Database.getInstance().getStudents().stream()
+    			.filter(s -> s.getCourses().contains(selectedCourse))
+    			.collect(Collectors.toCollection(Vector::new));
+    			
+    	if(students.isEmpty()) {
+    		System.out.println("No student enrolled in " + selectedCourse.getName());
+    		return;
     	}
+    	
+    	System.out.println("Select a student to input marks:");
+    	System.out.println("Students enrolled in " + selectedCourse.getName() + ":");
+    	
+    	StaticMethods.printList(students);
     	
     	System.out.println("Choose a student or enter 0 to exit");
     	int studentChoice = StaticMethods.validate(students.size());
@@ -264,7 +269,7 @@ public class Teacher extends Employee implements Serializable {
         		else {
         			Mark newMark = new Mark(attestation1, attestation2, finalExam);
         			selectedStudent.getTranscript().put(selectedCourse, newMark);
-        			System.out.println("The marks have been cubmitted succesfully");
+        			System.out.println("The marks have been submitted succesfully");
         			break;
         		}
         	}
@@ -274,13 +279,15 @@ public class Teacher extends Employee implements Serializable {
     public void viewMenu() {
     	
     	String[] options = new String[] { "View courses", "View students", "View marks","Put marks",
-    										"View rate","View one News","Change info", "Exit" };
+    										"View rate","View one News", "Send order", "Send request", "Exit" };
     	
-    	for (int i = 0; i<options.length; i++) {
-    		System.out.println((i + 1) + ". " + options[i]);
-    	}
-    	int choice = StaticMethods.validate(options.length);
+    	
     	while (true) {
+    		System.out.println();
+    		System.out.println("----Teacher Menu----");
+    		StaticMethods.printList(List.of(options));
+        	int choice = StaticMethods.validate(options.length);
+    		
     		if (choice == 1) {
     			viewCourses();
     		}
@@ -300,10 +307,19 @@ public class Teacher extends Employee implements Serializable {
     			viewOneNews();
     		}
     		else if (choice == 7) {
-    			changeInfo();
+    			sendOrder();
     		}
-    		else if (choice == 8 || choice == 0) {
-    			break;
+    		else if (choice == 8) {
+    			sendRequest();
+    		}
+    		else if (choice == 9 || choice == 0) {
+    			try {
+					Database.getInstance().saveDatabase();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
     		}
     	}
     }

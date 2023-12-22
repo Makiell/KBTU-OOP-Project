@@ -11,6 +11,8 @@ import wsp.*;
 import enums.*;
 
 public class Student extends User implements Serializable {
+	
+	private static final long serialVersionUID = 3027955937874520683L;
 	Vector<Course> courses;
 	Integer gpa = null;
 	HashMap<Course, Mark> transcript;
@@ -183,6 +185,30 @@ public class Student extends User implements Serializable {
 	 * teacher.getRole() + ")"); } }
 	 */
 	
+	public void viewTeacherForCourse() {
+		
+		if(courses.isEmpty()) {
+			System.out.println("No courses");
+		}
+		
+		System.out.println("Enter 0 to return back.");
+		System.out.println("Enter the course:");
+		
+		StaticMethods.printList(courses);
+		
+		int choice = StaticMethods.validate(courses.size());
+		
+		if(choice == 0) {
+			return;
+		}
+		
+		Course course = courses.get(choice-1);
+		
+		Vector<Teacher> teachers = course.getTeachers();
+		
+		StaticMethods.printList(teachers);
+	}
+	
 	public void viewCourses() {
 		
 		if(Database.getInstance().getCourses().isEmpty()) {
@@ -333,15 +359,9 @@ public class Student extends User implements Serializable {
 			else if (choice == 3) {
 				getCourseFromDB();
 			}
-
-//         else if (choice == 4) {
-//                System.out.println("Please select course(1-n):");
-//                for(Course c: courses){
-//                    System.out.println(c);
-//                }
-//                int coursechoice = Integer.parseInt(Scanner.nextLine());
-//                viewTeacherForCourse(Database.courses(coursechoice-1));
-//			    }
+			else if (choice == 4) {
+				viewTeacherForCourse();
+			}
 			else if (choice == 5) {
 				viewCourses();
 			} // else if (choice == 6) {

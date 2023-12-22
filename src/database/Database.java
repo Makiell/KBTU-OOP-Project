@@ -152,6 +152,24 @@ public class Database implements Serializable {
 		
 		return teachers;
 	}
+	
+	public Vector<Dean> getDeans() {
+		Vector<Dean> deans = employees.stream()
+				.filter(employee -> employee instanceof Dean)
+				.map(employee -> (Dean) employee)
+				.collect(Collectors.toCollection(Vector::new));
+
+		return deans;
+	}
+	
+	public Vector<TechSupportSpecialist> getTechSupports() {
+		Vector<TechSupportSpecialist> TechSupportSpecialists = employees.stream()
+				.filter(employee -> employee instanceof TechSupportSpecialist)
+				.map(employee -> (TechSupportSpecialist) employee)
+				.collect(Collectors.toCollection(Vector::new));
+
+		return TechSupportSpecialists;
+	}
 
 	public Vector<Organisation> getOrganisations() {
 		return organisations;

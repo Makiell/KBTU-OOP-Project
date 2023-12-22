@@ -11,8 +11,9 @@ public class Order implements Serializable {
     private String message; 
     private TechSupportSpecialist to;
 
-    public Order(Status status, String message, TechSupportSpecialist to) {  super();
-        this.status = status;  this.message = message;
+    public Order(String message, TechSupportSpecialist to) {
+        this.status = Status.NEW;  
+        this.message = message;
         this.to = to;
         to.getOrders().add(this);
     }

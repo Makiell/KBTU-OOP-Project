@@ -34,14 +34,17 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	System.out.println("Choose order:");
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
-    	Order o = getOrders().get(choice);
-    	if(o.getStatus() == Status.REJECTED)
+    	Order o = getOrders().get(choice-1);
+    	if(o.getStatus() == Status.REJECTED) {
     		System.out.println("ERROR! Order was already rejected!");
-    	else if(o.getStatus() == Status.ACCEPTED)
+    	}
+    	else if(o.getStatus() == Status.ACCEPTED) {
     		System.out.println("ERROR! Order was already accepted");
-    	else
+    	}
+    	else {
     		o.setStatus(Status.ACCEPTED);
 			System.out.println("Order has been accepted!");
+    	}
     }
     
     public void rejectOrder() {
@@ -52,22 +55,27 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	System.out.println("Choose order:");
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
-    	Order o = getOrders().get(choice);
-    	if(o.getStatus() == Status.REJECTED)
+    	Order o = getOrders().get(choice-1);
+    	if(o.getStatus() == Status.REJECTED) {
     		System.out.println("ERROR! Order was already rejected!");
-    	else if(o.getStatus() == Status.ACCEPTED)
+    	}
+    	else if(o.getStatus() == Status.ACCEPTED) {
     		System.out.println("ERROR! Order was already accepted");
-    	else
+    	}
+    	else {
     		o.setStatus(Status.ACCEPTED);
 			System.out.println("Order has been rejected!");
+    	}
     }
     
     public void viewMenu() {
+    	String[] options = new String[] {"View orders",
+				"Accept order", "Reject order","View one News", "Exit" };
+    	
     	while(true) {
-    		String[] options = new String[] {"View orders",
-    				"Accept order", "Reject order","View one News", "Exit" };
     		
-    		System.out.println("/nTech support specialist menu");
+    		System.out.println();
+    		System.out.println("Tech support specialist menu");
     		
     		StaticMethods.printList(List.of(options));
     		
