@@ -48,28 +48,6 @@ public abstract class User implements Serializable {
 			System.out.println((i + 1) + ". " + n.getTitle());
 			System.out.println();
 		}
-
-		System.out.println("Enter the number of the news to view or 0 to exit:");
-		int choice = StaticMethods.validate(news.size());
-
-		if (choice > 0) {
-			News selectedNews = news.get(choice);
-			System.out.println("----Selected News----");
-			System.out.println(selectedNews.toString());
-			System.out.println();
-				
-			viewComments(selectedNews);
-				
-			Scanner in = new Scanner(System.in);
-				
-			System.out.println("Do you want to add a comment? (+/-)");
-		    String answer = in.nextLine();
-
-		    if (answer.equals("+")) {
-		       addComment(selectedNews);
-		    }
-		}
-
 	}
 	public void viewOneNews() {
 		Vector <News> news = Database.getInstance().getNews();
