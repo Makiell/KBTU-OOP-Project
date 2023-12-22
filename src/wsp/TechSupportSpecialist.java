@@ -54,7 +54,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     public void viewMenu() {
     	while(true) {
     		String[] options = new String[] {"View orders",
-    				"Accept order", "Reject order", "Exit" };
+    				"Accept order", "Reject order","View one News", "Exit" };
     		
     		System.out.println("/nTech support specialist menu");
     		
@@ -74,8 +74,10 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		else if(choice == 3) {
     			this.rejectOrder();
     		}
-    		
-    		else if(choice == 4 || choice == 0) {
+    		else if (choice == 4) {
+    			viewOneNews();
+    		}
+    		else if(choice == 5 || choice == 0) {
     			try {
     				Database.getInstance().saveDatabase();
     			}
