@@ -137,8 +137,7 @@ public class Database implements Serializable {
 	public Vector<Researcher> getResearchers() {
 		return researchers;
 	}
-<<<<<<< HEAD
-=======
+
 	
 	public Vector<Teacher> getTeachers(){
 		Vector<Teacher> teachers = employees.stream()
@@ -166,7 +165,7 @@ public class Database implements Serializable {
 
 		return TechSupportSpecialists;
 	}
->>>>>>> origin/main
+
 
 	public Vector<Organisation> getOrganisations() {
 		return organisations;
