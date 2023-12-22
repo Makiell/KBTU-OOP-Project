@@ -20,9 +20,7 @@ public class Admin extends User implements Serializable {
 		super(username, password, firstName, lastName);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
+
 	public void addStudent() {
 		Scanner in = new Scanner(System.in);
 		
@@ -321,12 +319,6 @@ public class Admin extends User implements Serializable {
 		
 	}
 
-
-
-	@Override
-	public void viewNews() {
-	}
-
 	@Override
 	public void viewMenu() {
 		
@@ -369,7 +361,7 @@ public class Admin extends User implements Serializable {
 		}
 		
 	}
-	
+
 	
 	public String toString() {
 		return "Admin " + super.toString();

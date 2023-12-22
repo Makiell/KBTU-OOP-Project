@@ -189,18 +189,13 @@ public class Student extends User implements Serializable {
 		StaticMethods.printList(Database.getInstance().getCourses());
 	}
 
-	@Override
-	public void viewNews() {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void rateTeachers(Map<Teacher, Integer> ratings) {
 		for (Map.Entry<Teacher, Integer> entry : ratings.entrySet()) {
 			Teacher teacher = entry.getKey();
 			Integer rating = entry.getValue();
 		}
 	}
+
 	
 	public void organisationMenu() {
 		System.out.println("Please enter your choice:");
