@@ -309,7 +309,7 @@ public class Student extends User implements Serializable {
 	public void viewMenu() {
 		while (true) {
 			String[] options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "Exit" };
+					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation","View one News", "Exit" };
 			
 			System.out.println("\nStudent Menu:");
 			for (int i = 0; i < options.length; i++) {
@@ -344,8 +344,11 @@ public class Student extends User implements Serializable {
 //			    }
 			else if (choice == 7) {
 				organisationMenu();
-			} 
-			else if (choice == 8 || choice == 0) {
+			}
+			else if (choice == 8) {
+				viewOneNews();
+			}
+			else if (choice == 9 || choice == 0) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {

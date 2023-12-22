@@ -107,9 +107,7 @@ public class Teacher extends Employee implements Serializable {
         Course selectedCourse = courses.get(courseChoice - 1);
         viewMarks(selectedCourse);
     }
-    public void viewNews() {
-        super.viewNews();
-    }
+
 	
     
     public void changeInfo() {
