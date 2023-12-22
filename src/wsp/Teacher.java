@@ -74,15 +74,35 @@ public class Teacher extends Employee implements Serializable {
         }
     }
 
-    public void viewStudents(Course course) {
+    public void viewStudents() {
+        if (courses.isEmpty()) {
+            System.out.println("No courses");
+            return;
+        }
+        for (int i = 0; i<courses.size(); i++) {
+    		Course c = courses.get(i);
+    		System.out.println((i + 1) + ". " + c.getName());
+    	}
+    	System.out.println();
+
+        System.out.println("Please enter your choice:");
+        System.out.println("Enter 0 to exit");
+        int courseChoice = StaticMethods.validate(courses.size());
+
+        if (courseChoice == 0) {
+            return;
+        }
+
+        Course selectedCourse = courses.get(courseChoice);
+
         Vector<Student> students = Database.getInstance().getStudents();
-        System.out.println("Students enrolled in " + course.getName() + ":");
+
+        System.out.println("Students enrolled in " + selectedCourse.getName() + ":");
         for (Student student : students) {
-            if (student.getCourses().contains(course)) {
+            if (student.getCourses().contains(selectedCourse)) {
                 System.out.println("- " + student.getUsername());
             }
         }
-
     }
 
     public void viewMarks() {
@@ -104,7 +124,7 @@ public class Teacher extends Employee implements Serializable {
         	return;
         }
         
-        Course selectedCourse = courses.get(courseChoice - 1);
+        Course selectedCourse = courses.get(courseChoice);
         viewMarks(selectedCourse);
     }
 
@@ -247,6 +267,43 @@ public class Teacher extends Employee implements Serializable {
     			Mark newMark = new Mark(attestation1, attestation2, finalExam);
     			selectedStudent.getTranscript().put(selectedCourse, newMark);
     			System.out.println("The marks have been cubmitted succesfully");
+    			break;
+    		}
+    	}
+    }
+    @Override
+    public void viewMenu() {
+    	
+    	String[] options = new String[] { "View courses", "View students", "View marks","Put marks",
+    										"View rate","View one News","Change info", "Exit" };
+    	
+    	for (int i = 0; i<options.length; i++) {
+    		System.out.println((i + 1) + ". " + options[i]);
+    	}
+    	int choice = StaticMethods.validate(options.length);
+    	while (true) {
+    		if (choice == 1) {
+    			viewCourses();
+    		}
+    		else if(choice == 2) {
+    			viewStudents();
+    		}
+    		else if (choice == 3) {
+    			viewMarks();
+    		}
+    		else if (choice == 4) {
+    			putMarks();
+    		}
+    		else if (choice == 5) {
+    			viewRate();
+    		}
+    		else if (choice == 6) {
+    			viewOneNews();
+    		}
+    		else if (choice == 7) {
+    			changeInfo();
+    		}
+    		else if (choice == 8 || choice == 0) {
     			break;
     		}
     	}
