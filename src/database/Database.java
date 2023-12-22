@@ -17,13 +17,20 @@ public class Database implements Serializable {
 	private Vector<User> users = new Vector<User>();
 	
 	private Vector<Student> students = new Vector<Student>();
+	
 	private Vector<Employee> employees = new Vector<Employee>();
+	
 	private Vector<Course> courses = new Vector<Course>();
+	
 	private Vector<News> news = new Vector<News>();
+	
 	private Vector<Request> requests = new Vector<Request>();
+	
 	private Vector<Order> orders = new Vector<Order>();
+	
 //	private Vector<Log> logs;
 	private Vector<Researcher> researchers = new Vector<Researcher>();
+	
 	private Vector<Organisation> organisations = new Vector<Organisation>();;
 	
 	
