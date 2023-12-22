@@ -73,7 +73,7 @@ public class Dean extends Teacher implements Serializable {
 	        
 	        Faculty faculty = optionsFaculty[facultyChoice-1];
 	        
-	        this.faculty = faculty;
+	        this.setFaculty(faculty);
 		}
     }
 

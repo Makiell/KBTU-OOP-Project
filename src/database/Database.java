@@ -2,6 +2,7 @@ package database;
 
 import java.io.*;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import wsp.*;
 import utils.*;
@@ -10,7 +11,7 @@ public class Database implements Serializable {
 	
 	private static Database INSTANCE;
 	
-//	private static final long serialVersionUID = 1454407583937359068L;
+	private static final long serialVersionUID = 4496003716159423929L;
 	
 	private Vector<Admin> admins = new Vector<Admin>();
 	
@@ -141,6 +142,15 @@ public class Database implements Serializable {
 
 	public Vector<Researcher> getResearchers() {
 		return researchers;
+	}
+	
+	public Vector<Teacher> getTeachers(){
+		Vector<Teacher> teachers = employees.stream()
+											.filter(employee -> employee instanceof Teacher)
+											.map(employee -> (Teacher) employee)
+											.collect(Collectors.toCollection(Vector::new));
+		
+		return teachers;
 	}
 
 	public Vector<Organisation> getOrganisations() {

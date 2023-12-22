@@ -10,11 +10,11 @@ import enums.*;
 
 public class Teacher extends Employee implements Serializable {
 
-    TeacherTitle typeTeacher;
-    Vector <Course> courses = new Vector<Course>();
-    Faculty faculty;
-    Map<Course, Vector<Lesson>> lessons = new HashMap <Course, Vector<Lesson>>();
-    double rate = 0.0;
+    private TeacherTitle typeTeacher;
+    private Vector <Course> courses = new Vector<Course>();
+    private Faculty faculty;
+    private Map<Course, Vector<Lesson>> lessons = new HashMap <Course, Vector<Lesson>>();
+    private double rate = 0.0;
 
 
     public Teacher(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,
@@ -22,8 +22,6 @@ public class Teacher extends Employee implements Serializable {
         super(username, password, firstName, lastName);
         this.typeTeacher = typeTeacher;
         this.faculty = faculty;
-
-
     }
 
 
@@ -192,7 +190,7 @@ public class Teacher extends Employee implements Serializable {
             }
         }
     }
- 
+
     public void putMarks() {
     	System.out.println("Select s course to input marks: ");
     	
@@ -310,6 +308,7 @@ public class Teacher extends Employee implements Serializable {
     	}
     }
 
+
     public void viewRate() {
         System.out.println("Teacher's rating: " + rate);
     }
@@ -317,7 +316,7 @@ public class Teacher extends Employee implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Teacher [typeTeacher=" + typeTeacher + ", faculty=" + this.faculty + "] " + super.toString();
+		return "Teacher [typeTeacher=" + typeTeacher + " courses=" + lessons + ", faculty=" + this.faculty + "] " + super.toString();
 	}
 
     

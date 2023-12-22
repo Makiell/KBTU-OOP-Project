@@ -37,15 +37,14 @@ public abstract class User implements Serializable {
 		this.viewMenu();
 	}
 	
-	
 	public void viewNews() {
 		Vector <News> news = Database.getInstance().getNews();
 		System.out.println("----NEWS----");
 		
 		for (int i = 0; i < news.size(); i++) {
 			News n = news.get(i);
-			System.out.println((i + 1) + ". " + n.getTopic());
-			System.out.println((i + 1) + ". " + n.getTitle());
+			System.out.println((i + 1) + ". " + "Topic: " + n.getTopic());
+			System.out.println("   "+n.getTitle());
 			System.out.println();
 		}
 	}
@@ -112,7 +111,6 @@ public abstract class User implements Serializable {
 		
 	}
 	
-	
 	public abstract void viewMenu();
 	public abstract void changeInfo();
 	
@@ -120,9 +118,21 @@ public abstract class User implements Serializable {
 //		
 //	}
 	
+	
+	
 	public String getUsername() {
 		return username;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
 
 	public String getPassword() {
 		return password;

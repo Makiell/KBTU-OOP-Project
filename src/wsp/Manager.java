@@ -44,10 +44,48 @@ public class Manager extends Employee {
 	}
 
 	public void createStatisticReport() {
+		
+//		Vector<Student> students = Database.getInstance().getStudents();
+		
+		
 
 	}
 
 	public void addCourse() {
+		
+		Scanner in = new Scanner(System.in);
+		
+		System.out.println("Enter 0 to return back.");
+		System.out.println("Enter the number of credits of the course: ");
+		
+		int input = StaticMethods.validate(10);
+		
+		if(input == 0) {
+			return;
+		}
+		
+		System.out.println("Enter name of course:");
+		String name = in.nextLine();
+		
+		System.out.println("Choose for which faculty is this course:");
+		Faculty[] options = Faculty.values();
+		StaticMethods.printList(List.of(options));
+		int facultyChoice = StaticMethods.validate(1, options.length);
+		Faculty faculty = options[facultyChoice-1];
+		
+		System.out.println("Choose type of this course for " + faculty + ":");
+		TypeCourse[] optionsType = TypeCourse.values();
+		StaticMethods.printList(List.of(optionsType));
+		int typeCourse = StaticMethods.validate(1, optionsType.length);
+		TypeCourse type = optionsType[typeCourse-1];
+		
+		Course newCourse = new Course(input, name, type, faculty);
+		
+		Database.getInstance().addCourse(newCourse);
+		
+		System.out.println("Course added " + newCourse);
+		
+		
 
 	}
 	
@@ -100,22 +138,26 @@ public class Manager extends Employee {
     }
 
 	public void createNews() {
+		
 		Scanner s = new Scanner(System.in);
 		System.out.println("News topic:");
 		String topic = s.nextLine();
+		
 		System.out.println("News title:");
 		String title = s.nextLine();
+		
 		System.out.println("News text:");
 		String text = s.nextLine();
-		Database.getInstance().addNews(new News(topic, title, text));
+		
+		News newNews = new News(topic, title, text);
+		
+		Database.getInstance().addNews(newNews);
 	}
 
 	public void viewRequests() {
 		Vector<Request> dbrequests = Database.getInstance().getRequests();
 		System.out.println("List of Requests:");
-		for (Request r : dbrequests) {
-			System.out.println(r);
-		}
+		StaticMethods.printList(dbrequests);
 	}
 
 	public void editNews() {
@@ -140,19 +182,19 @@ public class Manager extends Employee {
 		int editchoice = StaticMethods.validate(3);
 
 		if (editchoice == 1) {
-			s.nextLine();
+			System.out.println("Enter new topic:");
 			String topic = s.nextLine();
 			news.setTopic(topic);
 			System.out.println("Update news:" + news.toString());
 		} 
 		else if (editchoice == 2) {
-			s.nextLine();
+			System.out.println("Enter new title:");
 			String title = s.nextLine();
 			news.setTitle(title);
 			System.out.println("Update news:" + news.toString());
 		} 
 		else if (editchoice == 3) {
-			s.nextLine();
+			System.out.println("Enter new text:");
 			String text = s.nextLine();
 			news.setText(text);
 			System.out.println("Update news:" + news.toString());
@@ -165,30 +207,120 @@ public class Manager extends Employee {
 	}
 
 	public void assignCourseForTeacher() {
+		System.out.println("Enter 0 to return back.");
+		System.out.println("Which course you want to assign:");
+		
+		Vector<Course> courses = Database.getInstance().getCourses();
+		
+		StaticMethods.printList(courses);
+		
+		int courseChoice = StaticMethods.validate(courses.size());
+		
+		if(courseChoice == 0) {
+			return;
+		}
+		
+		Course course = courses.get(courseChoice-1);
+		
+		System.out.println("Which teacher would you like to assign the " + course.getName() + " course to?");
+		
+		Vector<Teacher> teachers = Database.getInstance().getTeachers();
+		
+		StaticMethods.printList(teachers);
+		
+		int teacherChoice = StaticMethods.validate(1, teachers.size());
+		
+		Teacher teacher = teachers.get(teacherChoice-1);
+		
+		teacher.getCourses().add(course);
+		
+		course.addTeacher(teacher);
+		
+		teacher.getLessons().put(course, new Vector<Lesson>());
+		
+		System.out.println(course.getName() + " assigned to " + teacher.getFirstName() + " " + teacher.getLastName());
+	}
+	
+	public void addLesson() {
+		System.out.println("Enter 0 to return back.");
+		System.out.println("To which teacher would you like to add the lesson?");
+		
+		Vector<Teacher> teachers = Database.getInstance().getTeachers();
+		
+		StaticMethods.printList(teachers);
+		
+		int teacherChoice = StaticMethods.validate(teachers.size());
+		
+		if(teacherChoice == 0) {
+			return;
+		}
+		
+		Teacher teacher = teachers.get(teacherChoice-1);
+		
+		System.out.println("To which course of " + teacher.getFirstName() + " " + teacher.getLastName() + " do you want to add lesson?");
+		
+		Vector<Course> courses = teacher.getCourses();
+		
+		StaticMethods.printList(courses);
+		
+		int courseChoice = StaticMethods.validate(1, courses.size());
+		
+		Course course = courses.get(courseChoice-1);
+		
+		System.out.println("Enter the type of lesson:");
+		
+		TypeLesson[] types = TypeLesson.values();
+		
+		StaticMethods.printList(List.of(types));
+		
+		int typeChoice = StaticMethods.validate(1, types.length);
+		
+		TypeLesson typeLesson = types[typeChoice-1];
+		
+		System.out.println("Enter the day:");
+		
+		Day[] days = Day.values();
+		
+		StaticMethods.printList(List.of(days));
+		
+		int dayChoice = StaticMethods.validate(1, days.length);
+		
+		Day day = days[dayChoice-1];
+		
+		System.out.println("Enter the lesson start time:");
+		
+		int time = StaticMethods.validate(8, 18);
+		
+		System.out.println("Enter the room");
+		
+		int room = StaticMethods.validate(100, 700);
+		
+		Vector<Lesson> lessons = teacher.getLessons().get(course);
+		
+		Lesson newLesson = new Lesson(typeLesson, new LessonTime(day, time), room);
+		
+		lessons.add(newLesson);
+		
+		teacher.getLessons().put(course, lessons);
+		
+		System.out.println("Added " + newLesson);
+		
 	}
 
 	public void viewStudents() {
-		for(Student s : Database.getInstance().getStudents()) {
-			System.out.println(s);
-		}
+		StaticMethods.printList(Database.getInstance().getStudents());
 	}
 
 	public void viewTeachers() {
-		Vector<Employee> employees = Database.getInstance().getEmployees();
-		Vector<Teacher> teachers = employees.stream()
-        		.filter(employee -> employee instanceof Teacher)
-        		.map(employee -> (Teacher) employee)
-        		.collect(Collectors.toCollection(Vector::new));
+		Vector<Teacher> teachers = Database.getInstance().getTeachers();
 		
-		for(Teacher t : teachers) {
-			System.out.println(t);
-		}
+		StaticMethods.printList(teachers);
 	}
 
 	public void viewMenu() {
 		while (true) {
-			String[] options = new String[] { "Create a statistical report", "Add course", "Create news",
-					"View Requests", "Edit news", "Assign Course For Teacher", "view Students", "view Teachers",
+			String[] options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
+					"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers",
 					"Exit" };
 			
 			System.out.println("\nManager Menu:");
@@ -202,26 +334,29 @@ public class Manager extends Employee {
 			}
 			else if (choice == 2) {
 				addCourse();
-			} 
+			}
 			else if (choice == 3) {
-				createNews();
+				addLesson();
 			}
 			else if (choice == 4) {
+				createNews();
+			}
+			else if (choice == 5) {
 				viewRequests();
 			} 
-			else if (choice == 5) {
+			else if (choice == 6) {
 				editNews();
 			} 
-			else if (choice == 6) {
+			else if (choice == 7) {
 				assignCourseForTeacher();
 			} 
-			else if (choice == 7) {
+			else if (choice == 8) {
 				viewStudents();
 			} 
-			else if (choice == 8) {
+			else if (choice == 9) {
 				viewTeachers();
 			} 
-			else if (choice == 9 || choice == 0) {
+			else if (choice == 10 || choice == 0) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {

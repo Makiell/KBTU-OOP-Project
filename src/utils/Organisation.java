@@ -18,13 +18,12 @@ public class Organisation implements Serializable {
 		this.name = name;
 		this.head = head;
 		this.members = new Vector<Student>();
-		this.members.add(head);
 	}
 
 
 	@Override
 	public String toString() {
-		return "Organisation [name=" + name + ", head=" + head.getUsername() + ", members=" + members + "]";
+		return "Organisation [name=" + name + ", head=" + head.getFirstName()  + ", members=" + members.size() + "]";
 	}
 
 
