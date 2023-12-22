@@ -211,6 +211,9 @@ public class Student extends User implements Serializable {
 		if(choiceorg == 0) {
 			return;
 		}
+		if(choiceorg == 2 && this.organisation == null) {
+			System.out.println("You are not in organisation");
+		}
 		else if (choiceorg == 1) {
 			joinOrganisation();
 		} 
@@ -229,10 +232,7 @@ public class Student extends User implements Serializable {
 		Vector<Organisation> organisations = Database.getInstance().getOrganisations();
 		
 		organisations.remove(this.organisation);
-		for (Organisation o : organisations) {
-			System.out.println(i + " - " + o);
-			i = ++nextI;
-		}
+		StaticMethods.printList(organisations);
 		
 		
 		if (!organisations.isEmpty()) {
@@ -253,6 +253,8 @@ public class Student extends User implements Serializable {
 			this.organisation = organisation;
 			organisation.addMember(this);
 			
+			System.out.println("You joined " + organisation.getName());
+			
 		} 
 		else {
 			System.out.println("At the moment we dont have any organisations");
@@ -271,7 +273,6 @@ public class Student extends User implements Serializable {
 		Organisation organisation = new Organisation(name, this);
 		this.organisation = organisation;
 		Database.getInstance().addOrganisation(organisation);
-		s.close();
 	}
 	
 	public void changeInfo() {

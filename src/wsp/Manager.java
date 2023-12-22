@@ -149,7 +149,9 @@ public class Manager extends Employee {
 		System.out.println("News text:");
 		String text = s.nextLine();
 		
-		Database.getInstance().addNews(new News(topic, title, text));
+		News newNews = new News(topic, title, text);
+		
+		Database.getInstance().addNews(newNews);
 	}
 
 	public void viewRequests() {
@@ -180,21 +182,18 @@ public class Manager extends Employee {
 		int editchoice = StaticMethods.validate(3);
 
 		if (editchoice == 1) {
-			s.nextLine();
 			System.out.println("Enter new topic:");
 			String topic = s.nextLine();
 			news.setTopic(topic);
 			System.out.println("Update news:" + news.toString());
 		} 
 		else if (editchoice == 2) {
-			s.nextLine();
 			System.out.println("Enter new title:");
 			String title = s.nextLine();
 			news.setTitle(title);
 			System.out.println("Update news:" + news.toString());
 		} 
 		else if (editchoice == 3) {
-			s.nextLine();
 			System.out.println("Enter new text:");
 			String text = s.nextLine();
 			news.setText(text);

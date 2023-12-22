@@ -43,8 +43,8 @@ public abstract class User implements Serializable {
 		
 		for (int i = 0; i < news.size(); i++) {
 			News n = news.get(i);
-			System.out.println((i + 1) + ". " + n.getTopic());
-			System.out.println((i + 1) + ". " + n.getTitle());
+			System.out.println((i + 1) + ". " + "Topic: " + n.getTopic());
+			System.out.println("   "+n.getTitle());
 			System.out.println();
 		}
 	}

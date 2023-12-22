@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class Mark implements Serializable {
 	
-	private double attestation1;
-	private double attestation2;
-	private double finalExam;
+	private Double attestation1;
+	private Double attestation2;
+	private Double finalExam;
 	
 	
 	
 	
 	public Mark() {
-		this.attestation1 = (Double) null;
-		this.attestation2 = (Double) null;
-		this.finalExam = (Double) null;
+		this.attestation1 = null;
+		this.attestation2 = null;
+		this.finalExam = null;
 	}
 
 
@@ -59,6 +59,7 @@ public class Mark implements Serializable {
 		if(sum<50) {
 			return 0;
 		}
+		return 0;
 	}
 
 

@@ -307,10 +307,7 @@ public class Admin extends User implements Serializable {
 	}
 	
 	private void seeAllUsers() {
-		for(User u : Database.getInstance().getUsers()) {
-			System.out.println(u);
-		}
-		
+		StaticMethods.printList(Database.getInstance().getUsers());
 	}
 	
 	public void updateUser() {

@@ -15,6 +15,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
 
     public TechSupportSpecialist(String username, String password, String firstName, String lastName) {
         super(username, password, firstName, lastName);
+        this.orders = new Vector<Order>();
     }
     
     public Vector<Order> getOrders(){
@@ -26,6 +27,11 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     }
     
     public void acceptOrder() {
+    	if(orders.isEmpty()) {
+    		System.out.println("No orders");
+    		return;
+    	}
+    	System.out.println("Choose order:");
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
     	Order o = getOrders().get(choice);
@@ -39,6 +45,11 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     }
     
     public void rejectOrder() {
+    	if(orders.isEmpty()) {
+    		System.out.println("No orders");
+    		return;
+    	}
+    	System.out.println("Choose order:");
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
     	Order o = getOrders().get(choice);
@@ -90,4 +101,9 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     public String toString() {
     	return "Tech Support Specialist " + super.toString();
     }
+
+	public void addOrder(Order order) {
+		this.orders.add(order);
+		
+	}
 }

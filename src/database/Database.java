@@ -11,7 +11,7 @@ public class Database implements Serializable {
 	
 	private static Database INSTANCE;
 	
-//	private static final long serialVersionUID = 1454407583937359068L;
+	private static final long serialVersionUID = 4496003716159423929L;
 	
 	private Vector<Admin> admins = new Vector<Admin>();
 	

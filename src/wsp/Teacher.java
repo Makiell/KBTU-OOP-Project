@@ -180,7 +180,7 @@ public class Teacher extends Employee implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Teacher [typeTeacher=" + typeTeacher + ", faculty=" + this.faculty + "] " + super.toString();
+		return "Teacher [typeTeacher=" + typeTeacher + " courses=" + lessons + ", faculty=" + this.faculty + "] " + super.toString();
 	}
 
     
