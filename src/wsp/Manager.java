@@ -1,5 +1,6 @@
 package wsp;
 
+import database.Log;
 import enums.*;
 import utils.*;
 import database.Database;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Manager extends Employee {
+public class Manager extends Employee{
 	private TypeManager typeManager;
 
 	public Manager(String username, String password, String firstName, String lastName, TypeManager typeManager) {
@@ -149,13 +150,16 @@ public class Manager extends Employee {
 		System.out.println("News text:");
 		String text = s.nextLine();
 		
-		Database.getInstance().addNews(new News(topic, title, text));
+		News newNews = new News(topic, title, text);
+		
+		Database.getInstance().addNews(newNews);
 	}
 
 	public void viewRequests() {
 		Vector<Request> dbrequests = Database.getInstance().getRequests();
 		System.out.println("List of Requests:");
 		StaticMethods.printList(dbrequests);
+        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " viewed all requests"));
 	}
 
 	public void editNews() {
@@ -180,25 +184,25 @@ public class Manager extends Employee {
 		int editchoice = StaticMethods.validate(3);
 
 		if (editchoice == 1) {
-			s.nextLine();
 			System.out.println("Enter new topic:");
 			String topic = s.nextLine();
 			news.setTopic(topic);
 			System.out.println("Update news:" + news.toString());
+            Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " updated the news topic " + news.getTitle()));
 		} 
 		else if (editchoice == 2) {
-			s.nextLine();
 			System.out.println("Enter new title:");
 			String title = s.nextLine();
 			news.setTitle(title);
 			System.out.println("Update news:" + news.toString());
+            Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " updated the news title " + news.getTitle()));
 		} 
 		else if (editchoice == 3) {
-			s.nextLine();
 			System.out.println("Enter new text:");
 			String text = s.nextLine();
 			news.setText(text);
 			System.out.println("Update news:" + news.toString());
+            Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " updated the news text " + news.getTitle()));
 		} 
 		else if (editchoice == 0) {
 			return;
@@ -225,7 +229,13 @@ public class Manager extends Employee {
 		
 		System.out.println("Which teacher would you like to assign the " + course.getName() + " course to?");
 		
-		Vector<Teacher> teachers = Database.getInstance().getTeachers();
+		Vector<Employee> dbemployees = Database.getInstance().getEmployees();
+        Vector<Teacher> teachers = new Vector<>();
+        for(Employee e: dbemployees){
+            if(e instanceof Teacher){
+                teachers.add((Teacher) e);
+            }
+        }
 		
 		StaticMethods.printList(teachers);
 		
@@ -240,15 +250,23 @@ public class Manager extends Employee {
 		teacher.getLessons().put(course, new Vector<Lesson>());
 		
 		System.out.println(course.getName() + " assigned to " + teacher.getFirstName() + " " + teacher.getLastName());
+        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " Assigned course " + course.getName() + " with teacher " + teacher.getFirstName() + " " + teacher.getLastName()));
 	}
 	
 	public void addLesson() {
 		System.out.println("Enter 0 to return back.");
 		System.out.println("To which teacher would you like to add the lesson?");
-		
-		Vector<Teacher> teachers = Database.getInstance().getTeachers();
-		
-		StaticMethods.printList(teachers);
+
+        Vector<Employee> dbemployees = Database.getInstance().getEmployees();
+        Vector<Teacher> teachers = new Vector<>();
+        for(Employee e: dbemployees){
+            if(e instanceof Teacher){
+                teachers.add((Teacher) e);
+            }
+        }
+
+
+        StaticMethods.printList(teachers);
 		
 		int teacherChoice = StaticMethods.validate(teachers.size());
 		
@@ -305,17 +323,27 @@ public class Manager extends Employee {
 		teacher.getLessons().put(course, lessons);
 		
 		System.out.println("Added " + newLesson);
+        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " added Lesson " + newLesson));
 		
 	}
 
 	public void viewStudents() {
 		StaticMethods.printList(Database.getInstance().getStudents());
+        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " viewed all Students"));
 	}
 
 	public void viewTeachers() {
-		Vector<Teacher> teachers = Database.getInstance().getTeachers();
-		
-		StaticMethods.printList(teachers);
+        Vector<Employee> dbemployees = Database.getInstance().getEmployees();
+        Vector<Teacher> teachers = new Vector<>();
+        for(Employee e: dbemployees){
+            if(e instanceof Teacher){
+                teachers.add((Teacher) e);
+            }
+        }
+
+
+        StaticMethods.printList(teachers);
+        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " viewed all Teachers"));
 	}
 
 	public void viewMenu() {

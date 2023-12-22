@@ -1,6 +1,7 @@
 package database;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Vector;
 
 import wsp.*;
@@ -9,8 +10,9 @@ import utils.*;
 public class Database implements Serializable {
 	
 	private static Database INSTANCE;
+//    private static final long serialVersionUID = 5909273364633485948L;
 	
-//	private static final long serialVersionUID = 1454407583937359068L;
+	private static final long serialVersionUID = 4496003716159423929L;
 	
 	private Vector<Admin> admins = new Vector<Admin>();
 	
@@ -22,7 +24,7 @@ public class Database implements Serializable {
 	private Vector<News> news = new Vector<News>();
 	private Vector<Request> requests = new Vector<Request>();
 	private Vector<Order> orders = new Vector<Order>();
-//	private Vector<Log> logs;
+	private HashMap<User, Vector<Log>> userLogs;
 	private Vector<Researcher> researchers = new Vector<Researcher>();
 	private Vector<Organisation> organisations = new Vector<Organisation>();;
 	
@@ -135,6 +137,36 @@ public class Database implements Serializable {
 	public Vector<Researcher> getResearchers() {
 		return researchers;
 	}
+<<<<<<< HEAD
+=======
+	
+	public Vector<Teacher> getTeachers(){
+		Vector<Teacher> teachers = employees.stream()
+											.filter(employee -> employee instanceof Teacher)
+											.map(employee -> (Teacher) employee)
+											.collect(Collectors.toCollection(Vector::new));
+		
+		return teachers;
+	}
+	
+	public Vector<Dean> getDeans() {
+		Vector<Dean> deans = employees.stream()
+				.filter(employee -> employee instanceof Dean)
+				.map(employee -> (Dean) employee)
+				.collect(Collectors.toCollection(Vector::new));
+
+		return deans;
+	}
+	
+	public Vector<TechSupportSpecialist> getTechSupports() {
+		Vector<TechSupportSpecialist> TechSupportSpecialists = employees.stream()
+				.filter(employee -> employee instanceof TechSupportSpecialist)
+				.map(employee -> (TechSupportSpecialist) employee)
+				.collect(Collectors.toCollection(Vector::new));
+
+		return TechSupportSpecialists;
+	}
+>>>>>>> origin/main
 
 	public Vector<Organisation> getOrganisations() {
 		return organisations;
@@ -186,4 +218,12 @@ public class Database implements Serializable {
 		this.admins.add(a);
 		addUser(a);
 	}
+    public void addLog(User u, Log l) {
+        Vector<Log> logs = this.userLogs.get(u);
+        if (logs == null) {
+            logs = new Vector<>();
+        }
+        logs.add(l);
+        this.userLogs.put(u, logs);
+    }
 }
