@@ -353,7 +353,7 @@ public class Admin extends User implements Serializable {
 			else if (choice == 6) {
 				viewOneNews();
 			}
-			else if(choice == 67) {
+			else if(choice == 7) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
