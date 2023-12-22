@@ -23,6 +23,17 @@ public class StaticMethods {
 		return choice;
 	}
 	
+	public static int validate(int a, int n) {
+		Scanner s = new Scanner(System.in);
+		int choice = s.nextInt();
+		while (!(a <= choice && choice <= n)) {
+			System.out.println("Please enter number from" + a + " to " + n);
+			choice = s.nextInt();
+		}
+
+		return choice;
+	}
+	
 	public static String getValidInput(String promt, String regex) {
 		Scanner in = new Scanner(System.in);
 		System.out.println(promt);

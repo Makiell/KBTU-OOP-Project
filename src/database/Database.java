@@ -8,65 +8,64 @@ import utils.*;
 
 public class Database implements Serializable {
 	
-	private static final Database INSTANCE = loadDatabase();
+	private static Database INSTANCE;
 	
 //	private static final long serialVersionUID = 1454407583937359068L;
 	
-	private Vector<User> users;
+	private Vector<Admin> admins = new Vector<Admin>();
 	
-	private Vector<Student> students;
-	private Vector<Employee> employees;
-	private Vector<Course> courses;
-	private Vector<News> news;
-	private Vector<Request> requests;
-	private Vector<Order> orders;
+	private Vector<User> users = new Vector<User>();
+	
+	private Vector<Student> students = new Vector<Student>();
+	private Vector<Employee> employees = new Vector<Employee>();
+	private Vector<Course> courses = new Vector<Course>();
+	private Vector<News> news = new Vector<News>();
+	private Vector<Request> requests = new Vector<Request>();
+	private Vector<Order> orders = new Vector<Order>();
 //	private Vector<Log> logs;
-	private Vector<Researcher> researchers;
-	private Vector<Organisation> organisations;
+	private Vector<Researcher> researchers = new Vector<Researcher>();
+	private Vector<Organisation> organisations = new Vector<Organisation>();;
+	
+	
+	static{
+		if(new File("database.ser").exists()) {
+			try {
+				INSTANCE = loadDatabase();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			INSTANCE = new Database();
+			INSTANCE.initializeDefaultAdmin();
+		}
+	}
 	
 	
 	private Database() {
-		this.users = new Vector<User>();
-		this.students = new Vector<Student>();
-		this.employees = new Vector<Employee>();
-		this.courses = new Vector<Course>();
-		this.news = new Vector<News>();
-		this.requests = new Vector<Request>();
-		this.orders = new Vector<Order>();
-		this.researchers = new Vector<Researcher>();
-		this.organisations = new Vector<Organisation>();
 	}
 	
 	public static Database getInstance() {
 		return INSTANCE;
 	}
 	
-	private static Database loadDatabase() {
-		Database db = null;
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("database.ser"))){
-			db = (Database) ois.readObject();
-		}
-		catch(FileNotFoundException e){
-			db = new Database();
-		}
-		catch (IOException | ClassNotFoundException e) {
-			System.out.println(2);
-			e.printStackTrace();
-		}
-		return (db != null) ? db : new Database();
+	private static Database loadDatabase() throws IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("database.ser"));
+		return (Database) ois.readObject();
 	}
 	
-	public void saveDatabase() {
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.ser"))){
-			oos.writeObject(INSTANCE);
-		}
-		catch(IOException e) {
-			System.out.println(3);
-			e.printStackTrace();
-		}
+	public void saveDatabase() throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.ser"));
+		oos.writeObject(INSTANCE);
+		oos.close();
 	}
 	
-
+	private void initializeDefaultAdmin() {
+		Admin defaultAdmin = new Admin("admin", "admin", "AdminName", "AdminSurname");
+		addAdmin(defaultAdmin);
+	}
+	
     public void login() {
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -81,7 +80,7 @@ public class Database implements Serializable {
 				
 				System.out.println("Введите пароль: ");
 				String password = reader.readLine();
-				System.out.println(username + " " + password);
+//				System.out.println(username + " " + password);
 				
 				for(User u : this.users) {
 					if(u.getUsername().equals(username) && u.getPassword().equals(password)) {
@@ -140,6 +139,10 @@ public class Database implements Serializable {
 	public Vector<Organisation> getOrganisations() {
 		return organisations;
 	}
+	
+	public Vector<Admin> getAdmins(){
+		return admins;
+	}
 
 	public void addUser(User u) {
 		this.users.add(u);
@@ -147,6 +150,7 @@ public class Database implements Serializable {
 	
 	public void addStudent(Student s) {
 		this.students.add(s);
+		addUser(s);
 	}
 	
 	public void addEmployee(Employee e) {
@@ -178,7 +182,8 @@ public class Database implements Serializable {
 		this.organisations.add(or);
 	}
 
-
-    public void addAdmin(Admin s) {
-    }
+	public void addAdmin(Admin a) {
+		this.admins.add(a);
+		addUser(a);
+	}
 }

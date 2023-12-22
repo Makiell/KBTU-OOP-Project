@@ -13,7 +13,8 @@ public class Order implements Serializable {
 
     public Order(Status status, String message, TechSupportSpecialist to) {  super();
         this.status = status;  this.message = message;
-        this.to = to; 
+        this.to = to;
+        to.getOrders().add(this);
     }
 
     public Status getStatus() {
@@ -36,7 +37,9 @@ public class Order implements Serializable {
     }
 
     @Override
-    public String toString() {  return "Order [status=" + status + ", message=" + message + ", to=" + to + "]";
+    public String toString() {  return "Order [status=" + status + ", message="
+    + message + ", to=" + to;
+    
     }
 
 }

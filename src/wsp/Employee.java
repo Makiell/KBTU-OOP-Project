@@ -39,16 +39,11 @@ public class Employee extends User implements Serializable {
     }
 
 	@Override
-	public void viewNews() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void viewMenu() {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 	public String toString() {
 		return "Employee " + super.toString();
