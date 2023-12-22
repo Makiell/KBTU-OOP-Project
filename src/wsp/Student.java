@@ -199,6 +199,7 @@ public class Student extends User implements Serializable {
 			Integer rating = entry.getValue();
 		}
 	}
+
 	
 	public void organisationMenu() {
 		System.out.println("Please enter your choice:");
