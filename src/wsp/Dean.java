@@ -106,7 +106,7 @@ public class Dean extends Teacher implements Serializable {
     }
 
     public void viewMenu() {
-        String[] options = new String[]{"Sign Requests", "Exit"};
+        String[] options = new String[]{"Sign Requests","View one News", "Exit"};
 
         while (true) {
             System.out.println();
@@ -119,6 +119,9 @@ public class Dean extends Teacher implements Serializable {
                 signRequests();
             } 
             else if (choice == 2) {
+            	viewOneNews();
+            }
+            else if (choice == 3) {
             	try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {

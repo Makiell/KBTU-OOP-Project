@@ -72,15 +72,35 @@ public class Teacher extends Employee implements Serializable {
         }
     }
 
-    public void viewStudents(Course course) {
+    public void viewStudents() {
+        if (courses.isEmpty()) {
+            System.out.println("No courses");
+            return;
+        }
+        for (int i = 0; i<courses.size(); i++) {
+    		Course c = courses.get(i);
+    		System.out.println((i + 1) + ". " + c.getName());
+    	}
+    	System.out.println();
+
+        System.out.println("Please enter your choice:");
+        System.out.println("Enter 0 to exit");
+        int courseChoice = StaticMethods.validate(courses.size());
+
+        if (courseChoice == 0) {
+            return;
+        }
+
+        Course selectedCourse = courses.get(courseChoice);
+
         Vector<Student> students = Database.getInstance().getStudents();
-        System.out.println("Students enrolled in " + course.getName() + ":");
+
+        System.out.println("Students enrolled in " + selectedCourse.getName() + ":");
         for (Student student : students) {
-            if (student.getCourses().contains(course)) {
+            if (student.getCourses().contains(selectedCourse)) {
                 System.out.println("- " + student.getUsername());
             }
         }
-
     }
 
     public void viewMarks() {
@@ -102,12 +122,10 @@ public class Teacher extends Employee implements Serializable {
         	return;
         }
         
-        Course selectedCourse = courses.get(courseChoice - 1);
+        Course selectedCourse = courses.get(courseChoice);
         viewMarks(selectedCourse);
     }
-    public void viewNews() {
-        super.viewNews();
-    }
+
 	
     
     public void changeInfo() {
@@ -172,6 +190,124 @@ public class Teacher extends Employee implements Serializable {
             }
         }
     }
+
+    public void putMarks() {
+    	System.out.println("Select s course to input marks: ");
+    	
+    	if(courses.isEmpty()) {
+    		System.out.println("You are not assigned to any courses");
+    		return;
+    	}
+
+    	for (int i = 0; i<courses.size(); i++) {
+    		Course c = courses.get(i);
+    		System.out.println((i + 1) + ". " + c.getName());
+    	}
+    	System.out.println();
+    	
+    	int courseChoice = StaticMethods.validate(courses.size());
+    	
+    	if (courseChoice == 0) {
+    		return;
+    	}
+    	Course selectedCourse = courses.get(courseChoice);
+    	
+    	Vector <Lesson> courseLessons = lessons.get(selectedCourse);
+    	if (courseLessons.isEmpty()) {
+    		System.out.println("No lessons recorded for the course");
+    		return;
+    	}
+    	System.out.println("Select a student to input marks:");
+    	
+    	Vector <Student> students = Database.getInstance().getStudents();
+    	
+    	System.out.println("Students enrolled in " + selectedCourse.getName() + ":");
+    	int i = 1;
+    	for (Student student : students) {
+    		if (student.getCourses().contains(selectedCourse)) {
+    			System.out.println(i + ". " + student.getUsername());
+    			i++;
+    		}
+    	}
+    	
+    	System.out.println("Choose a student or enter 0 to exit");
+    	int studentChoice = StaticMethods.validate(students.size());
+    	
+    	if (studentChoice == 0) {
+    		return;
+    	}
+    	Student selectedStudent = Database.getInstance().getStudents().get(studentChoice);
+    	
+    	Mark previousMark = selectedStudent.getTranscript().get(selectedCourse);
+    	
+    	if(previousMark != null) {
+    		System.out.println("Previous marks for student: " + selectedStudent.getUsername() + ": " + previousMark.toString());
+    	}
+    	else {
+    		System.out.println("New marks for student: " + selectedStudent.getUsername());
+    		
+    		Scanner input = new Scanner(System.in);
+        	while(true) {
+        		
+        		System.out.println("First attestation: ");
+        		double attestation1 = Math.abs(input.nextDouble());
+        		
+        		System.out.println("Second attestation: ");
+        		double attestation2 = Math.abs(input.nextDouble());
+        		
+        		System.out.println("Final exam: ");
+        		double finalExam = Math.abs(input.nextDouble());
+        		
+        		if(attestation1 + attestation2 > 60 || finalExam > 40) {
+        			System.out.println("Error: please enter marks correctly!");
+        		}
+        		else {
+        			Mark newMark = new Mark(attestation1, attestation2, finalExam);
+        			selectedStudent.getTranscript().put(selectedCourse, newMark);
+        			System.out.println("The marks have been cubmitted succesfully");
+        			break;
+        		}
+        	}
+    	}
+    }
+    @Override
+    public void viewMenu() {
+    	
+    	String[] options = new String[] { "View courses", "View students", "View marks","Put marks",
+    										"View rate","View one News","Change info", "Exit" };
+    	
+    	for (int i = 0; i<options.length; i++) {
+    		System.out.println((i + 1) + ". " + options[i]);
+    	}
+    	int choice = StaticMethods.validate(options.length);
+    	while (true) {
+    		if (choice == 1) {
+    			viewCourses();
+    		}
+    		else if(choice == 2) {
+    			viewStudents();
+    		}
+    		else if (choice == 3) {
+    			viewMarks();
+    		}
+    		else if (choice == 4) {
+    			putMarks();
+    		}
+    		else if (choice == 5) {
+    			viewRate();
+    		}
+    		else if (choice == 6) {
+    			viewOneNews();
+    		}
+    		else if (choice == 7) {
+    			changeInfo();
+    		}
+    		else if (choice == 8 || choice == 0) {
+    			break;
+    		}
+    	}
+    }
+
 
     public void viewRate() {
         System.out.println("Teacher's rating: " + rate);

@@ -348,7 +348,7 @@ public class Admin extends User implements Serializable {
 	public void viewMenu() {
 		
 		String[] options = new String[] {
-				"Create new user", "See all users", "Update info of user", "Remove user", "See log files", "Exit"
+				"Create new user", "See all users", "Update info of user", "Remove user", "See log files","View one news", "Exit"
 		};
 		
 		while(true) {
@@ -372,8 +372,13 @@ public class Admin extends User implements Serializable {
 			else if(choice == 4) {
 				removeUser();
 			}
-			
-			else if(choice == 6) {
+			//else if (choice == 5) {
+				//seeLogFiles();
+			//}
+			else if (choice == 6) {
+				viewOneNews();
+			}
+			else if(choice == 7) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
