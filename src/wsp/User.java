@@ -34,7 +34,7 @@ public abstract class User implements Serializable {
 		this.viewMenu();
 	}
 	
-	public abstract void viewNews();
+	public void viewNews() {};
 	public abstract void viewMenu();
 	public abstract void changeInfo();
 	
@@ -42,9 +42,21 @@ public abstract class User implements Serializable {
 //		
 //	}
 	
+	
+	
 	public String getUsername() {
 		return username;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
 
 	public String getPassword() {
 		return password;

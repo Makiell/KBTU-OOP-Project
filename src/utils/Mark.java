@@ -23,6 +23,43 @@ public class Mark implements Serializable {
 		this.attestation2 = attestation2;
 		this.finalExam = finalExam;
 	}
+	
+	public double getGpa() {
+		double sum = attestation1 + attestation2 + finalExam;
+		if(sum>=95) {
+			return 4.0;
+		}
+		if(sum>=90) {
+			return 3.67;
+		}
+		if(sum>=85) {
+			return 3.33;
+		}
+		if(sum>=80) {
+			return 3.0;
+		}
+		if(sum>=75) {
+			return 2.67;
+		}
+		if(sum>=70) {
+			return 2.33;
+		}
+		if(sum>=65) {
+			return 2.0;
+		}
+		if(sum>=60) {
+			return 1.67;
+		}
+		if(sum>=55) {
+			return 1.33;
+		}
+		if(sum>=50) {
+			return 1.0;
+		}
+		if(sum<50) {
+			return 0;
+		}
+	}
 
 
 	@Override

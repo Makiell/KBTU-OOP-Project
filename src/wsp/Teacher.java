@@ -10,11 +10,11 @@ import enums.*;
 
 public class Teacher extends Employee implements Serializable {
 
-    TeacherTitle typeTeacher;
-    Vector <Course> courses = new Vector<Course>();
-    Faculty faculty;
-    Map<Course, Vector<Lesson>> lessons = new HashMap <Course, Vector<Lesson>>();
-    double rate = 0.0;
+    private TeacherTitle typeTeacher;
+    private Vector <Course> courses = new Vector<Course>();
+    private Faculty faculty;
+    private Map<Course, Vector<Lesson>> lessons = new HashMap <Course, Vector<Lesson>>();
+    private double rate = 0.0;
 
 
     public Teacher(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,
@@ -22,8 +22,6 @@ public class Teacher extends Employee implements Serializable {
         super(username, password, firstName, lastName);
         this.typeTeacher = typeTeacher;
         this.faculty = faculty;
-
-
     }
 
 
@@ -168,61 +166,6 @@ public class Teacher extends Employee implements Serializable {
                 Mark mark = student.getTranscript().get(selectedCourse);
                 System.out.println(student.getUsername() + ": " + (mark != null ? mark.toString() : "No marks"));
             }
-        }
-    }
- 
-    public void putMarks(Course course, Student student, Mark mark) {
-    	Scanner input = new Scanner(System.in);
-    
-    	if (!courses.contains(course)) {
-            System.out.println("Teacher is not assigned to the course: " + course.getName());
-            return;
-        }
-
-        if (!student.getCourses().contains(course)) {
-            System.out.println("Student is not enrolled in the course: " + course.getName());
-            return;
-        }
-
-        if (!lessons.containsKey(course)) {
-            System.out.println("No lessons recorded for the course: " + course.getName());
-            return;
-        }
-
-        Vector<Lesson> courseLessons = lessons.get(course);
-        if (courseLessons == null || courseLessons.isEmpty()) {
-            System.out.println("No lessons recorded for the course: " + course.getName());
-            return;
-        }
-        System.out.println("put marks for Student:" + student.getUsername());
-        
-        Mark previesMark = student.getTranscript().get(course);
-        if (previesMark != null) {
-        	System.out.println("Previous marks Student: " + student.getUsername());
-        }
-        else {
-        	System.out.println("new marks for Student: " + student.getUsername());
-        }
-        
-        while(true) {
-        	System.out.println("First attestation: ");
-        	double attestation1 = input.nextDouble();
-        	
-        	System.out.println("Second attestation: ");
-        	double attestation2 = input.nextDouble();
-        	
-        	System.out.println("Final exam: ");
-        	double finalExam = input.nextDouble();
-        	
-        	if (attestation1 > 30 || attestation2 > 30 || (attestation1 + attestation2) > 60 || finalExam > 40) {
-        		System.out.println("Error: please write marks correctly");
-        	}
-        	else {
-        		Mark newMark = new Mark(attestation1, attestation2, finalExam);
-        		student.getTranscript().put(course, newMark);
-        		System.out.println("The grades have been submitted successfully!");
-        		break;
-        	}
         }
     }
 

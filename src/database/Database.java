@@ -2,6 +2,7 @@ package database;
 
 import java.io.*;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import wsp.*;
 import utils.*;
@@ -134,6 +135,15 @@ public class Database implements Serializable {
 
 	public Vector<Researcher> getResearchers() {
 		return researchers;
+	}
+	
+	public Vector<Teacher> getTeachers(){
+		Vector<Teacher> teachers = employees.stream()
+											.filter(employee -> employee instanceof Teacher)
+											.map(employee -> (Teacher) employee)
+											.collect(Collectors.toCollection(Vector::new));
+		
+		return teachers;
 	}
 
 	public Vector<Organisation> getOrganisations() {

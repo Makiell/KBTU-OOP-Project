@@ -8,16 +8,14 @@ import enums.*;
 
 public class Lesson implements Serializable {
 	private TypeLesson type;
-	private Date start;
-	private Date end;
+	private LessonTime dateOfLesson;
 	private int room;
 
 	
 	
-	public Lesson(TypeLesson type, Date start, Date end, int room) {
+	public Lesson(TypeLesson type, LessonTime dateOfLesson, int room) {
 		this.type = type;
-		this.start = start;
-		this.end = end;
+		this.dateOfLesson = dateOfLesson;
 		this.room = room;
 
 	}
@@ -26,6 +24,6 @@ public class Lesson implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Lesson [type=" + type + ", start=" + start + ", end=" + end + ", room=" + room + "]";
+		return "Lesson [type=" + type + ", time=" + dateOfLesson + ", room=" + room + "]";
 	}
 }

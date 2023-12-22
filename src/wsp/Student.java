@@ -37,6 +37,10 @@ public class Student extends User implements Serializable {
 	public double getGpa() {
 		return gpa;
 	}
+	
+	public void calculateGpa() {
+		
+	}
 
 	public void setGpa(Integer gpa) {
 		this.gpa = gpa;
@@ -187,12 +191,6 @@ public class Student extends User implements Serializable {
 
 		System.out.println("Courses:");
 		StaticMethods.printList(Database.getInstance().getCourses());
-	}
-
-	@Override
-	public void viewNews() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void rateTeachers(Map<Teacher, Integer> ratings) {
