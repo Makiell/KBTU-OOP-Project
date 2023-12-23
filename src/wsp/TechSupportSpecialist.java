@@ -35,7 +35,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	else if(o.getAcceptStatus() == AcceptStatus.ACCEPTED)
     		System.out.println("ERROR! Order was already accepted");
     	else
-    		o.acceptStatus = AcceptStatus.ACCEPTED;
+    		o.setAcceptStatus(AcceptStatus.ACCEPTED);
     		o.setStatus(Status.DONE);
 			System.out.println("Order has been accepted!");
     }
@@ -49,7 +49,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	else if(o.getAcceptStatus() == AcceptStatus.ACCEPTED)
     		System.out.println("ERROR! Order was already accepted");
     	else
-    		o.acceptStatus = AcceptStatus.REJECTED;
+    		o.setAcceptStatus(AcceptStatus.REJECTED);
     		o.setStatus(Status.DONE);
 			System.out.println("Order has been rejected!");
     }

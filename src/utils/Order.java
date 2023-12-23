@@ -9,7 +9,8 @@ import enums.*;
 
 public class Order implements Serializable {
     private Status status;
-    private String message; 
+    private String message;
+    private AcceptStatus acceptStatus;
     private TechSupportSpecialist to;
 
     public Order(String message, TechSupportSpecialist to) {
@@ -17,6 +18,14 @@ public class Order implements Serializable {
         this.message = message;
         this.to = to;
         to.getOrders().add(this);
+    }
+    
+    public AcceptStatus getAcceptStatus() {
+    	return acceptStatus;
+    }
+    
+    public void setAcceptStatus(AcceptStatus accept) {
+    	this.acceptStatus = accept;
     }
 
     public Status getStatus() {

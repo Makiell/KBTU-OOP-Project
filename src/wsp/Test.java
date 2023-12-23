@@ -28,7 +28,7 @@ public class Test {
 //		Database.getInstance().login();
 		
 		TechSupportSpecialist t = new TechSupportSpecialist(null,null,null,null);
-		Order o = new Order(Status.NEW,"asdasdasd", t);
+		Order o = new Order("asdasdasd", t);
 		
 		t.viewMenu();
 	}
