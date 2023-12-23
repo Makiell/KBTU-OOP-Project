@@ -1,19 +1,23 @@
 package utils;
 
+import java.io.Serializable;
+
 import enums.Day;
 
-public class LessonTime {
-	private Day dayOfTheWeek;
-	private int time;
+public class LessonTime implements Serializable {
+	
+	private int startTime;
+	private int endTime;
 	
 	
 	public LessonTime(Day dayOfTheWeek, int time) {
 		this.dayOfTheWeek = dayOfTheWeek;
-		this.time = time;
+		this.startTime = time;
+		this.endTime = time + 1;
 	}
 	
 	public String toString() {
-		return this.dayOfTheWeek + " " + time + ":00 - " + time+1 + ":00";
+		return this.dayOfTheWeek + " " + startTime + ":00 - " + endTime + ":00";
 	}
 	
 }
