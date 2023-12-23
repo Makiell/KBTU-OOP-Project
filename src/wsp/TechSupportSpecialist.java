@@ -80,7 +80,12 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		}
     		
     		else if(choice == 4) {
-    			Database.getInstance().saveDatabase();
+    			try {
+					Database.getInstance().saveDatabase();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     			break;
     		}
     	}
