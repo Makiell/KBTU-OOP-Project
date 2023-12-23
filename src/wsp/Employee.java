@@ -8,6 +8,8 @@ import enums.*;
 import utils.*;
 
 public class Employee extends User implements Serializable {
+	
+	private static final long serialVersionUID = 3585353902952762348L;
 
     public Employee(String username, String password, String firstName, String lastName) {
         super(username, password, firstName, lastName);
@@ -18,36 +20,87 @@ public class Employee extends User implements Serializable {
         System.out.println("Sending message to " + user.getUsername() + ": " + message);
     }
 
-    public void sendRequest(Request request) {
-
-        Database.getInstance().addRequest(request);
-        Dean dean = request.getTo();
-
-        System.out.println("Response from the dean: " + dean.getUsername());
-        dean.addRequest(request);
-        System.out.println("Request sent successfully");
+    public void sendRequest() {
+    	
+    	Vector<Dean> deans = Database.getInstance().getDeans();
+    	
+    	if(deans.isEmpty()) {
+    		System.out.println("No deans");
+    		return;
+    	}
+    	
+    	System.out.println("Enter 0 to return back.");
+    	System.out.println("Choose the dean:");
+    	
+    	StaticMethods.printList(deans);
+    	
+    	int choice = StaticMethods.validate(deans.size());
+    	
+    	if(choice==0) {
+    		return;
+    	}
+    	
+    	Dean dean = deans.get(choice-1);
+    	
+    	System.out.println("Enter the emergency level:");
+    	
+    	Emergency[] emergencyList = Emergency.values();
+    	
+    	StaticMethods.printList(List.of(emergencyList));
+    	
+    	int emergencyChoice = StaticMethods.validate(1, emergencyList.length);
+    	
+    	Emergency emergency = emergencyList[emergencyChoice-1];
+    	
+    	System.out.println("Enter the message:");
+    	Scanner in = new Scanner(System.in);
+    	String message = in.nextLine();
+    	
+    	Request newRequest = new Request(emergency, message, dean);
+    	
+        Database.getInstance().addRequest(newRequest);
+        
+        System.out.println(newRequest + " sent successfully");
 
     }
 
-    public void sendOrder(Order order) {
-        Database.getInstance().addOrder(order);
-
-        TechSupportSpecialist specialist = order.getTo();
-        Database.getInstance().addOrder(order);
-        System.out.println("Order sent successfully to " + specialist.getUsername());
+    public void sendOrder() {
+    	Vector<TechSupportSpecialist> TechSupportSpecialists = Database.getInstance().getTechSupports();
+    	
+    	if(TechSupportSpecialists.isEmpty()) {
+    		System.out.println("No tech supports");
+    		return;
+    	}
+    	
+    	System.out.println("Enter 0 to return back.");
+    	System.out.println("Choose the tech support:");
+    	
+    	StaticMethods.printList(TechSupportSpecialists);
+    	
+    	int choice = StaticMethods.validate(TechSupportSpecialists.size());
+    	
+    	if(choice==0) {
+    		return;
+    	}
+    	
+    	TechSupportSpecialist techSupport = TechSupportSpecialists.get(choice-1);
+    	
+    	System.out.println("Enter the message:");
+    	Scanner in = new Scanner(System.in);
+    	String message = in.nextLine();
+    	
+    	Order newOrder = new Order(message, techSupport);
+    	
+        Database.getInstance().addOrder(newOrder);
+        System.out.println(newOrder + " sent successfully");
     }
-
-	@Override
-	public void viewNews() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void viewMenu() {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 	public String toString() {
 		return "Employee " + super.toString();

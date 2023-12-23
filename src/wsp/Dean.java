@@ -15,7 +15,11 @@ import utils.StaticMethods;
 
 public class Dean extends Teacher implements Serializable {
 
-    private Vector<Request> requests = new Vector<>();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3623621447508671844L;
+	private Vector<Request> requests = new Vector<>();
 
     public Dean(String username, String password, String firstName, String lastName, Faculty faculty) {
         super(username, password, firstName, lastName, null, faculty);
@@ -73,8 +77,12 @@ public class Dean extends Teacher implements Serializable {
 	        
 	        Faculty faculty = optionsFaculty[facultyChoice-1];
 	        
-	        this.faculty = faculty;
+	        this.setFaculty(faculty);
 		}
+    }
+    
+    public void viewRequests() {
+    	StaticMethods.printList(Database.getInstance().getRequests());
     }
 
     public void signRequests() {
@@ -96,7 +104,7 @@ public class Dean extends Teacher implements Serializable {
         	return;
         }
 
-        Request selectedRequest = requests.get(choice);
+        Request selectedRequest = requests.get(choice-1);
         selectedRequest.setStatus(Status.DONE);
         requests.remove(selectedRequest);
         
@@ -106,7 +114,7 @@ public class Dean extends Teacher implements Serializable {
     }
 
     public void viewMenu() {
-        String[] options = new String[]{"Sign Requests", "Exit"};
+        String[] options = new String[]{"View all requests", "Sign Requests", "View one News", "Exit"};
 
         while (true) {
             System.out.println();
@@ -115,10 +123,16 @@ public class Dean extends Teacher implements Serializable {
 
             int choice = StaticMethods.validate(options.length);
             
-            if (choice == 1) {
+            if(choice == 1) {
+            	viewRequests();
+            }
+            if (choice == 2) {
                 signRequests();
             } 
-            else if (choice == 2) {
+            else if (choice == 3) {
+            	viewOneNews();
+            }
+            else if (choice == 4 || choice == 0) {
             	try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {

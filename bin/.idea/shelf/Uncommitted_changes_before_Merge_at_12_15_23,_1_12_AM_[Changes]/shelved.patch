@@ -1,0 +1,33 @@
+Index: src/wsp/Test.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package wsp;\n\nimport java.util.Vector;\n\nimport database.Database;\nimport enums.*;\nimport utils.*;\nimport java.io.*;\npublic class Test {\n\n\tpublic static void main(String[] args) throws Exception {\n\t\t// TODO Auto-generated method stub\n        Database database = Database.getInstance();\n\t\tStudent s = new Student(\"bac\", \"a\", null, null, null);\n        Teacher t = new Teacher(\"bacc\", \"aa\", null, null, TeacherTitle.LECTOR, Faculty.SITE);\n        Vector<Teacher>  teacher = new Vector<>();\n        teacher.add(t);\n        Course c = new Course(5, teacher, \"ALgo\", TypeCourse.REQUIRED, Faculty.SITE);\n        Course c2 = new Course(5, teacher, \"OOP\", TypeCourse.REQUIRED, Faculty.SITE);\n        database.getInstance().addCourse(c);\n        database.getInstance().addCourse(c2);\n\t\tSystem.out.println(s);\n\t\tDatabase.getInstance().addStudent(s);\n\t\tDatabase.getInstance().addUser(s);\n\t\tDatabase.getInstance().login();\n\t}\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/wsp/Test.java b/src/wsp/Test.java
+--- a/src/wsp/Test.java	
++++ b/src/wsp/Test.java	
+@@ -12,16 +12,12 @@
+ 		// TODO Auto-generated method stub
+         Database database = Database.getInstance();
+ 		Student s = new Student("bac", "a", null, null, null);
+-        Teacher t = new Teacher("bacc", "aa", null, null, TeacherTitle.LECTOR, Faculty.SITE);
+-        Vector<Teacher>  teacher = new Vector<>();
+-        teacher.add(t);
+-        Course c = new Course(5, teacher, "ALgo", TypeCourse.REQUIRED, Faculty.SITE);
+-        Course c2 = new Course(5, teacher, "OOP", TypeCourse.REQUIRED, Faculty.SITE);
+-        database.getInstance().addCourse(c);
+-        database.getInstance().addCourse(c2);
+-		System.out.println(s);
+-		Database.getInstance().addStudent(s);
+-		Database.getInstance().addUser(s);
++        Manager m = new Manager("bacc", "aa", null, null, TypeManager.OR);
++		System.out.println(m);
++        Database.getInstance().addStudent(s);
++        Database.getInstance().addUser(s);
++		Database.getInstance().addManager(m);
++		Database.getInstance().addUser(m);
+ 		Database.getInstance().login();
+ 	}
+ 
