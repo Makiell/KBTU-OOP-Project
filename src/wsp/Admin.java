@@ -357,13 +357,8 @@ public class Admin extends User implements Serializable {
 			}
 			
 			else if(choice == 6) {
-				try {
-					Database.getInstance().saveDatabase();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
+                Database.getInstance().saveDatabase();
+                break;
 			}
 		
 		}

@@ -10,6 +10,7 @@ import utils.*;
 import wsp.*;
 import enums.*;
 
+
 public class Student extends User implements Serializable {
 	Vector<Course> courses;
 	Integer gpa = null;
@@ -120,12 +121,7 @@ public class Student extends User implements Serializable {
 		
 		System.out.println("Please enter your choice:");
 		
-		System.out.println("Enter 0 to return back");
 		int coursechoice = StaticMethods.validate(courses.size());
-		
-		if(coursechoice == 0) {
-			return;
-		}
 		
 		Course course = courses.get(coursechoice - 1);
 
@@ -150,14 +146,10 @@ public class Student extends User implements Serializable {
 		Vector<Course> coursesToShow = databasecourses.stream()
 												      .filter(c -> !courses.contains(c))
 												      .collect(Collectors.toCollection(Vector::new));
+
+        StaticMethods.printList(coursesToShow);
 		
-		StaticMethods.printList(coursesToShow);
-		
-		System.out.println("Enter 0 to return back");
 		int coursechoice = StaticMethods.validate(coursesToShow.size());
-		if(coursechoice == 0) {
-			return;
-		}
 		
 		registerToCourse(coursesToShow.get(coursechoice - 1));
 	}
@@ -168,16 +160,28 @@ public class Student extends User implements Serializable {
 		System.out.println("Course " + course.getName() + " registration successful!");
 	}
 
-	/*
-	 * public void viewTeacherForCourse(Course course) { if
-	 * (!courses.contains(course)) {
-	 * System.out.println("Student not registered for this course"); return; }
-	 * Vector<Teacher> teachers = course.getTeachers(); if (teachers == null ||
-	 * teachers.isEmpty()) { System.out.println("No teachers"); return; }
-	 * System.out.println("Teachers for course " + course.getName() + ":"); for
-	 * (Teacher teacher : teachers) { System.out.println(teacher.getName() + " (" +
-	 * teacher.getRole() + ")"); } }
-	 */
+
+    public void viewTeacherForCourse() {
+        System.out.println("All courses:");
+        StaticMethods.printList(courses);
+        int coursechoice = StaticMethods.validate(courses.size());
+        Course course = courses.get(coursechoice - 1);
+        if (!courses.contains(course)) {
+	        System.out.println("Student not registered for this course");
+            return;
+      }
+	    Vector<Teacher> teachers = course.getTeachers();
+        if (teachers == null || teachers.isEmpty()) {
+            System.out.println("No teachers");
+            return;
+        }
+	    System.out.println("Teachers for course " + course.getName() + ":");
+        for (Teacher teacher : teachers) {
+            System.out.println(teacher.toString() + " (" + teacher.getTypeTeacher() + ")");
+        }
+    }
+
+
 	
 	public void viewCourses() {
 		
@@ -186,8 +190,10 @@ public class Student extends User implements Serializable {
 		}
 
 		System.out.println("Courses:");
-		StaticMethods.printList(Database.getInstance().getCourses());
+        StaticMethods.printList(Database.getInstance().getCourses());
 	}
+
+
 
 	@Override
 	public void viewNews() {
@@ -195,24 +201,37 @@ public class Student extends User implements Serializable {
 
 	}
 
-	public void rateTeachers(Map<Teacher, Integer> ratings) {
-		for (Map.Entry<Teacher, Integer> entry : ratings.entrySet()) {
-			Teacher teacher = entry.getKey();
-			Integer rating = entry.getValue();
-		}
+	public void rateTeachers() {
+        System.out.println("All Teachers:");
+        Vector<Employee> dbemployees = Database.getInstance().getEmployees();
+        Vector<Teacher> teachers = new Vector<>();
+        for(Employee e: dbemployees){
+            if(e instanceof Teacher){
+                teachers.add((Teacher) e);
+            }
+        }
+        for(Teacher t : teachers){
+            StaticMethods.printList(teachers);
+        }
+
+        System.out.println("Please select the teacher you want to evaluate:");
+        int teacherchoice = StaticMethods.validate(teachers.size());
+        Teacher teacher = teachers.get(teacherchoice - 1);
+        System.out.println("Your assessment of this teacher:");
+        int rate = StaticMethods.validate(10);
+        teacher.setRate(rate);
 	}
+	
+	
+
 	
 	public void organisationMenu() {
 		System.out.println("Please enter your choice:");
 		System.out.println("1 - Join in a organisation");
 		System.out.println("2 - Leave in a organisation");
 		System.out.println("3 - Create in a organisation");
-		System.out.println("Enter 0 to return back");
 		int choiceorg = StaticMethods.validate(3);
-		if(choiceorg == 0) {
-			return;
-		}
-		else if (choiceorg == 1) {
+		if (choiceorg == 1) {
 			joinOrganisation();
 		} 
 		else if (choiceorg == 2) {
@@ -238,12 +257,7 @@ public class Student extends User implements Serializable {
 		
 		if (!organisations.isEmpty()) {
 
-			System.out.println("Enter 0 to return back");
 			int orgchoice = StaticMethods.validate(organisations.size());
-			
-			if(orgchoice == 0) {
-				return;
-			}
 			
 			Organisation organisation = organisations.get(orgchoice - 1);
 
@@ -276,38 +290,6 @@ public class Student extends User implements Serializable {
 	}
 	
 	public void changeInfo() {
-		System.out.println("What do you want to change?");
-		
-		String[] options = new String[] {
-				"Username", "Password", "First name", "Last name"
-		};
-		
-		StaticMethods.printList(List.of(options));
-		System.out.println("Enter 0 to return back");
-		int choice = StaticMethods.validate(options.length);
-		Scanner in = new Scanner(System.in);
-		
-		if(choice == 0) {
-			return;
-		}
-		else if(choice == 1) {
-			System.out.println("Enter new username");
-			String newUsername = in.nextLine();
-			this.setUsername(newUsername);
-		}
-		else if(choice == 2) {
-			System.out.println("Enter new password");
-			String newPassword = in.nextLine();
-			this.setPassword(newPassword);
-		}
-		else if(choice == 3) {
-			String firstName = StaticMethods.getValidInput("Enter new first name:", "[a-zA-Z]+");
-			this.setFirstName(firstName);
-		}
-		else if(choice == 4) {
-			String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
-			this.setLastName(lastName);
-		}
 		
 	}
 
@@ -317,10 +299,7 @@ public class Student extends User implements Serializable {
 					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "Exit" };
 			
 			System.out.println("\nStudent Menu:");
-			for (int i = 0; i < options.length; i++) {
-				System.out.println((i + 1) + ". " + options[i]);
-			}
-			
+            StaticMethods.printList(List.of(options));
 			System.out.print("Enter your choice: ");
 			int choice = StaticMethods.validate(options.length);
 			
@@ -334,30 +313,20 @@ public class Student extends User implements Serializable {
 				getCourseFromDB();
 			}
 
-//         else if (choice == 4) {
-//                System.out.println("Please select course(1-n):");
-//                for(Course c: courses){
-//                    System.out.println(c);
-//                }
-//                int coursechoice = Integer.parseInt(Scanner.nextLine());
-//                viewTeacherForCourse(Database.courses(coursechoice-1));
-//			    }
+            else if (choice == 4) {
+                viewTeacherForCourse();
+			    }
 			else if (choice == 5) {
 				viewCourses();
-			} // else if (choice == 6) {
-//			    	rateTeachers(null, null);
-//			    }
+			}  else if (choice == 6) {
+			    	rateTeachers();
+			    }
 			else if (choice == 7) {
 				organisationMenu();
 			} 
 			else if (choice == 8 || choice == 0) {
-				try {
-					Database.getInstance().saveDatabase();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
+                Database.getInstance().saveDatabase();
+                break;
 			}
 		}
 	}
