@@ -1,9 +1,11 @@
 package utils;
 
+import wsp.*;
+
 public interface Observed {
-	void addObserver(Observer observer);
+	void addObserver(User observer);
 	
-	void removeObserver(Observer observer);
+	void removeObserver(User observer);
 	
-	void notifyObservers();
+	void notifyObservers(ResearchPaper paper);
 }
