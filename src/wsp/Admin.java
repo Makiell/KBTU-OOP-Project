@@ -42,6 +42,10 @@ public class Admin extends User implements Serializable {
         
         int facultyChoice = StaticMethods.validate(options.length);
         
+        if(facultyChoice == 0) {
+        	return;
+        }
+        
         Faculty faculty = options[facultyChoice-1];
         
         Student newStudent = new Student(username, password, firstName, lastName, faculty);
@@ -75,11 +79,19 @@ public class Admin extends User implements Serializable {
         
         Faculty faculty = options[facultyChoice-1];
         
+        if(facultyChoice == 0) {
+        	return;
+        }
+        
         Grade[] optionsGrade = Grade.values();
         
         StaticMethods.printList(List.of(optionsGrade));
         
         int gradeChoice = StaticMethods.validate(optionsGrade.length);
+        
+        if(facultyChoice == 0) {
+        	return;
+        }
         
         Grade grade = optionsGrade[gradeChoice-1];
         
@@ -133,6 +145,10 @@ public class Admin extends User implements Serializable {
         
         int facultyChoice = StaticMethods.validate(options.length);
         
+        if(facultyChoice == 0) {
+        	return;
+        }
+        
         Faculty faculty = options[facultyChoice-1];
         
         TeacherTitle[] optionsTitle = TeacherTitle.values();
@@ -140,6 +156,10 @@ public class Admin extends User implements Serializable {
         StaticMethods.printList(List.of(optionsTitle));
         
         int titleChoice = StaticMethods.validate(optionsTitle.length);
+        
+        if(titleChoice == 0) {
+        	return;
+        }
         
         TeacherTitle title = optionsTitle[titleChoice-1];
         
@@ -170,6 +190,10 @@ public class Admin extends User implements Serializable {
         StaticMethods.printList(List.of(options));
         
         int choice = StaticMethods.validate(options.length);
+        
+        if(choice == 0) {
+        	return;
+        }
         
         TypeManager title = options[choice-1];
         
@@ -210,6 +234,10 @@ public class Admin extends User implements Serializable {
         StaticMethods.printList(List.of(options));
         
         int facultyChoice = StaticMethods.validate(options.length);
+        
+        if(facultyChoice == 0) {
+        	return;
+        }
         
         Faculty faculty = options[facultyChoice-1];
         
@@ -323,7 +351,7 @@ public class Admin extends User implements Serializable {
 	public void viewMenu() {
 		
 		String[] options = new String[] {
-				"Create new user", "See all users", "Update info of user", "Remove user", "See log files","View one news", "Exit"
+				"Create new user", "See all users", "Update info of user", "Remove user", "See log files", "Exit"
 		};
 		
 		while(true) {
@@ -347,20 +375,14 @@ public class Admin extends User implements Serializable {
 			else if(choice == 4) {
 				removeUser();
 			}
-			//else if (choice == 5) {
-				//seeLogFiles();
-			//}
-			else if (choice == 6) {
-				viewOneNews();
-			}
-			else if(choice == 67) {
-				try {
-					Database.getInstance().saveDatabase();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
+			
+			else if(choice == 6) {
+                try {
+                    Database.getInstance().saveDatabase();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
 			}
 		
 		}

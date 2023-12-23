@@ -5,7 +5,7 @@ import java.io.Serializable;
 import enums.Day;
 
 public class LessonTime implements Serializable {
-	
+	private Day dayOfTheWeek;
 	private int startTime;
 	private int endTime;
 	

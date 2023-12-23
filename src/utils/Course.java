@@ -46,7 +46,7 @@ public class Course implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Course [id=" + id + ", credits=" + credits + ", teachers=" + teachers + ", name=" + name + ", type="
+		return "Course [id=" + id + ", credits=" + credits + ", name=" + name + ", type="
 				+ type + ", faculty=" + faculty + "]";
 	}
 	

@@ -11,7 +11,7 @@ public class Test {
 
 	public static void main(String[] args) throws Exception {
 //		 TODO Auto-generated method stub
-//		Student s = new Student("bac", "a", null, null, null);
+
 //        Teacher t = new Teacher("bacc", "aa", null, null, TeacherTitle.LECTOR, Faculty.SITE);
 //        Vector<Teacher>  teacher = new Vector<>();
 //        teacher.add(t);
@@ -24,8 +24,8 @@ public class Test {
 //		Database.getInstance().addUser(s);
         Admin s = new Admin("bac", "a", null, null);
         Database.getInstance().addAdmin(s);
-		Database.getInstance().addUser(s);
-		Database.getInstance().login();
+        Database.getInstance().addUser(s);
+        Database.getInstance().login();
 	}
 
 }

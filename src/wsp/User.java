@@ -43,8 +43,8 @@ public abstract class User implements Serializable {
 		
 		for (int i = 0; i < news.size(); i++) {
 			News n = news.get(i);
-			System.out.println((i + 1) + ". " + n.getTopic());
-			System.out.println((i + 1) + ". " + n.getTitle());
+			System.out.println((i + 1) + ". " + "Topic: " + n.getTopic());
+			System.out.println("   "+n.getTitle());
 			System.out.println();
 		}
 	}
@@ -55,7 +55,7 @@ public abstract class User implements Serializable {
 		for (int i = 0; i < news.size(); i++) {
 			News n = news.get(i);
 			System.out.println((i + 1) + ". " + n.getTopic());
-			System.out.println((i + 1) + ". " + n.getTitle());
+			System.out.println("   " + n.getTitle());
 			System.out.println();
 		}
 		
@@ -66,7 +66,7 @@ public abstract class User implements Serializable {
 			System.out.println();
 		}
 		else {
-			News selectedNews = news.get(choice);
+			News selectedNews = news.get(choice-1);
 			System.out.println("----Selected News----");
 			System.out.println(selectedNews.toString());
 			System.out.println();
