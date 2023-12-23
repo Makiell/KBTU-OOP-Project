@@ -4,11 +4,12 @@ import wsp.*;
 
 import java.io.Serializable;
 
+import database.Database;
 import enums.*;
 
 public class Order implements Serializable {
     private Status status;
-    private String message; 
+    private String message;
     private TechSupportSpecialist to;
 
     public Order(String message, TechSupportSpecialist to) {

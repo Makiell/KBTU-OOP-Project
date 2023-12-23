@@ -1,8 +1,8 @@
 package database;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import wsp.*;
 import utils.*;
@@ -10,7 +10,6 @@ import utils.*;
 public class Database implements Serializable {
 	
 	private static Database INSTANCE;
-//    private static final long serialVersionUID = 5909273364633485948L;
 	
 	private static final long serialVersionUID = 4496003716159423929L;
 	
@@ -19,13 +18,20 @@ public class Database implements Serializable {
 	private Vector<User> users = new Vector<User>();
 	
 	private Vector<Student> students = new Vector<Student>();
+	
 	private Vector<Employee> employees = new Vector<Employee>();
+	
 	private Vector<Course> courses = new Vector<Course>();
+	
 	private Vector<News> news = new Vector<News>();
+	
 	private Vector<Request> requests = new Vector<Request>();
+	
 	private Vector<Order> orders = new Vector<Order>();
-	private HashMap<User, Vector<Log>> userLogs;
+	
+//	private Vector<Log> logs;
 	private Vector<Researcher> researchers = new Vector<Researcher>();
+	
 	private Vector<Organisation> organisations = new Vector<Organisation>();;
 	
 	
@@ -137,7 +143,6 @@ public class Database implements Serializable {
 	public Vector<Researcher> getResearchers() {
 		return researchers;
 	}
-
 	
 	public Vector<Teacher> getTeachers(){
 		Vector<Teacher> teachers = employees.stream()
@@ -165,7 +170,6 @@ public class Database implements Serializable {
 
 		return TechSupportSpecialists;
 	}
-
 
 	public Vector<Organisation> getOrganisations() {
 		return organisations;
@@ -217,12 +221,4 @@ public class Database implements Serializable {
 		this.admins.add(a);
 		addUser(a);
 	}
-    public void addLog(User u, Log l) {
-        Vector<Log> logs = this.userLogs.get(u);
-        if (logs == null) {
-            logs = new Vector<>();
-        }
-        logs.add(l);
-        this.userLogs.put(u, logs);
-    }
 }

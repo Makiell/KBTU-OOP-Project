@@ -15,9 +15,6 @@ import utils.StaticMethods;
 
 public class Dean extends Teacher implements Serializable {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 3623621447508671844L;
 	private Vector<Request> requests = new Vector<>();
 

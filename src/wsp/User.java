@@ -17,6 +17,10 @@ public abstract class User implements Serializable {
 	private String lastName;
 	
 	
+	public void handleEvent(ResearchPaper paper) {
+		System.out.print("Dear " + this.firstName +" "+ this.lastName + " to journal was added new papers!\n" + paper);
+	}
+	
 	public User(String username, String password, String firstName, String lastName) {
 		if(Database.getInstance().getUsers().isEmpty()) {
 			this.id = 1;

@@ -4,10 +4,10 @@ import utils.Order;
 import utils.StaticMethods;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
+import enums.Status;
 import database.Database;
-import enums.*;
 
 public class TechSupportSpecialist extends Employee implements Serializable {
 	
@@ -47,24 +47,25 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	else if(o.getStatus() == Status.ACCEPTED)
     		System.out.println("ERROR! Order was already accepted");
     	else
-    		o.setStatus(Status.ACCEPTED);
+    		o.setStatus(Status.REJECTED);
 			System.out.println("Order has been rejected!");
     }
     
     public void viewMenu() {
     	while(true) {
     		String[] options = new String[] {"View orders",
-    				"Accept order", "Reject order","View one News", "Exit" };
-    		
-    		System.out.println("/nTech support specialist menu");
-    		
-    		StaticMethods.printList(List.of(options));
+    				"Accept order", "Reject order", "Exit" };
+    		System.out.println("Tech support specialist menu");
+    		for(int i = 0; i < options.length; i++) {
+    			System.out.println(i + 1 + ". " + options[i]);
+    		}
     		
     		System.out.println("Enter your choice: ");
     		int choice = StaticMethods.validate(options.length);
     		
     		if(choice == 1) {
     			this.viewOrders();
+    			orders.stream().forEach(o -> o.setStatus(Status.VIEWED));
     		}
     		
     		else if(choice == 2) {
@@ -74,16 +75,14 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		else if(choice == 3) {
     			this.rejectOrder();
     		}
-    		else if (choice == 4) {
-    			viewOneNews();
-    		}
-    		else if(choice == 5 || choice == 0) {
+    		
+    		else if(choice == 4) {
     			try {
-    				Database.getInstance().saveDatabase();
-    			}
-    			catch(IOException e){
-    				e.printStackTrace();
-    			}
+					Database.getInstance().saveDatabase();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     			break;
     		}
     	}
@@ -92,5 +91,4 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     public String toString() {
     	return "Tech Support Specialist " + super.toString();
     }
-
 }
