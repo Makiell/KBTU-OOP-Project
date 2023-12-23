@@ -4,6 +4,7 @@ import wsp.*;
 
 import java.io.Serializable;
 
+import database.Database;
 import enums.*;
 
 public class Order implements Serializable {

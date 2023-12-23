@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Scanner;
 import java.util.Vector;
+import enums.Status;
 import database.Database;
 import enums.AcceptStatus;
 
@@ -35,6 +36,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		System.out.println("ERROR! Order was already accepted");
     	else
     		o.acceptStatus = AcceptStatus.ACCEPTED;
+    		o.setStatus(Status.DONE);
 			System.out.println("Order has been accepted!");
     }
     
@@ -48,6 +50,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		System.out.println("ERROR! Order was already accepted");
     	else
     		o.acceptStatus = AcceptStatus.REJECTED;
+    		o.setStatus(Status.DONE);
 			System.out.println("Order has been rejected!");
     }
     
@@ -65,6 +68,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		
     		if(choice == 1) {
     			this.viewOrders();
+    			orders.stream().forEach(o -> o.setStatus(Status.VIEWED));
     		}
     		
     		else if(choice == 2) {
@@ -76,12 +80,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		}
     		
     		else if(choice == 4) {
-    			try {
-    				Database.getInstance().saveDatabase();
-    			}
-    			catch(IOException e){
-    				e.printStackTrace();
-    			}
+    			Database.getInstance().saveDatabase();
     			break;
     		}
     	}
