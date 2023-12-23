@@ -25,12 +25,8 @@ public class Test {
 //        Admin s = new Admin("bac", "a", null, null);
 //        Database.getInstance().addAdmin(s);
 //		Database.getInstance().addUser(s);
-//		Database.getInstance().login();
+		Database.getInstance().login();
 		
-		TechSupportSpecialist t = new TechSupportSpecialist(null,null,null,null);
-		Order o = new Order("asdasdasd", t);
-		
-		t.viewMenu();
 	}
 
 }
