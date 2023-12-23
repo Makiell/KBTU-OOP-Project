@@ -1,6 +1,7 @@
 package wsp;
 
 import java.io.Serializable;
+import utils.Observer;
 import utils.*;
 import java.util.Objects;
 import java.util.Vector;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 
 import database.Database;
 
-public abstract class User implements Serializable {
+public abstract class User implements Serializable, Observer {
 	
 	private int id = 1;
 	private String username;
@@ -16,6 +17,10 @@ public abstract class User implements Serializable {
 	private String firstName;
 	private String lastName;
 	
+	@Override
+	public void handleEvent(Vector<ResearchPaper> researchPapers) {
+		System.out.println("Dear" + this.firstName + this.lastName + "to journal was added new papers!" + researchPapers);
+	}
 	
 	public User(String username, String password, String firstName, String lastName) {
 		if(Database.getInstance().getUsers().isEmpty()) {

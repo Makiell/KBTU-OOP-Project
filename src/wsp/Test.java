@@ -21,8 +21,16 @@ public class Test {
 //        Database.getInstance().addCourse(c2);
 ////		System.out.println(s);
 //		Database.getInstance().addStudent(s);
+////		Database.getInstance().addUser(s);
+//        Admin s = new Admin("bac", "a", null, null);
+//        Database.getInstance().addAdmin(s);
 //		Database.getInstance().addUser(s);
-		Database.getInstance().login();
+//		Database.getInstance().login();
+		
+		TechSupportSpecialist t = new TechSupportSpecialist(null,null,null,null);
+		Order o = new Order("asdasdasd", t);
+		
+		t.viewMenu();
 	}
 
 }
