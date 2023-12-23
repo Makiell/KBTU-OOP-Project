@@ -11,7 +11,7 @@ public class ResearchJournal implements Serializable, Observed {
 	Vector<User> subscribers = new Vector<>();
 	
 	public ResearchJournal(String name) {
-		
+		this.name = name;
 	}
 	
 	public void addPaper(ResearchPaper paper) {
