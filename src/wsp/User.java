@@ -15,10 +15,22 @@ public abstract class User implements Serializable {
 	private String password;
 	private String firstName;
 	private String lastName;
+	private Vector<String> messages = new Vector<>();
 	
+	public Vector<String> getMessage(){
+		return messages;
+	};
+	
+	public void addMessage(String mes) {
+		this.messages.add(mes);
+	}
+	
+	public void viewMessages() {
+		StaticMethods.printList(this.messages);
+	}
 	
 	public void handleEvent(ResearchPaper paper) {
-		System.out.print("Dear " + this.firstName +" "+ this.lastName + " to journal was added new papers!\n" + paper);
+		this.addMessage("Dear " + this.firstName +" "+ this.lastName + " to journal was added new papers!\n" + paper);
 	}
 	
 	public User(String username, String password, String firstName, String lastName) {
