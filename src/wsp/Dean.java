@@ -2,6 +2,8 @@ package wsp;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import database.Log;
 import enums.Faculty;
 import enums.Status;
 
@@ -80,6 +82,7 @@ public class Dean extends Teacher implements Serializable {
     
     public void viewRequests() {
     	StaticMethods.printList(Database.getInstance().getRequests());
+        Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " view all requests "));
     }
 
     public void signRequests() {
@@ -107,6 +110,7 @@ public class Dean extends Teacher implements Serializable {
         
         System.out.println("Dean signed request: " + selectedRequest);
         System.out.println("The request was successfully signed and deleted.");
+        Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " signed request"));
     
     }
 
@@ -138,6 +142,7 @@ public class Dean extends Teacher implements Serializable {
             } 
             else if (choice == 3) {
             	viewOneNews();
+                Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " viewed a one News"));
             }
             else if (choice == 4) {
                 try {
@@ -150,6 +155,7 @@ public class Dean extends Teacher implements Serializable {
             else if(researcher != null) {
 				if(choice == 5) {
 					researcher.viewMenu();
+                    Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " went to the researcher menu"));
 				}
 			}
         }

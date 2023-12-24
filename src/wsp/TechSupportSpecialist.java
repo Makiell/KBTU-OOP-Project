@@ -1,5 +1,6 @@
 package wsp;
 
+import database.Log;
 import utils.Order;
 import utils.StaticMethods;
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     
     public void viewOrders() {
     	StaticMethods.printList(this.getOrders());
+        Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " viewed all orders "));
     }
     
     public void acceptOrder() {
@@ -37,6 +39,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	else
     		o.setStatus(Status.ACCEPTED);
 			System.out.println("Order has been accepted!");
+            Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " accepted order "));
     }
     
     public void rejectOrder() {
@@ -50,6 +53,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	else
     		o.setStatus(Status.REJECTED);
 			System.out.println("Order has been rejected!");
+        Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " rejected the order"));
     }
     
     public void viewMenu() {
@@ -102,6 +106,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		else if(researcher != null) {
 				if(choice == 5) {
 					researcher.viewMenu();
+                    Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " went to the researcher menu"));
 				}
 			}
     	}

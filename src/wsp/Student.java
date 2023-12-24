@@ -38,11 +38,11 @@ public class Student extends User implements Serializable, Comparable<Student> {
     }
 
     public double getGpa() {
-        return gpa;
+        return gpa != null ? gpa.doubleValue() : 0.0;
     }
 
     public void setGpa(Double gpa) {
-        this.gpa = gpa;
+        this.gpa = gpa != null ? gpa : 0.0;
     }
 
     public Map<Course, Mark> getTranscript() {
@@ -112,7 +112,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
         for (Map.Entry<Course, Mark> entry : transcript.entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue().toString());
         }
-        Database.getInstance().addLog(this, new Log("Student " + getUsername() + " viewed Transcript"));
+        Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed Transcript"));
     }
 
     public void viewMarks() {
@@ -142,7 +142,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
         }
         else {
             System.out.println("Course: " + course.getName() + " Mark: " + mark.toString());
-            Database.getInstance().addLog(this, new Log("Student " + getUsername() + " viewed Marks for Course " + course.getName()));
+            Database.getInstance().addLog(this, new Log("Student " + this.getUsername()+ " viewed Marks for Course " + course.getName()));
         }
 
     }
@@ -173,7 +173,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
         this.courses.add(course);
         this.transcript.put(course, new Mark());
         System.out.println("Course " + course.getName() + " registration successful!");
-        Database.getInstance().addLog(this, new Log("Student " + getUsername() + " registrated to course " + course.getName()));
+        Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " registrated to course " + course.getName()));
     }
 
     public void viewTeacherForCourse() {
@@ -193,7 +193,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
         System.out.println("Teachers for course " + course.getName() + ":");
         for (Teacher teacher : teachers) {
             System.out.println(teacher.toString() + " (" + teacher.getTypeTeacher() + ")");
-            Database.getInstance().addLog(this, new Log("Student " + getUsername() + " viewed all Teachers"));
+            Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed all Teachers"));
         }
     }
 
@@ -208,7 +208,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
 
         System.out.println("Courses:");
         StaticMethods.printList(Database.getInstance().getCourses());
-        Database.getInstance().addLog(this, new Log("Student " + getUsername() + " viewed All courses"));
+        Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed All courses"));
     }
 
     public void rateTeachers() {
@@ -228,7 +228,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
         
         teacher.setRate(rate);
         
-        Database.getInstance().addLog(this, new Log("Student " + " appreciated teacher " + teacher.getFirstName() + " " + teacher.getLastName()));
+        Database.getInstance().addLog(this, new Log("Student " + this.getUsername()+ " appreciated teacher " + teacher.getFirstName() + " " + teacher.getLastName()));
     }
     
     public void organisationMenu() {
@@ -279,7 +279,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
 
             this.organisation = organisation;
             organisation.addMember(this);
-            Database.getInstance().addLog(this, new Log("Student " + getUsername() + " viewed joined organisation" + organisation.getName()));
+            Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed joined organisation" + organisation.getName()));
         }
         else {
             System.out.println("At the moment we dont have any organisations");
@@ -289,7 +289,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
     public void leaveOrganisation() {
         organisation.removeMember(this);
         this.organisation = null;
-        Database.getInstance().addLog(this, new Log("Student " + getUsername() + " viewed left organisation" + organisation.getName()));
+        Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed left organisation" + organisation.getName()));
     }
 
     public void createOrganisation() {
@@ -299,7 +299,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
         Organisation organisation = new Organisation(name, this);
         this.organisation = organisation;
         Database.getInstance().addOrganisation(organisation);
-        Database.getInstance().addLog(this, new Log("Student " + getUsername() + " viewed created organisation" + organisation.getName()));
+        Database.getInstance().addLog(this, new Log("Student " + this.getUsername()+ " viewed created organisation" + organisation.getName()));
         s.close();
     }
 
@@ -383,6 +383,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
             }
             else if (choice == 8) {
                 viewOneNews();
+                Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed a one News"));
             }
             else if (choice == 9) {
                 try {
@@ -396,6 +397,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
             else if(researcher != null) {
 				if(choice == 10) {
 					researcher.viewMenu();
+                    Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " went to the researcher menu"));
 				}
 			}
         }

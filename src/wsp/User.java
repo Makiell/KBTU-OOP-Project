@@ -49,8 +49,10 @@ public abstract class User implements Serializable {
 		this.lastName = lastName;
 	}
 
-	
-	public void authentification() {
+	public int getId()
+    {
+        return id;
+    }	public void authentification() {
 		this.viewNews();
 		this.viewMenu();
 	}
