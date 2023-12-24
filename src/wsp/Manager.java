@@ -322,9 +322,31 @@ public class Manager extends Employee{
 	public void viewTeachers() {
 
         Vector<Teacher> teachers = Database.getInstance().getTeachers();
+        
+        if(teachers.isEmpty()) {
+        	System.out.println("No teachers");
+        	return;
+        }
 
         StaticMethods.printList(teachers);
         Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " viewed all Teachers"));
+	}
+	
+	
+	public void createJournal() {
+		System.out.println("Enter 0 to return back");
+		System.out.println("Enter the name:");
+		Scanner in = new Scanner(System.in);
+		String name = in.nextLine();
+		if(name.equals("0")) {
+			return;
+		}
+		
+		ResearchJournal newJournal = new ResearchJournal(name);
+		
+		Database.getInstance().addJournal(newJournal);
+		
+		System.out.println("New journal created " + newJournal);
 	}
 
 	public void viewMenu() {
@@ -335,12 +357,12 @@ public class Manager extends Employee{
 			
 			if(researcher == null) {
 				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
-						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers",
+						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers", "Create journal",
 						"Exit" };
 			}
 			else {
 				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
-						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers",
+						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers", "Create journal",
 						"Exit", "View researcher menu"};
 			}
 			
@@ -376,8 +398,11 @@ public class Manager extends Employee{
 			} 
 			else if (choice == 9) {
 				viewTeachers();
-			} 
+			}
 			else if (choice == 10) {
+				createJournal();
+			}
+			else if (choice == 11) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -387,7 +412,7 @@ public class Manager extends Employee{
 				break;
 			}
 			else if(researcher != null) {
-				if(choice == 11) {
+				if(choice == 12) {
 					researcher.viewMenu();
 				}
 			}

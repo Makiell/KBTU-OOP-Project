@@ -15,18 +15,18 @@ public class ResearchPaper implements Serializable {
 	private Date date;
 	private String doi;
 	
-	public ResearchPaper(String name, Vector<Researcher> authors, int pages, Date date, String doi) {
+	public ResearchPaper(String name, Vector<Researcher> authors, int pages, String doi) {
 		this.name = name;
 		this.authors = authors;
 		this.pages = pages;
-		this.date = date;
+		this.date = new Date();
 		this.doi = doi;
 		this.citations = 0;
 	}
 
 	@Override
 	public String toString() {
-		return "ResearchPaper [name=" + name + ", authors=" + authors + ", citations=" + citations + ", pages=" + pages
+		return "ResearchPaper [name=" + name + ", authors=" + authors.size() + ", citations=" + citations + ", pages=" + pages
 				+ ", date=" + date + ", doi=" + doi + "]";
 	}
 	

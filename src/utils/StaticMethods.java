@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,23 +15,47 @@ public class StaticMethods {
 	
 	public static int validate(int n) {
 		Scanner s = new Scanner(System.in);
-		int choice = s.nextInt();
-		while (!(0 <= choice && choice <= n)) {
-			System.out.println("Please enter number from 0 to " + n);
-			choice = s.nextInt();
-		}
+		int choice;
+		while(true) {
+			try {
+				choice = s.nextInt();
+				if (0 <= choice && choice <= n) {
+					break;
+				}
+				else {
+					System.out.println("Please enter number from 0 to " + n);
+				}
+				
+			}
+			catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                s.nextLine();
+            }
 
+		}
 		return choice;
 	}
 	
 	public static int validate(int a, int n) {
 		Scanner s = new Scanner(System.in);
-		int choice = s.nextInt();
-		while (!(a <= choice && choice <= n)) {
-			System.out.println("Please enter number from" + a + " to " + n);
-			choice = s.nextInt();
-		}
+		int choice;
+		while(true) {
+			try {
+				choice = s.nextInt();
+				if (a <= choice && choice <= n) {
+					break;
+				}
+				else {
+					System.out.println("Please enter number from " + a + " to " + n);
+				}
+				
+			}
+			catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                s.nextLine();
+            }
 
+		}
 		return choice;
 	}
 	

@@ -27,6 +27,7 @@ public class Database implements Serializable {
     private Vector<Order> orders = new Vector<Order>();
     private HashMap<User, Vector<Log>> userLogs = new HashMap<User, Vector<Log>>();
     private Vector<Researcher> researchers = new Vector<Researcher>();
+    private Vector<ResearchJournal> journals = new Vector<ResearchJournal>();
     private Vector<Organisation> organisations = new Vector<Organisation>();;
 
 
@@ -173,6 +174,10 @@ public class Database implements Serializable {
     public Vector<Admin> getAdmins(){
         return admins;
     }
+    
+    public Vector<ResearchJournal> getJournals(){
+    	return journals;
+    }
 
     public void addUser(User u) {
         this.users.add(u);
@@ -202,6 +207,10 @@ public class Database implements Serializable {
 
     public void addOrder(Order o) {
         this.orders.add(o);
+    }
+    
+    public void addJournal(ResearchJournal rj) {
+    	this.journals.add(rj);
     }
 
     public void addResearcher(Researcher r) {

@@ -211,12 +211,6 @@ public class Student extends User implements Serializable, Comparable<Student> {
         Database.getInstance().addLog(this, new Log("Student " + getUsername() + " viewed All courses"));
     }
 
-    @Override
-    public void viewNews() {
-        // TODO Auto-generated method stub
-
-    }
-
     public void rateTeachers() {
         System.out.println("All Teachers:");
         Vector<Teacher> teachers = Database.getInstance().getTeachers();
