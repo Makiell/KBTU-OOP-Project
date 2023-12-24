@@ -245,36 +245,43 @@ public class Teacher extends Employee implements Serializable {
     	
     	Mark previousMark = selectedStudent.getTranscript().get(selectedCourse);
     	
-    	if(previousMark != null) {
+    	if(previousMark.getAtt() != null) {
     		System.out.println("Previous marks for student: " + selectedStudent.getUsername() + ": " + previousMark.toString());
     	}
     	else {
     		System.out.println("New marks for student: " + selectedStudent.getUsername());
     		
     		Scanner input = new Scanner(System.in);
+    		
         	while(true) {
-        		
-        		System.out.println("First attestation: ");
-        		double attestation1 = Math.abs(input.nextDouble());
-        		
-        		System.out.println("Second attestation: ");
-        		double attestation2 = Math.abs(input.nextDouble());
-        		
-        		System.out.println("Final exam: ");
-        		double finalExam = Math.abs(input.nextDouble());
-        		
-        		if(attestation1 + attestation2 > 60 || finalExam > 40) {
+        		try {
+        			System.out.println("First attestation: ");
+            		double attestation1 = Math.abs(input.nextDouble());
+            		
+            		System.out.println("Second attestation: ");
+            		double attestation2 = Math.abs(input.nextDouble());
+            		
+            		System.out.println("Final exam: ");
+            		double finalExam = Math.abs(input.nextDouble());
+            		
+            		if(attestation1 + attestation2 > 60 || finalExam > 40) {
+            			System.out.println("Error: please enter marks correctly!");
+            		}
+            		else {
+            			Mark newMark = new Mark(attestation1, attestation2, finalExam);
+            			selectedStudent.getTranscript().put(selectedCourse, newMark);
+            			System.out.println("The marks have been submitted succesfully");
+            			break;
+            		}
+        		}
+        		catch(InputMismatchException e) {
         			System.out.println("Error: please enter marks correctly!");
-        		}
-        		else {
-        			Mark newMark = new Mark(attestation1, attestation2, finalExam);
-        			selectedStudent.getTranscript().put(selectedCourse, newMark);
-        			System.out.println("The marks have been submitted succesfully");
-        			break;
-        		}
+        			input.nextLine();
+        		}	
         	}
     	}
     }
+    
     @Override
     public void viewMenu() {
     	

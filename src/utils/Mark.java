@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 public class Mark implements Serializable {
 	
+	
+	private static final long serialVersionUID = 7664173347655213766L;
+	
 	private Double attestation1;
 	private Double attestation2;
 	private Double finalExam;
-	
-	
 	
 	
 	public Mark() {
@@ -57,6 +58,10 @@ public class Mark implements Serializable {
 			return 1.0;
 		}
         return 0.0;
+	}
+	
+	public Double getAtt() {
+		return attestation1;
 	}
 
 
