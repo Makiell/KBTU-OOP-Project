@@ -1,5 +1,6 @@
 package wsp;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 import wsp.*;
@@ -97,7 +98,48 @@ public class Employee extends User implements Serializable {
 
 	@Override
 	public void viewMenu() {
-		// TODO Auto-generated method stub
+		String[] options;
+    	
+    	Researcher researcher = Database.getInstance().isResearcher(this);
+    	
+    	if(researcher == null) {
+    		 options = new String[]{"Send request", "Send order", "View one News", "Exit"};
+    	}
+    	else {
+    		 options = new String[]{"Send request", "Send order", "View one News", "Exit", "View researcher menu"};
+    	}
+       
+
+        while (true) {
+            System.out.println();
+            System.out.println("----Employee Menu----");
+            StaticMethods.printList(List.of(options));
+
+            int choice = StaticMethods.validate(1, options.length);
+            
+            if(choice == 1) {
+            	sendRequest();
+            }
+            if (choice == 2) {
+                sendOrder();
+            } 
+            else if (choice == 3) {
+            	viewOneNews();
+            }
+            else if (choice == 4) {
+                try {
+                    Database.getInstance().saveDatabase();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            }
+            else if(researcher != null) {
+				if(choice == 5) {
+					researcher.viewMenu();
+				}
+			}
+        }
 		
 	}
 

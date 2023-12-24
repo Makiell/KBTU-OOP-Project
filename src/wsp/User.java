@@ -10,6 +10,8 @@ import database.Database;
 
 public abstract class User implements Serializable {
 	
+	private static final long serialVersionUID = -2636065254513175824L;
+	
 	private int id = 1;
 	private String username;
 	private String password;

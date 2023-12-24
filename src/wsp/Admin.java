@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 import database.Database;
+import database.Log;
 import utils.StaticMethods;
 import enums.*;
 
@@ -21,254 +22,52 @@ public class Admin extends User implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void addStudent() {
-		Scanner in = new Scanner(System.in);
+	public void addResearcher() {
+		String[] options = new String[] {
+				"Add researcher to existing user", "Create researcher from new user"
+		};
 		
-		System.out.println("Enter username:");
-        String username = in.nextLine();
-
-        System.out.println("Enter password:");
-        String password = in.nextLine();
-
-        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
-
-        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
-        
-        System.out.println("Choose faculty:");
-        
-        Faculty[] options = Faculty.values();
-        
-        StaticMethods.printList(List.of(options));
-        
-        int facultyChoice = StaticMethods.validate(options.length);
-        
-        if(facultyChoice == 0) {
-        	return;
-        }
-        
-        Faculty faculty = options[facultyChoice-1];
-        
-        Student newStudent = new Student(username, password, firstName, lastName, faculty);
+		StaticMethods.printList(List.of(options));
 		
-        Database.getInstance().addStudent(newStudent);
-        
-        System.out.println("Student added " + newStudent);
-        
+		System.out.println("What do you want to do?");
+		int choice = StaticMethods.validate(1, 2);
+		
+		if(choice == 1) {
+			StaticMethods.printList(Database.getInstance().getUsers());
+			System.out.println("Choose user:");
+			
+			int userChoice = StaticMethods.validate(1, Database.getInstance().getUsers().size());
+			
+			Researcher r = new Researcher(Database.getInstance().getUsers().get(userChoice-1));
+			
+			Database.getInstance().addResearcher(r);
+		}
+		else if(choice == 2) {
+			
+			System.out.println("Which user do you want to create?");
+			
+			String[] optionsToCreate = new String[] {
+					"Student", "Graduate Student", "Employee", "Teacher", "Manager", "Tech Support Specialist", "Dean", 
+			};
+			
+			StaticMethods.printList(List.of(optionsToCreate));
+			int choiceUser = StaticMethods.validate(1, optionsToCreate.length);
+			
+			if(choice>=1 && choice<=2) {
+				StudentFactory studentFactory = new StudentFactory();
+				Student newStudent = studentFactory.getStudent(choiceUser);
+				Researcher r = new Researcher(newStudent);
+				Database.getInstance().addResearcher(r);
+			}
+			else if(choice>=3) {
+				EmployeeFactory employeeFactory = new EmployeeFactory();
+				Employee newEmployee = employeeFactory.getEmployee(choice);
+				Researcher r = new Researcher(newEmployee);
+				Database.getInstance().addResearcher(r);
+			}
+		}
 	}
-	
-	public void addGraduateStudent() {
-		Scanner in = new Scanner(System.in);
-		
-		System.out.println("Enter username:");
-        String username = in.nextLine();
 
-        System.out.println("Enter password:");
-        String password = in.nextLine();
-
-        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
-
-        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
-        
-        System.out.println("Choose faculty:");
-        
-        Faculty[] options = Faculty.values();
-        
-        StaticMethods.printList(List.of(options));
-        
-        int facultyChoice = StaticMethods.validate(options.length);
-        
-        Faculty faculty = options[facultyChoice-1];
-        
-        if(facultyChoice == 0) {
-        	return;
-        }
-        
-        Grade[] optionsGrade = Grade.values();
-        
-        StaticMethods.printList(List.of(optionsGrade));
-        
-        int gradeChoice = StaticMethods.validate(optionsGrade.length);
-        
-        if(facultyChoice == 0) {
-        	return;
-        }
-        
-        Grade grade = optionsGrade[gradeChoice-1];
-        
-        Student newGraduateStudent = new GraduateStudent(username, password, firstName, lastName, faculty, grade);
-		
-        Database.getInstance().addStudent(newGraduateStudent);
-        
-        System.out.println("Student added " + newGraduateStudent);
-        
-	}
-	
-	public void addEmployee() {
-		Scanner in = new Scanner(System.in);
-		
-		System.out.println("Enter username:");
-        String username = in.nextLine();
-
-        System.out.println("Enter password:");
-        String password = in.nextLine();
-
-        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
-
-        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
-        
-        Employee newEmployee = new Employee(username, password, firstName, lastName);
-		
-        Database.getInstance().addEmployee(newEmployee);
-        
-        System.out.println("Employee added " + newEmployee);
-        
-	}
-	
-	public void addTeacher() {
-		Scanner in = new Scanner(System.in);
-		
-		System.out.println("Enter username:");
-        String username = in.nextLine();
-
-        System.out.println("Enter password:");
-        String password = in.nextLine();
-
-        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
-
-        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
-        
-        System.out.println("Choose faculty:");
-        
-        Faculty[] options = Faculty.values();
-        
-        StaticMethods.printList(List.of(options));
-        
-        int facultyChoice = StaticMethods.validate(options.length);
-        
-        if(facultyChoice == 0) {
-        	return;
-        }
-        
-        Faculty faculty = options[facultyChoice-1];
-        
-        TeacherTitle[] optionsTitle = TeacherTitle.values();
-        
-        StaticMethods.printList(List.of(optionsTitle));
-        
-        int titleChoice = StaticMethods.validate(optionsTitle.length);
-        
-        if(titleChoice == 0) {
-        	return;
-        }
-        
-        TeacherTitle title = optionsTitle[titleChoice-1];
-        
-        Teacher newTeacher = new Teacher(username, password, firstName, lastName, title, faculty);
-		
-        Database.getInstance().addEmployee(newTeacher);
-        
-        System.out.println("Teacher added " + newTeacher);
-	}
-	
-	public void addManager() {
-		Scanner in = new Scanner(System.in);
-		
-		System.out.println("Enter username:");
-        String username = in.nextLine();
-
-        System.out.println("Enter password:");
-        String password = in.nextLine();
-
-        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
-
-        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
-        
-        System.out.println("Choose type:");
-        
-        TypeManager[] options = TypeManager.values();
-        
-        StaticMethods.printList(List.of(options));
-        
-        int choice = StaticMethods.validate(options.length);
-        
-        if(choice == 0) {
-        	return;
-        }
-        
-        TypeManager title = options[choice-1];
-        
-        Manager newManager = new Manager(username, password, firstName, lastName, title);
-		
-        Database.getInstance().addEmployee(newManager);
-        
-        System.out.println("Manager added " + newManager);
-	}
-	
-	
-	public void addTechSupport() {
-		Scanner in = new Scanner(System.in);
-		
-		System.out.println("Enter username:");
-        String username = in.nextLine();
-
-        System.out.println("Enter password:");
-        String password = in.nextLine();
-
-        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
-
-        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
-        
-        TechSupportSpecialist newTechSupport = new TechSupportSpecialist(username, password, firstName, lastName);
-		
-        Database.getInstance().addEmployee(newTechSupport);
-        
-        System.out.println("Tech Support added " + newTechSupport);
-	}
-	
-	
-	public void addDean() {
-		Scanner in = new Scanner(System.in);
-		
-		Faculty[] options = Faculty.values();
-        
-        StaticMethods.printList(List.of(options));
-        
-        int facultyChoice = StaticMethods.validate(options.length);
-        
-        if(facultyChoice == 0) {
-        	return;
-        }
-        
-        Faculty faculty = options[facultyChoice-1];
-        
-        Vector<Employee> employees = Database.getInstance().getEmployees();
-        boolean deanExists = employees.stream()
-        		.filter(employee -> employee instanceof Dean)
-        		.map(employee -> (Dean) employee)
-        		.anyMatch(dean -> dean.getFaculty() == faculty);
-        
-        if(deanExists) {
-        	System.out.println("Dean of the " + faculty + " already exists!");
-        	return;
-        }
-		
-		System.out.println("Enter username:");
-        String username = in.nextLine();
-
-        System.out.println("Enter password:");
-        String password = in.nextLine();
-
-        String firstName = StaticMethods.getValidInput("Enter first name:", "[a-zA-Z]+");
-
-        String lastName = StaticMethods.getValidInput("Enter last name:", "[a-zA-Z]+");
-        
-        Dean newDean = new Dean(username, password, firstName, lastName, faculty);
-		
-        Database.getInstance().addEmployee(newDean);
-        
-        System.out.println("Dean added " + newDean);
-	}
-	
 	
 	public void createUser() {
 		System.out.println("Which user do you want to create?");
@@ -283,26 +82,16 @@ public class Admin extends User implements Serializable {
 		if(choice == 0) {
 			return;
 		}
-		else if(choice == 1) {
-			addStudent();
+		else if(choice>=1 && choice<=2) {
+			StudentFactory studentFactory = new StudentFactory();
+			studentFactory.getStudent(choice);
 		}
-		else if(choice == 2) {
-			addGraduateStudent();
+		else if(choice == 3) {
+			addResearcher();
 		}
-		else if(choice == 4) {
-			addEmployee();
-		}
-		else if(choice == 5) {
-			addTeacher();
-		}
-		else if(choice == 6) {
-			addManager();
-		}
-		else if(choice == 7) {
-			addTechSupport();
-		}
-		else if(choice == 8) {
-			addDean();
+		else if(choice >= 4) {
+			EmployeeFactory employeeFactory = new EmployeeFactory();
+			employeeFactory.getEmployee(choice);
 		}
 	}
 	
@@ -343,6 +132,32 @@ public class Admin extends User implements Serializable {
 		
 		
 	}
+	
+	public void seeLogFiles() {
+		System.out.println("Enter 0 to return back");
+		System.out.println("Choose user to see logs:");
+		
+		Vector<User> users = Database.getInstance().getUsers();
+		
+		StaticMethods.printList(users);
+		
+		int choice = StaticMethods.validate(users.size());
+		
+		if(choice==0) {
+			return;
+		}
+		
+		User u = users.get(choice-1);
+		
+		Vector<Log> logs = Database.getInstance().seeLogs(u);
+				
+		if(logs==null) {
+			System.out.println("No logs for this user.");
+			return;
+		}
+		
+		StaticMethods.printList(logs);
+	}
 
 	@Override
 	public void viewMenu() {
@@ -372,9 +187,9 @@ public class Admin extends User implements Serializable {
 			else if(choice == 4) {
 				removeUser();
 			}
-			//else if (choice == 5) {
-				//seeLogFiles();
-			//}
+			else if (choice == 5) {
+				seeLogFiles();
+			}
 			else if (choice == 6) {
 				viewOneNews();
 			}

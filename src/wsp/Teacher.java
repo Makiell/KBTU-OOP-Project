@@ -278,15 +278,27 @@ public class Teacher extends Employee implements Serializable {
     @Override
     public void viewMenu() {
     	
-    	String[] options = new String[] { "View courses", "View students", "View marks","Put marks",
-    										"View rate","View one News", "Send order", "Send request", "Exit" };
+    	
+    	
+    	String[] options;
+    	
+    	Researcher researcher = Database.getInstance().isResearcher(this);
+    	
+    	if(researcher == null) {
+    		options = new String[] { "View courses", "View students", "View marks","Put marks",
+					"View rate","View one News", "Send order", "Send request", "Exit" };
+    	}
+    	else {
+    		options = new String[] { "View courses", "View students", "View marks","Put marks",
+					"View rate","View one News", "Send order", "Send request", "Exit", "View researcher menu"};
+    	}
     	
     	
     	while (true) {
     		System.out.println();
     		System.out.println("----Teacher Menu----");
     		StaticMethods.printList(List.of(options));
-        	int choice = StaticMethods.validate(options.length);
+        	int choice = StaticMethods.validate(1, options.length);
     		
     		if (choice == 1) {
     			viewCourses();
@@ -312,7 +324,7 @@ public class Teacher extends Employee implements Serializable {
     		else if (choice == 8) {
     			sendRequest();
     		}
-    		else if (choice == 9 || choice == 0) {
+    		else if (choice == 9) {
     			try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -321,6 +333,11 @@ public class Teacher extends Employee implements Serializable {
 				}
 				break;
     		}
+    		else if(researcher != null) {
+				if(choice == 10) {
+					researcher.viewMenu();
+				}
+			}
     	}
     }
 

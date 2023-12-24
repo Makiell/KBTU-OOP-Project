@@ -25,7 +25,7 @@ public class Database implements Serializable {
     private Vector<News> news = new Vector<News>();
     private Vector<Request> requests = new Vector<Request>();
     private Vector<Order> orders = new Vector<Order>();
-    private HashMap<User, Vector<Log>> userLogs;
+    private HashMap<User, Vector<Log>> userLogs = new HashMap<User, Vector<Log>>();
     private Vector<Researcher> researchers = new Vector<Researcher>();
     private Vector<Organisation> organisations = new Vector<Organisation>();;
 
@@ -217,11 +217,28 @@ public class Database implements Serializable {
         addUser(a);
     }
     public void addLog(User u, Log l) {
-        Vector<Log> logs = this.userLogs.get(u);
-        if (logs == null) {
+    	Vector<Log> logs;
+    	if (this.userLogs.get(u) == null) {
             logs = new Vector<>();
         }
+    	else {
+    		logs = this.userLogs.get(u);
+    	}
+         
         logs.add(l);
         this.userLogs.put(u, logs);
     }
+    
+    public Vector<Log> seeLogs(User u){
+    	return userLogs.get(u);
+    }
+    
+    public Researcher isResearcher(User u) {
+		for(Researcher r : researchers) {
+			if(r.getUser() == u) {
+				return r;
+			}
+		}
+		return null;
+	}
 }

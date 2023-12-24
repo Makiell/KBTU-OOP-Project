@@ -4,6 +4,7 @@ import utils.Order;
 import utils.StaticMethods;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 import enums.Status;
@@ -52,16 +53,29 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     }
     
     public void viewMenu() {
-    	while(true) {
-    		String[] options = new String[] {"View orders",
+    	
+    	String[] options;
+    	
+    	Researcher researcher = Database.getInstance().isResearcher(this);
+    	
+    	if(researcher == null) {
+    		options = new String[] {"View orders",
     				"Accept order", "Reject order", "Exit" };
-    		System.out.println("Tech support specialist menu");
-    		for(int i = 0; i < options.length; i++) {
-    			System.out.println(i + 1 + ". " + options[i]);
-    		}
+    	}
+    	else {
+    		options = new String[] {"View orders",
+    				"Accept order", "Reject order", "Exit", "View researcher menu"};
+    	}
+    	
+    	
+    	while(true) {
+    		 
+    		System.out.println("----Tech support specialist menu----");
+    		
+    		StaticMethods.printList(List.of(options));
     		
     		System.out.println("Enter your choice: ");
-    		int choice = StaticMethods.validate(options.length);
+    		int choice = StaticMethods.validate(1, options.length);
     		
     		if(choice == 1) {
     			this.viewOrders();
@@ -85,6 +99,11 @@ public class TechSupportSpecialist extends Employee implements Serializable {
 				}
     			break;
     		}
+    		else if(researcher != null) {
+				if(choice == 5) {
+					researcher.viewMenu();
+				}
+			}
     	}
     }
     

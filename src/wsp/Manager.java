@@ -229,13 +229,7 @@ public class Manager extends Employee{
 		
 		System.out.println("Which teacher would you like to assign the " + course.getName() + " course to?");
 		
-		Vector<Employee> dbemployees = Database.getInstance().getEmployees();
-        Vector<Teacher> teachers = new Vector<>();
-        for(Employee e: dbemployees){
-            if(e instanceof Teacher){
-                teachers.add((Teacher) e);
-            }
-        }
+		Vector<Teacher> teachers = Database.getInstance().getTeachers();
 		
 		StaticMethods.printList(teachers);
 		
@@ -257,14 +251,7 @@ public class Manager extends Employee{
 		System.out.println("Enter 0 to return back.");
 		System.out.println("To which teacher would you like to add the lesson?");
 
-        Vector<Employee> dbemployees = Database.getInstance().getEmployees();
-        Vector<Teacher> teachers = new Vector<>();
-        for(Employee e: dbemployees){
-            if(e instanceof Teacher){
-                teachers.add((Teacher) e);
-            }
-        }
-
+        Vector<Teacher> teachers = Database.getInstance().getTeachers();
 
         StaticMethods.printList(teachers);
 		
@@ -333,30 +320,35 @@ public class Manager extends Employee{
 	}
 
 	public void viewTeachers() {
-        Vector<Employee> dbemployees = Database.getInstance().getEmployees();
-        Vector<Teacher> teachers = new Vector<>();
-        for(Employee e: dbemployees){
-            if(e instanceof Teacher){
-                teachers.add((Teacher) e);
-            }
-        }
 
+        Vector<Teacher> teachers = Database.getInstance().getTeachers();
 
         StaticMethods.printList(teachers);
         Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " viewed all Teachers"));
 	}
 
 	public void viewMenu() {
+		String[] options;
+		
+    	Researcher researcher = Database.getInstance().isResearcher(this);
 		while (true) {
-			String[] options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
-					"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers",
-					"Exit" };
 			
-			System.out.println("\nManager Menu:");
+			if(researcher == null) {
+				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
+						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers",
+						"Exit" };
+			}
+			else {
+				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
+						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers",
+						"Exit", "View researcher menu"};
+			}
+			
+			System.out.println("----Manager Menu----");
 			StaticMethods.printList(List.of(options));
 			
 			System.out.print("Enter your choice: ");
-			int choice = StaticMethods.validate(options.length);
+			int choice = StaticMethods.validate(1, options.length);
 			
 			if (choice == 1) {
 				createStatisticReport();
@@ -385,7 +377,7 @@ public class Manager extends Employee{
 			else if (choice == 9) {
 				viewTeachers();
 			} 
-			else if (choice == 10 || choice == 0) {
+			else if (choice == 10) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -393,6 +385,11 @@ public class Manager extends Employee{
 					e.printStackTrace();
 				}
 				break;
+			}
+			else if(researcher != null) {
+				if(choice == 11) {
+					researcher.viewMenu();
+				}
 			}
 		}
 	}

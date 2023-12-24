@@ -1,5 +1,6 @@
 package wsp;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -108,14 +109,55 @@ public class GraduateStudent extends Student implements Serializable {
 
     @Override
     public void viewMenu() {
-        super.viewMenu();
-    }
+    	
+    	Researcher researcher = Database.getInstance().isResearcher(this);
+    	
+    	while (true) {
+        	String[] options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
+					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "View one News", "Exit", "View researcher menu" };
+			
+            System.out.println("\n----Graduate student Menu----");
+            StaticMethods.printList(List.of(options));
 
+            System.out.print("Enter your choice:");
+            int choice = StaticMethods.validate(1, options.length);
 
-
-    public int compareTo(GraduateStudent s) {
-
-        return super.compareTo(s);
+            if (choice == 1) {
+                viewTranscript();
+            }
+            else if (choice == 2) {
+                viewMarks();
+            }
+            else if (choice == 3) {
+                getCourseFromDB();
+            }
+            else if (choice == 4) {
+                viewTeacherForCourse();
+            }
+            else if (choice == 5) {
+                viewCourses();
+            } else if (choice == 6) {
+                rateTeachers();
+            }
+            else if (choice == 7) {
+                organisationMenu();
+            }
+            else if (choice == 8) {
+                viewOneNews();
+            }
+            else if (choice == 9) {
+                try {
+                    Database.getInstance().saveDatabase();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                break;
+            }
+            else if(choice == 10) {
+            	researcher.viewMenu();
+            }
+        }
     }
 
 }

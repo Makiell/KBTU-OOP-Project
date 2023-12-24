@@ -102,7 +102,7 @@ public class Dean extends Teacher implements Serializable {
         }
 
         Request selectedRequest = requests.get(choice-1);
-        selectedRequest.setStatus(Status.DONE);
+        selectedRequest.setStatus(Status.ACCEPTED);
         requests.remove(selectedRequest);
         
         System.out.println("Dean signed request: " + selectedRequest);
@@ -111,14 +111,24 @@ public class Dean extends Teacher implements Serializable {
     }
 
     public void viewMenu() {
-        String[] options = new String[]{"View all requests", "Sign Requests", "View one News", "Exit"};
+    	String[] options;
+    	
+    	Researcher researcher = Database.getInstance().isResearcher(this);
+    	
+    	if(researcher == null) {
+    		 options = new String[]{"View all requests", "Sign Requests", "View one News", "Exit"};
+    	}
+    	else {
+    		 options = new String[]{"View all requests", "Sign Requests", "View one News", "Exit", "View researcher menu"};
+    	}
+       
 
         while (true) {
             System.out.println();
             System.out.println("----Dean Menu----");
             StaticMethods.printList(List.of(options));
 
-            int choice = StaticMethods.validate(options.length);
+            int choice = StaticMethods.validate(1, options.length);
             
             if(choice == 1) {
             	viewRequests();
@@ -129,7 +139,7 @@ public class Dean extends Teacher implements Serializable {
             else if (choice == 3) {
             	viewOneNews();
             }
-            else if (choice == 4 || choice == 0) {
+            else if (choice == 4) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -137,7 +147,11 @@ public class Dean extends Teacher implements Serializable {
                 }
                 break;
             }
-            
+            else if(researcher != null) {
+				if(choice == 5) {
+					researcher.viewMenu();
+				}
+			}
         }
     }
 

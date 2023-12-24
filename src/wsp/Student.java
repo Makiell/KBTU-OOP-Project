@@ -11,8 +11,11 @@ import wsp.*;
 import enums.*;
 
 public class Student extends User implements Serializable, Comparable<Student> {
+	
+	private static final long serialVersionUID = -1763612314337268589L;
+	
     Vector<Course> courses;
-    double gpa = Double.parseDouble(null);
+    Double gpa = null;
     HashMap<Course, Mark> transcript;
     Faculty faculty;
     //	Vector<Journal> journals;
@@ -38,7 +41,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
         return gpa;
     }
 
-    public void setGpa(Integer gpa) {
+    public void setGpa(Double gpa) {
         this.gpa = gpa;
     }
 
@@ -216,25 +219,24 @@ public class Student extends User implements Serializable, Comparable<Student> {
 
     public void rateTeachers() {
         System.out.println("All Teachers:");
-        Vector<Employee> dbemployees = Database.getInstance().getEmployees();
-        Vector<Teacher> teachers = new Vector<>();
-        for(Employee e: dbemployees){
-            if(e instanceof Teacher){
-                teachers.add((Teacher) e);
-            }
-        }
-        for(Teacher t : teachers){
-            StaticMethods.printList(teachers);
-        }
+        Vector<Teacher> teachers = Database.getInstance().getTeachers();
+
+        StaticMethods.printList(teachers);
 
         System.out.println("Please select the teacher you want to evaluate:");
-        int teacherchoice = StaticMethods.validate(teachers.size());
+        
+        int teacherchoice = StaticMethods.validate(1, teachers.size());
         Teacher teacher = teachers.get(teacherchoice - 1);
+        
         System.out.println("Your assessment of this teacher:");
+        
         int rate = StaticMethods.validate(10);
+        
         teacher.setRate(rate);
+        
         Database.getInstance().addLog(this, new Log("Student " + " appreciated teacher " + teacher.getFirstName() + " " + teacher.getLastName()));
     }
+    
     public void organisationMenu() {
         System.out.println("Please enter your choice:");
         System.out.println("1 - Join in a organisation");
@@ -345,16 +347,25 @@ public class Student extends User implements Serializable, Comparable<Student> {
 
     public void viewMenu() {
         while (true) {
-            String[] options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-                    "View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation","View one News", "Exit" };
-
-            System.out.println("\nStudent Menu:");
-            for (int i = 0; i < options.length; i++) {
-                System.out.println((i + 1) + ". " + options[i]);
-            }
+        	String[] options;
+			
+			Researcher researcher = Database.getInstance().isResearcher(this);
+			
+			if(researcher != null) {
+				
+				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
+						"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "View one News", "Exit", "View researcher menu" };
+			}
+			else {
+				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
+						"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "View one News", "Exit" };
+			}
+			
+            System.out.println("\n----Student Menu----");
+            StaticMethods.printList(List.of(options));
 
             System.out.print("Enter your choice: ");
-            int choice = StaticMethods.validate(options.length);
+            int choice = StaticMethods.validate(1, options.length);
 
             if (choice == 1) {
                 viewTranscript();
@@ -365,7 +376,6 @@ public class Student extends User implements Serializable, Comparable<Student> {
             else if (choice == 3) {
                 getCourseFromDB();
             }
-
             else if (choice == 4) {
                 viewTeacherForCourse();
             }
@@ -380,7 +390,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
             else if (choice == 8) {
                 viewOneNews();
             }
-            else if (choice == 9 || choice == 0) {
+            else if (choice == 9) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -389,6 +399,11 @@ public class Student extends User implements Serializable, Comparable<Student> {
                 }
                 break;
             }
+            else if(researcher != null) {
+				if(choice == 10) {
+					researcher.viewMenu();
+				}
+			}
         }
     }
 
