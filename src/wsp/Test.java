@@ -25,11 +25,7 @@ public class Test {
 //        Admin s = new Admin("bac", "a", null, null);
 //        Database.getInstance().addAdmin(s);
 //		Database.getInstance().addUser(s);
-//		Database.getInstance().login();
-		
-		Student s = new Student("s", "s", "s", "s", null);
-		
-		s.viewMenu();
+		Database.getInstance().login();
 		
 	}
 

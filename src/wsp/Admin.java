@@ -103,31 +103,6 @@ public class Admin extends User implements Serializable {
         
 	}
 	
-	public void addResearcher() {
-		String[] options = new String[] {
-				"Add researcher to existing user", "Create researcher from new user"
-		};
-		
-		StaticMethods.printList(List.of(options));
-		
-		System.out.println("What do you want to do?");
-		int choice = StaticMethods.validate(1, 2);
-		
-		if(choice == 1) {
-			StaticMethods.printList(Database.getInstance().getUsers());
-			System.out.println("Choose user:");
-			
-			int userChoice = StaticMethods.validate(1, Database.getInstance().getUsers().size());
-			
-			Researcher r = new Researcher(Database.getInstance().getUsers().get(userChoice-1));
-			
-			Database.getInstance().addResearcher(r);
-		}
-		else if(choice == 2) {
-			createUser();
-		}
-	}
-	
 	public void addEmployee() {
 		Scanner in = new Scanner(System.in);
 		
@@ -313,9 +288,6 @@ public class Admin extends User implements Serializable {
 		}
 		else if(choice == 2) {
 			addGraduateStudent();
-		}
-		else if(choice == 3) {
-			addResearcher();
 		}
 		else if(choice == 4) {
 			addEmployee();
