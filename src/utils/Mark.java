@@ -56,9 +56,7 @@ public class Mark implements Serializable {
 		if(sum>=50) {
 			return 1.0;
 		}
-		if(sum<50) {
-			return 0;
-		}
+        return 0.0;
 		return 0;
 	}
 

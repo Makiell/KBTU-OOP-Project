@@ -130,12 +130,11 @@ public class Dean extends Teacher implements Serializable {
             	viewOneNews();
             }
             else if (choice == 4 || choice == 0) {
-            	try {
-					Database.getInstance().saveDatabase();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                try {
+                    Database.getInstance().saveDatabase();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             }
             

@@ -110,6 +110,12 @@ public class GraduateStudent extends Student implements Serializable {
     public void viewMenu() {
         super.viewMenu();
     }
-    
-    
+
+
+
+    public int compareTo(GraduateStudent s) {
+
+        return super.compareTo(s);
+    }
+
 }
