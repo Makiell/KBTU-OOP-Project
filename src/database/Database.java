@@ -221,4 +221,13 @@ public class Database implements Serializable {
 		this.admins.add(a);
 		addUser(a);
 	}
+	
+	public Researcher isResearcher(User u) {
+		for(Researcher r : researchers) {
+			if(r.getUser() == u) {
+				return r;
+			}
+		}
+		return null;
+	}
 }

@@ -174,17 +174,6 @@ public class Student extends User implements Serializable {
 		System.out.println("Course " + course.getName() + " registration successful!");
 	}
 
-	/*
-	 * public void viewTeacherForCourse(Course course) { if
-	 * (!courses.contains(course)) {
-	 * System.out.println("Student not registered for this course"); return; }
-	 * Vector<Teacher> teachers = course.getTeachers(); if (teachers == null ||
-	 * teachers.isEmpty()) { System.out.println("No teachers"); return; }
-	 * System.out.println("Teachers for course " + course.getName() + ":"); for
-	 * (Teacher teacher : teachers) { System.out.println(teacher.getName() + " (" +
-	 * teacher.getRole() + ")"); } }
-	 */
-	
 	public void viewTeacherForCourse() {
 		
 		if(courses.isEmpty()) {
@@ -339,8 +328,21 @@ public class Student extends User implements Serializable {
 
 	public void viewMenu() {
 		while (true) {
-			String[] options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation","View one News", "Exit" };
+			
+			String[] options;
+			
+			Researcher researcher = new Researcher(this);
+			
+			if(researcher != null) {
+				
+				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
+						"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation","View one News", "Exit", "View researcher menu" };
+			}
+			else {
+				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
+						"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation","View one News", "Exit" };
+			}
+			
 			
 			System.out.println("\nStudent Menu:");
 			for (int i = 0; i < options.length; i++) {
@@ -348,7 +350,7 @@ public class Student extends User implements Serializable {
 			}
 			
 			System.out.print("Enter your choice: ");
-			int choice = StaticMethods.validate(options.length);
+			int choice = StaticMethods.validate(1, options.length);
 			
 			if (choice == 1) {
 				viewTranscript();
@@ -373,7 +375,7 @@ public class Student extends User implements Serializable {
 			else if (choice == 8) {
 				viewOneNews();
 			}
-			else if (choice == 9 || choice == 0) {
+			else if (choice == 9) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -381,6 +383,11 @@ public class Student extends User implements Serializable {
 					e.printStackTrace();
 				}
 				break;
+			}
+			else if(researcher != null) {
+				if(choice == 10) {
+					researcher.viewMenu();
+				}
 			}
 		}
 	}
