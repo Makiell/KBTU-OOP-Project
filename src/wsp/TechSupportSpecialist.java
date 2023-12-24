@@ -55,7 +55,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	while(true) {
     		String[] options = new String[] {"View orders",
     				"Accept order", "Reject order", "Exit" };
-    		System.out.println("/nTech support specialist menu");
+    		System.out.println("Tech support specialist menu");
     		for(int i = 0; i < options.length; i++) {
     			System.out.println(i + 1 + ". " + options[i]);
     		}

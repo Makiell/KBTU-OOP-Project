@@ -16,7 +16,7 @@ public class ResearchJournal implements Serializable, Observed {
 	
 	public void addPaper(ResearchPaper paper) {
 		this.papers.add(paper);
-		this.notifyObservers();
+		this.notifyObservers(paper);
 	}
 	
 	public void removePaper(ResearchPaper paper) {
@@ -24,20 +24,22 @@ public class ResearchJournal implements Serializable, Observed {
 	}
 	
 	@Override
-	public void addObserver(Observer observer) {
-		this.subscribers.add((User) observer);
+	public void addObserver(User observer) {
+		this.subscribers.add(observer);
 		
 	}
 	@Override
-	public void removeObserver(Observer observer) {
-		this.subscribers.remove((User) observer);
+	public void removeObserver(User observer) {
+		this.subscribers.remove(observer);
 		
 	}
+	
 	@Override
-	public void notifyObservers() {
-		for(Observer observer: subscribers) {
-			observer.handleEvent(this.papers);
+	public void notifyObservers(ResearchPaper paper) {
+		for(User u: subscribers) {
+			u.handleEvent(paper);
 		}
 		
 	}
+
 }

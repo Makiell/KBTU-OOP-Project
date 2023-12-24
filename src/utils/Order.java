@@ -18,7 +18,6 @@ public class Order implements Serializable {
         this.to = to;
         to.getOrders().add(this);
     }
-  
 
     public Status getStatus() {
         return status; }
