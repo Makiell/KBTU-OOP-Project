@@ -43,6 +43,18 @@ public class Student extends User implements Serializable, Comparable<Student> {
     public void setGpa(Double gpa) {
         this.gpa = gpa != null ? gpa : 0.0;
     }
+    
+    public void calculateGpa() {
+    	double sum = 0;
+    	double sumCredit = 0;
+    	for(Map.Entry<Course, Mark> entry: transcript.entrySet()) {
+    		Mark mark = entry.getValue();
+    		Course course = entry.getKey();
+    		sum += mark.getGpa()*course.getCredits();
+    		sumCredit += course.getCredits();
+    	}
+    	this.gpa = sum / sumCredit;
+    }
 
     public Map<Course, Mark> getTranscript() {
         return transcript;
@@ -74,7 +86,6 @@ public class Student extends User implements Serializable, Comparable<Student> {
                 + ", gpa=" + gpa + ", transcript=" + transcript + ", faculty=" + faculty + ", organisation="
                 + organisation + "] " + super.toString();
     }
-
 
     public int compareTo(Student s) {
         if(this.gpa > s.gpa) return 1;

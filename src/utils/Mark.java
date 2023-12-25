@@ -11,7 +11,6 @@ public class Mark implements Serializable {
 	private Double attestation2;
 	private Double finalExam;
 	
-	
 	public Mark() {
 		this.attestation1 = null;
 		this.attestation2 = null;

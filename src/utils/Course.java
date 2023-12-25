@@ -57,6 +57,10 @@ public class Course implements Serializable {
 	public void addTeacher(Teacher t) {
 		this.teachers.add(t);
 	}
+	
+	public int getCredits() {
+		return this.credits;
+	}
 
 
 	@Override
