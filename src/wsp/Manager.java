@@ -54,7 +54,7 @@ public class Manager extends Employee{
         Researcher maxResearcher = researchers.get(0);
         for(int i  = 1; i < researchers.size(); i++){
             Researcher curResearcher = researchers.get(i);
-            if(curResearcher.gethIndex() > maxResearcher.gethIndex()){
+            if(curResearcher.calculatehIndex() > maxResearcher.calculatehIndex()){
                 maxResearcher = curResearcher;
             }
         }
