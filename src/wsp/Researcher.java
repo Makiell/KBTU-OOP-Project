@@ -10,7 +10,7 @@ import database.Database;
 import utils.*;
 
 public class Researcher<T> implements Serializable {
-	
+    private static final long serialVersionUID = -8619146448875960868L;
 	private T user;
 	private Vector<ResearchProject> projects;
 	private Vector<ResearchPaper> papers;
@@ -39,6 +39,9 @@ public class Researcher<T> implements Serializable {
 	public void setUser(T user) {
 		this.user = user;
 	}
+    public int gethIndex(){
+        return hIndex;
+    }
 	
 	public void viewPapers() {
 		

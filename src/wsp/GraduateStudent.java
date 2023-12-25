@@ -144,6 +144,7 @@ public class GraduateStudent extends Student implements Serializable {
             }
             else if (choice == 8) {
                 viewOneNews();
+                Database.getInstance().addLog(this, new Log("Graduate Student " + this.getUsername() + " viewed a one News"));
             }
             else if (choice == 9) {
                 try {
@@ -156,6 +157,7 @@ public class GraduateStudent extends Student implements Serializable {
             }
             else if(choice == 10) {
             	researcher.viewMenu();
+                Database.getInstance().addLog(this, new Log("Graduate Student " + this.getUsername() + " went to the researcher menu"));
             }
         }
     }
