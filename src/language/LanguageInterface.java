@@ -10,8 +10,21 @@ public interface LanguageInterface {
     String[] teacherMenu();
     
     String[] teacherResearcherMenu();
-    
+    // Админ на русском языке
     String[] adminMenu();
+    
+    String[] addResearcherOptions();
+    void whatDoYouWantToDo();
+    void chooseUser();
+    void whichUserDoYouWantToCreate();
+    String[] addResearcherOptionsCreate();
+    String[] createUserOptions();
+    void enterReturnBack();
+    void updateUserWhichUserDoYouWantToChange();
+    void removeUserChooseUserToDelete();
+    void seeLogFilesChooseUserToSeeLogs();
+    void seeLogFilesNoLogsForThisUser();
+    
     
     String[] managerMenu();
     

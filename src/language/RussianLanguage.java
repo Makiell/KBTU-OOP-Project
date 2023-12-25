@@ -83,6 +83,77 @@ public class RussianLanguage implements LanguageInterface {
 				"7 - Выйти"
 		};
 	}
+	@Override
+	public String[] addResearcherOptions() {
+		// TODO Auto-generated method stub
+		return new String[] {
+				"Добавить исследователя к существующему пользователю", 
+				"Создать исследователя из нового пользователя"
+				};
+	}
+	@Override
+	public void whatDoYouWantToDo() {
+		// TODO Auto-generated method stub
+		System.out.println("Что вы хотите сделать?");
+	}
+
+	@Override
+	public void chooseUser() {
+		// TODO Auto-generated method stub
+		System.out.println("Выберите пользователя:");
+	}
+
+	@Override
+	public void whichUserDoYouWantToCreate() {
+		// TODO Auto-generated method stub
+		System.out.println("Какого пользователя вы хотите создать?");
+	}
+
+	@Override
+	public String[] addResearcherOptionsCreate() {
+		// TODO Auto-generated method stub
+		return new String[] {
+				"Студент","Аспирант","Сотрудник","Преподаватель","Руководитель","Специалист техподдержки","Декан"
+		};
+	}
+
+	@Override
+	public String[] createUserOptions() {
+		// TODO Auto-generated method stub
+		return new String[] {
+				"Студент","Аспирант","Сотрудник","Преподаватель","Руководитель","Специалист техподдержки","Декан"
+		};
+	}
+
+	@Override
+	public void enterReturnBack() {
+		// TODO Auto-generated method stub
+		System.out.println("Нажмите 0, чтобы вернуться назад.");
+	}
+
+	@Override
+	public void updateUserWhichUserDoYouWantToChange() {
+		// TODO Auto-generated method stub
+		System.out.println("Какого пользователя вы хотите изменить? нажмите 0, чтобы вернуться назад");
+	}
+
+	@Override
+	public void removeUserChooseUserToDelete() {
+		// TODO Auto-generated method stub
+		System.out.println("Выберите пользователя для удаления:");
+	}
+
+	@Override
+	public void seeLogFilesChooseUserToSeeLogs() {
+		// TODO Auto-generated method stub
+		System.out.println("Выберите пользователя для просмотра журналов:");
+	}
+
+	@Override
+	public void seeLogFilesNoLogsForThisUser() {
+		// TODO Auto-generated method stub
+		System.out.println("Для этого пользователя нет журналов.");
+	}
 
 	@Override
 	public String[] managerMenu() {
@@ -229,6 +300,4 @@ public class RussianLanguage implements LanguageInterface {
 				"6 - Выйти"
 		};
 	}
-
-	
 }
