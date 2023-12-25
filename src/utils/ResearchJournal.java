@@ -41,5 +41,9 @@ public class ResearchJournal implements Serializable, Observed {
 		}
 		
 	}
+	
+	public String toString() {
+		return "Journal " + name;
+	}
 
 }

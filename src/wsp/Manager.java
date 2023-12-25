@@ -45,11 +45,40 @@ public class Manager extends Employee{
 	}
 
 	public void createStatisticReport() {
-		
-//		Vector<Student> students = Database.getInstance().getStudents();
-		
-		
+        Vector<Student> students = Database.getInstance().getStudents();
+        Vector<Researcher> researchers = Database.getInstance().getResearchers();
+        int gpamax = 0;
+        int gpahigh = 0;
+        int gpamedium = 0;
+        int countother = 0;
+        Researcher maxResearcher = researchers.get(0);
+        for(int i  = 1; i < researchers.size(); i++){
+            Researcher curResearcher = researchers.get(i);
+            if(curResearcher.gethIndex() > maxResearcher.gethIndex()){
+                maxResearcher = curResearcher;
+            }
+        }
+        for(Student s: students){
+            if(s.getGpa() == 4.00){
+                gpamax++;
+            }
+            else if( s.getGpa() < 4.00 && s.getGpa() >= 3.00){
+                gpahigh++;
+            }
+            else if(s.getGpa() < 3.00 && s.getGpa() >= 2.00){
+                gpamedium++;
+            }
+            else if(s.getGpa() < 2.00){
+                countother++;
+            }
+        }
 
+		System.out.println("The number of students with GPA 4.0:" + gpamax);
+        System.out.println("The number of students with GPA from 3.99 to 3.00:" + gpahigh);
+        System.out.println("The number of students with GPA from 2.99 to 2.00:" + gpamedium);
+        System.out.println("The number of students with GPA is less than 2.00:" + countother);
+		System.out.println("The researcher with the highest H-index:" + maxResearcher.toString());
+        Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " created statistic report"));
 	}
 
 	public void addCourse() {
@@ -85,8 +114,8 @@ public class Manager extends Employee{
 		Database.getInstance().addCourse(newCourse);
 		
 		System.out.println("Course added " + newCourse);
-		
-		
+
+        Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " added new Course " + newCourse.getName()));
 
 	}
 	
@@ -153,13 +182,14 @@ public class Manager extends Employee{
 		News newNews = new News(topic, title, text);
 		
 		Database.getInstance().addNews(newNews);
+        Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " create new News"));
 	}
 
 	public void viewRequests() {
 		Vector<Request> dbrequests = Database.getInstance().getRequests();
 		System.out.println("List of Requests:");
 		StaticMethods.printList(dbrequests);
-        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " viewed all requests"));
+        Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " viewed all requests"));
 	}
 
 	public void editNews() {
@@ -188,21 +218,21 @@ public class Manager extends Employee{
 			String topic = s.nextLine();
 			news.setTopic(topic);
 			System.out.println("Update news:" + news.toString());
-            Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " updated the news topic " + news.getTitle()));
+            Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " updated the news topic " + news.getTitle()));
 		} 
 		else if (editchoice == 2) {
 			System.out.println("Enter new title:");
 			String title = s.nextLine();
 			news.setTitle(title);
 			System.out.println("Update news:" + news.toString());
-            Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " updated the news title " + news.getTitle()));
+            Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " updated the news title " + news.getTitle()));
 		} 
 		else if (editchoice == 3) {
 			System.out.println("Enter new text:");
 			String text = s.nextLine();
 			news.setText(text);
 			System.out.println("Update news:" + news.toString());
-            Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " updated the news text " + news.getTitle()));
+            Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " updated the news text " + news.getTitle()));
 		} 
 		else if (editchoice == 0) {
 			return;
@@ -244,7 +274,7 @@ public class Manager extends Employee{
 		teacher.getLessons().put(course, new Vector<Lesson>());
 		
 		System.out.println(course.getName() + " assigned to " + teacher.getFirstName() + " " + teacher.getLastName());
-        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " Assigned course " + course.getName() + " with teacher " + teacher.getFirstName() + " " + teacher.getLastName()));
+        Database.getInstance().addLog(this, new Log("Manager " + this.getUsername()+ " Assigned course " + course.getName() + " with teacher " + teacher.getFirstName() + " " + teacher.getLastName()));
 	}
 	
 	public void addLesson() {
@@ -310,21 +340,44 @@ public class Manager extends Employee{
 		teacher.getLessons().put(course, lessons);
 		
 		System.out.println("Added " + newLesson);
-        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " added Lesson " + newLesson));
+        Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " added Lesson " + newLesson));
 		
 	}
 
 	public void viewStudents() {
 		StaticMethods.printList(Database.getInstance().getStudents());
-        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " viewed all Students"));
+        Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " viewed all Students"));
 	}
 
 	public void viewTeachers() {
 
         Vector<Teacher> teachers = Database.getInstance().getTeachers();
+        
+        if(teachers.isEmpty()) {
+        	System.out.println("No teachers");
+        	return;
+        }
 
         StaticMethods.printList(teachers);
-        Database.getInstance().addLog(this, new Log("Manager " + getUsername() + " viewed all Teachers"));
+        Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " viewed all Teachers"));
+	}
+	
+	
+	public void createJournal() {
+		System.out.println("Enter 0 to return back");
+		System.out.println("Enter the name:");
+		Scanner in = new Scanner(System.in);
+		String name = in.nextLine();
+		if(name.equals("0")) {
+			return;
+		}
+		
+		ResearchJournal newJournal = new ResearchJournal(name);
+		
+		Database.getInstance().addJournal(newJournal);
+		
+		System.out.println("New journal created " + newJournal);
+        Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " created a Journal " + name));
 	}
 
 	public void viewMenu() {
@@ -335,12 +388,12 @@ public class Manager extends Employee{
 			
 			if(researcher == null) {
 				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
-						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers",
+						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers", "Create journal",
 						"Exit" };
 			}
 			else {
 				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
-						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers",
+						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers", "Create journal",
 						"Exit", "View researcher menu"};
 			}
 			
@@ -376,8 +429,11 @@ public class Manager extends Employee{
 			} 
 			else if (choice == 9) {
 				viewTeachers();
-			} 
+			}
 			else if (choice == 10) {
+				createJournal();
+			}
+			else if (choice == 11) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -387,8 +443,9 @@ public class Manager extends Employee{
 				break;
 			}
 			else if(researcher != null) {
-				if(choice == 11) {
+				if(choice == 12) {
 					researcher.viewMenu();
+                    Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " went to the researcher menu"));
 				}
 			}
 		}

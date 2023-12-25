@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import database.Database;
+import database.Log;
 import utils.*;
 import wsp.*;
 import enums.*;
@@ -72,6 +73,7 @@ public class Teacher extends Employee implements Serializable {
         for (Course course : courses) {
             System.out.println("- " + course.getName());
         }
+        Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " viewed his courses"));
     }
 
     public void viewStudents() {
@@ -105,6 +107,7 @@ public class Teacher extends Employee implements Serializable {
                 System.out.println("- " + student.getUsername());
             }
         }
+        Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " viewed students by course " + selectedCourse.getName()));
     }
 
     public void viewMarks() {
@@ -125,6 +128,8 @@ public class Teacher extends Employee implements Serializable {
         
         Course selectedCourse = courses.get(courseChoice-1);
         viewMarks(selectedCourse);
+
+
     }
 
 	
@@ -191,6 +196,7 @@ public class Teacher extends Employee implements Serializable {
                 System.out.println(student.getUsername() + ": " + (mark != null ? mark.toString() : "No marks"));
             }
         }
+        Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " viewed marks by course " + selectedCourse.getName()));
     }
 
     public void putMarks() {
@@ -245,36 +251,44 @@ public class Teacher extends Employee implements Serializable {
     	
     	Mark previousMark = selectedStudent.getTranscript().get(selectedCourse);
     	
-    	if(previousMark != null) {
+    	if(previousMark.getAtt() != null) {
     		System.out.println("Previous marks for student: " + selectedStudent.getUsername() + ": " + previousMark.toString());
     	}
     	else {
     		System.out.println("New marks for student: " + selectedStudent.getUsername());
     		
     		Scanner input = new Scanner(System.in);
+    		
         	while(true) {
-        		
-        		System.out.println("First attestation: ");
-        		double attestation1 = Math.abs(input.nextDouble());
-        		
-        		System.out.println("Second attestation: ");
-        		double attestation2 = Math.abs(input.nextDouble());
-        		
-        		System.out.println("Final exam: ");
-        		double finalExam = Math.abs(input.nextDouble());
-        		
-        		if(attestation1 + attestation2 > 60 || finalExam > 40) {
+        		try {
+        			System.out.println("First attestation: ");
+            		double attestation1 = Math.abs(input.nextDouble());
+            		
+            		System.out.println("Second attestation: ");
+            		double attestation2 = Math.abs(input.nextDouble());
+            		
+            		System.out.println("Final exam: ");
+            		double finalExam = Math.abs(input.nextDouble());
+            		
+            		if(attestation1 + attestation2 > 60 || finalExam > 40) {
+            			System.out.println("Error: please enter marks correctly!");
+            		}
+            		else {
+            			Mark newMark = new Mark(attestation1, attestation2, finalExam);
+            			selectedStudent.getTranscript().put(selectedCourse, newMark);
+            			System.out.println("The marks have been submitted succesfully");
+                        Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " gave the student " + selectedStudent.getUsername() + " by course " + selectedCourse.getName()));
+            			break;
+            		}
+        		}
+        		catch(InputMismatchException e) {
         			System.out.println("Error: please enter marks correctly!");
-        		}
-        		else {
-        			Mark newMark = new Mark(attestation1, attestation2, finalExam);
-        			selectedStudent.getTranscript().put(selectedCourse, newMark);
-        			System.out.println("The marks have been submitted succesfully");
-        			break;
-        		}
+        			input.nextLine();
+        		}	
         	}
     	}
     }
+    
     @Override
     public void viewMenu() {
     	
@@ -317,6 +331,7 @@ public class Teacher extends Employee implements Serializable {
     		}
     		else if (choice == 6) {
     			viewOneNews();
+                Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " viewed a one News"));
     		}
     		else if (choice == 7) {
     			sendOrder();
@@ -336,6 +351,7 @@ public class Teacher extends Employee implements Serializable {
     		else if(researcher != null) {
 				if(choice == 10) {
 					researcher.viewMenu();
+                    Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " went to the researcher menu"));
 				}
 			}
     	}
