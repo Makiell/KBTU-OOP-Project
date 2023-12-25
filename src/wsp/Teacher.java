@@ -17,14 +17,19 @@ public class Teacher extends Employee implements Serializable {
     private Vector <Course> courses = new Vector<Course>();
     private Faculty faculty;
     private Map<Course, Vector<Lesson>> lessons = new HashMap <Course, Vector<Lesson>>();
-    private double rate = 0.0;
+    private Vector<Double> rate;
 
 
     public Teacher(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,
                    Faculty faculty) {
         super(username, password, firstName, lastName);
         this.typeTeacher = typeTeacher;
+        if(typeTeacher == TeacherTitle.PROFESSOR) {
+        	Researcher<Teacher> researcher = new Researcher<>(this);
+            Database.getInstance().addResearcher(researcher);
+        }
         this.faculty = faculty;
+        this.rate = new Vector<>();
     }
 
 
@@ -45,7 +50,11 @@ public class Teacher extends Employee implements Serializable {
     }
 
     public double getRate() {
-        return rate;
+    	double sum = 0;
+    	for(Double i : this.rate) {
+    		sum += i;
+    	}
+        return sum/this.rate.size();
     }
 
     public void setTypeTeacher(TeacherTitle typeTeacher) {
@@ -65,7 +74,7 @@ public class Teacher extends Employee implements Serializable {
     }
 
     public void setRate(double rate) {
-        this.rate = rate;
+        this.rate.add(rate);
     }
 
     public void viewCourses() {
@@ -138,7 +147,7 @@ public class Teacher extends Employee implements Serializable {
     	System.out.println("What do you want to change?");
 		
 		String[] options = new String[] {
-				"Username", "Password", "First name", "Last name", "Rate"
+				"Username", "Password", "First name", "Last name"
 		};
 		
 		StaticMethods.printList(List.of(options));
@@ -166,19 +175,6 @@ public class Teacher extends Employee implements Serializable {
 		else if(choice == 4) {
 			String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
 			this.setLastName(lastName);
-		}
-		else if(choice == 5) {
-			System.out.println("Введите значение:");
-
-			while(true) {
-				if (in.hasNextDouble()) {
-	                double rate = in.nextDouble();
-	                this.rate = rate;
-	                return;
-	            } else {
-	                System.out.println("Enter valid data");
-	            }
-			}
 		}
     }
 
@@ -292,19 +288,17 @@ public class Teacher extends Employee implements Serializable {
     @Override
     public void viewMenu() {
     	
-    	
-    	
     	String[] options;
     	
     	Researcher researcher = Database.getInstance().isResearcher(this);
     	
     	if(researcher == null) {
-    		options = new String[] { "View courses", "View students", "View marks","Put marks",
-					"View rate","View one News", "Send order", "Send request", "Exit" };
+    		options = new String[] { "View courses", "View students", "View marks", "Put marks",
+					"View rate", "View one News", "Send order", "Send request", "Exit" };
     	}
     	else {
-    		options = new String[] { "View courses", "View students", "View marks","Put marks",
-					"View rate","View one News", "Send order", "Send request", "Exit", "View researcher menu"};
+    		options = new String[] { "View courses", "View students", "View marks", "Put marks",
+					"View rate", "View one News", "Send order", "Send request", "Exit", "View researcher menu"};
     	}
     	
     	
@@ -359,7 +353,7 @@ public class Teacher extends Employee implements Serializable {
 
 
     public void viewRate() {
-        System.out.println("Teacher's rating: " + rate);
+        System.out.println("Teacher's rating: " + this.getRate());
     }
 
 

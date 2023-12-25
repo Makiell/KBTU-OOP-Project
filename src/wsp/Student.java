@@ -18,7 +18,6 @@ public class Student extends User implements Serializable, Comparable<Student> {
     Double gpa = null;
     HashMap<Course, Mark> transcript;
     Faculty faculty;
-    //	Vector<Journal> journals;
     Organisation organisation;
 
     public Student(String username, String password, String firstName, String lastName, Faculty faculty) {
@@ -61,14 +60,6 @@ public class Student extends User implements Serializable, Comparable<Student> {
         this.faculty = faculty;
     }
 
-    //	public Vector<Journal> getJournals() {
-//		return journals;
-//	}
-//
-//	public void setJournals(Vector<Journal> journals) {
-//		this.journals = journals;
-//	}
-//
     public Organisation getOrganisation() {
         return organisation;
     }
@@ -84,23 +75,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
                 + organisation + "] " + super.toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Student student))
-            return false;
-        if (!super.equals(o))
-            return false;
-        return Objects.equals(courses, student.courses) && Objects.equals(gpa, student.gpa)
-                && Objects.equals(transcript, student.transcript) && faculty == student.faculty
-                && Objects.equals(organisation, student.organisation);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), courses, gpa, transcript, faculty, organisation);
-    }
     public int compareTo(Student s) {
         if(this.gpa > s.gpa) return 1;
         if(this.gpa < s.gpa) return -1;
@@ -177,6 +152,10 @@ public class Student extends User implements Serializable, Comparable<Student> {
     }
 
     public void viewTeacherForCourse() {
+    	if(this.courses.isEmpty()) {
+    		System.out.println("No courses");
+    		return;
+    	}
         System.out.println("All courses:");
         StaticMethods.printList(courses);
         int coursechoice = StaticMethods.validate(courses.size());
@@ -300,7 +279,6 @@ public class Student extends User implements Serializable, Comparable<Student> {
         this.organisation = organisation;
         Database.getInstance().addOrganisation(organisation);
         Database.getInstance().addLog(this, new Log("Student " + this.getUsername()+ " viewed created organisation" + organisation.getName()));
-        s.close();
     }
 
     public void changeInfo() {
@@ -346,13 +324,12 @@ public class Student extends User implements Serializable, Comparable<Student> {
 			Researcher researcher = Database.getInstance().isResearcher(this);
 			
 			if(researcher != null) {
-				
 				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-						"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "View one News", "Exit", "View researcher menu" };
+						"View Teacher for a Course", "View All Courses", "View subscribed journals", "Rate Teachers", "Organisation", "View one News", "Subscribe journal", "Exit", "View researcher menu" };
 			}
 			else {
 				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-						"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "View one News", "Exit" };
+						"View Teacher for a Course", "View All Courses", "View subscribed journals", "Rate Teachers", "Organisation", "View one News", "Subscribe journal", "Exit" };
 			}
 			
             System.out.println("\n----Student Menu----");
@@ -375,17 +352,24 @@ public class Student extends User implements Serializable, Comparable<Student> {
             }
             else if (choice == 5) {
                 viewCourses();
-            } else if (choice == 6) {
-                rateTeachers();
+            } 
+            else if(choice == 6) {
+            	viewJournals();
             }
             else if (choice == 7) {
-                organisationMenu();
+                rateTeachers();
             }
             else if (choice == 8) {
+                organisationMenu();
+            }
+            else if (choice == 9) {
                 viewOneNews();
                 Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed a one News"));
             }
-            else if (choice == 9) {
+            else if(choice == 10) {
+            	StaticMethods.subscribeJournal(this);
+            }
+            else if (choice == 11) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -395,13 +379,16 @@ public class Student extends User implements Serializable, Comparable<Student> {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 10) {
+				if(choice == 12) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " went to the researcher menu"));
 				}
 			}
         }
     }
+    
+    
+    
 
 
 }

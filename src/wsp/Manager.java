@@ -278,10 +278,16 @@ public class Manager extends Employee{
 	}
 	
 	public void addLesson() {
+		
+		Vector<Teacher> teachers = Database.getInstance().getTeachers();
+		
+		if(teachers.isEmpty()) {
+			System.out.println("No teachers");
+			return;
+		}
+		
 		System.out.println("Enter 0 to return back.");
 		System.out.println("To which teacher would you like to add the lesson?");
-
-        Vector<Teacher> teachers = Database.getInstance().getTeachers();
 
         StaticMethods.printList(teachers);
 		
@@ -292,6 +298,11 @@ public class Manager extends Employee{
 		}
 		
 		Teacher teacher = teachers.get(teacherChoice-1);
+		
+		if(teacher.getCourses().isEmpty()) {
+			System.out.println("No courses for this teacher");
+			return;
+		}
 		
 		System.out.println("To which course of " + teacher.getFirstName() + " " + teacher.getLastName() + " do you want to add lesson?");
 		

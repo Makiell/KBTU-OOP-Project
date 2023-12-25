@@ -84,7 +84,6 @@ public class Database implements Serializable {
 
                 System.out.println("Введите пароль: ");
                 String password = reader.readLine();
-//				System.out.println(username + " " + password);
 
                 for(User u : this.users) {
                     if(u.getUsername().equals(username) && u.getPassword().equals(password)) {
@@ -97,8 +96,6 @@ public class Database implements Serializable {
 
             }
             catch (IOException e) {
-                // TODO Auto-generated catch block
-                System.out.print(4);
                 e.printStackTrace();
             }
 
@@ -109,7 +106,9 @@ public class Database implements Serializable {
     }
 
     public Vector<User> getUsers() {
-        return users;
+    	Vector<User> withoutAdmin = (Vector<User>) this.users.clone();
+    	withoutAdmin.removeAll(this.admins);
+        return withoutAdmin;
     }
 
     public Vector<Student> getStudents() {
@@ -183,18 +182,33 @@ public class Database implements Serializable {
         this.users.add(u);
     }
 
-    public void addStudent(Student s) {
+    public boolean addStudent(Student s) {
+    	if(this.students.contains(s)) {
+    		System.out.println("Student is not unique");
+    		return false;
+    	}
         this.students.add(s);
         addUser(s);
+        return true;
     }
 
-    public void addEmployee(Employee e) {
+    public boolean addEmployee(Employee e) {
+    	if(this.employees.contains(e)) {
+    		System.out.println("Employee is not unique");
+    		return false;
+    	}
         this.employees.add(e);
         addUser(e);
+        return true;
     }
 
-    public void addCourse(Course c) {
+    public boolean addCourse(Course c) {
+    	if(this.courses.contains(c)) {
+    		System.out.println("Course is not unique");
+    		return false;
+    	}
         this.courses.add(c);
+        return true;
     }
 
     public void addNews(News n) {

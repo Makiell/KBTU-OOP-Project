@@ -7,5 +7,5 @@ public interface Observed {
 	
 	void removeObserver(User observer);
 	
-	void notifyObservers(ResearchPaper paper);
+	void notifyObservers(ResearchPaper paper, ResearchJournal rj);
 }

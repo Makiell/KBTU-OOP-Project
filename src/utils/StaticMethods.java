@@ -3,6 +3,11 @@ package utils;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Vector;
+
+import database.Database;
+import database.Log;
+import wsp.User;
 
 public class StaticMethods {
 
@@ -69,5 +74,35 @@ public class StaticMethods {
 		}
 		
 		return in.next();
+	}
+	
+	public static void subscribeJournal(User u) {
+		Vector<ResearchJournal> journals = Database.getInstance().getJournals();
+		if(journals.isEmpty()) {
+			System.out.println("No journals");
+			return;
+		}
+		
+		System.out.println("Enter 0 to return back");
+		System.out.println("Choose journal:");
+		
+		
+		
+		printList(journals);
+		
+		int choice = validate(journals.size());
+		
+		if(choice == 0) {
+			return;
+		}
+		
+		ResearchJournal journal = journals.get(choice-1);
+		
+		journal.addObserver(u);
+		u.getJournals().add(journal);
+		
+		System.out.println("Subscribed to " + journal.getName());
+		
+		Database.getInstance().addLog(u, new Log(u.getUsername() + " subscribed to journal " + journal.getName()));
 	}
 }

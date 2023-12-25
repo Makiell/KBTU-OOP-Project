@@ -17,6 +17,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
 
     public TechSupportSpecialist(String username, String password, String firstName, String lastName) {
         super(username, password, firstName, lastName);
+        this.orders = new Vector<Order>();
     }
     
     public Vector<Order> getOrders(){
@@ -24,36 +25,60 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     }
     
     public void viewOrders() {
-    	StaticMethods.printList(this.getOrders());
+    	Vector<Order> orders = this.getOrders();
+    	for(Order o : orders) {
+    		if(o.getStatus()==Status.NEW) {
+    			o.setStatus(Status.VIEWED);
+    		}
+    	}
+    	StaticMethods.printList(orders);
         Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " viewed all orders "));
     }
     
     public void acceptOrder() {
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
-    	Order o = getOrders().get(choice);
+    	Order o = getOrders().get(choice-1);
     	if(o.getStatus() == Status.REJECTED)
+    	{
     		System.out.println("ERROR! Order was already rejected!");
-    	else if(o.getStatus() == Status.ACCEPTED)
+    	}
+    	if(o.getStatus() == Status.ACCEPTED)
+    	{
     		System.out.println("ERROR! Order was already accepted");
-    	else
+    		return;
+    	}
+    	else {
     		o.setStatus(Status.ACCEPTED);
 			System.out.println("Order has been accepted!");
             Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " accepted order "));
+    	}
+    		
     }
     
     public void rejectOrder() {
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
-    	Order o = getOrders().get(choice);
+    	Order o = getOrders().get(choice-1);
     	if(o.getStatus() == Status.REJECTED)
+    	{
     		System.out.println("ERROR! Order was already rejected!");
-    	else if(o.getStatus() == Status.ACCEPTED)
+    		return;
+    	}
+    		
+    	if(o.getStatus() == Status.ACCEPTED)
+    	{
     		System.out.println("ERROR! Order was already accepted");
+    		return;
+    	}
+    		
     	else
+    	{
     		o.setStatus(Status.REJECTED);
 			System.out.println("Order has been rejected!");
-        Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " rejected the order"));
+			Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " rejected the order"));
+    	}
+    		
     }
     
     public void viewMenu() {
@@ -83,7 +108,6 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		
     		if(choice == 1) {
     			this.viewOrders();
-    			orders.stream().forEach(o -> o.setStatus(Status.VIEWED));
     		}
     		
     		else if(choice == 2) {
