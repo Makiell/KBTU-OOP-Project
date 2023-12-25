@@ -207,7 +207,7 @@ public class RussianLanguage implements LanguageInterface {
 	public String[] employeeResearcherMenu() {
 		// TODO Auto-generated method stub
 		return new String[]{
-				"----Меню Cотрудника----",
+				"----Меню Исследователя-Cотрудника----",
 				"1 - Отправить запрос", 
 				"2 - Отправить заказ", 
 				"3 - Просмотреть одну новость", 
@@ -220,7 +220,7 @@ public class RussianLanguage implements LanguageInterface {
 	public String[] researcherMenu() {
 		// TODO Auto-generated method stub
 		return new String[] {
-				"----Меню Исследователя",
+				"----Меню Исследователя----",
 				"1 - Просмотр документов", 
 				"2 - Создать бумагу", 
 				"3 - Просмотр проектов", 
