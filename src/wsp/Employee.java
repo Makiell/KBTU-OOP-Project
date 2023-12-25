@@ -103,10 +103,10 @@ public class Employee extends User implements Serializable {
     	Researcher researcher = Database.getInstance().isResearcher(this);
     	
     	if(researcher == null) {
-    		 options = new String[]{"Send request", "Send order", "View one News", "Exit"};
+    		 options = new String[]{"Send request", "Send order", "View one News", "View all papers", "Exit"};
     	}
     	else {
-    		 options = new String[]{"Send request", "Send order", "View one News", "Exit", "View researcher menu"};
+    		 options = new String[]{"Send request", "Send order", "View one News", "View all papers", "Exit", "View researcher menu"};
     	}
        
 
@@ -126,7 +126,10 @@ public class Employee extends User implements Serializable {
             else if (choice == 3) {
             	viewOneNews();
             }
-            else if (choice == 4) {
+            else if(choice == 4) {
+            	Database.getInstance().getAllPapers();
+            }
+            else if (choice == 5) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -135,7 +138,7 @@ public class Employee extends User implements Serializable {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 5) {
+				if(choice == 6) {
 					researcher.viewMenu();
 				}
 			}

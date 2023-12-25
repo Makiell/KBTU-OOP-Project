@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
-import database.Database;
-import database.Log;
-import utils.StaticMethods;
+import database.*;
+import utils.*;
 import enums.*;
 
 

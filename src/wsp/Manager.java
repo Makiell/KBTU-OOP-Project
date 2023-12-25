@@ -400,12 +400,13 @@ public class Manager extends Employee{
 			if(researcher == null) {
 				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
 						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers", "Create journal",
+						"View all papers",
 						"Exit" };
 			}
 			else {
 				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
 						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers", "Create journal",
-						"Exit", "View researcher menu"};
+						"Exit", "View all papers", "View researcher menu"};
 			}
 			
 			System.out.println("----Manager Menu----");
@@ -444,7 +445,10 @@ public class Manager extends Employee{
 			else if (choice == 10) {
 				createJournal();
 			}
-			else if (choice == 11) {
+			else if(choice == 11) {
+            	Database.getInstance().getAllPapers();
+            }
+			else if (choice == 12) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -454,7 +458,7 @@ public class Manager extends Employee{
 				break;
 			}
 			else if(researcher != null) {
-				if(choice == 12) {
+				if(choice == 13) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " went to the researcher menu"));
 				}

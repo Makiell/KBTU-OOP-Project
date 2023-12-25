@@ -325,11 +325,11 @@ public class Student extends User implements Serializable, Comparable<Student> {
 			
 			if(researcher != null) {
 				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-						"View Teacher for a Course", "View All Courses", "View subscribed journals", "Rate Teachers", "Organisation", "View one News", "Subscribe journal", "Exit", "View researcher menu" };
+						"View Teacher for a Course", "View All Courses", "View subscribed journals", "Rate Teachers", "Organisation", "View one News", "Subscribe journal", "View all papers", "Exit", "View researcher menu" };
 			}
 			else {
 				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-						"View Teacher for a Course", "View All Courses", "View subscribed journals", "Rate Teachers", "Organisation", "View one News", "Subscribe journal", "Exit" };
+						"View Teacher for a Course", "View All Courses", "View subscribed journals", "Rate Teachers", "Organisation", "View one News", "Subscribe journal", "View all papers", "Exit" };
 			}
 			
             System.out.println("\n----Student Menu----");
@@ -369,7 +369,10 @@ public class Student extends User implements Serializable, Comparable<Student> {
             else if(choice == 10) {
             	StaticMethods.subscribeJournal(this);
             }
-            else if (choice == 11) {
+            else if(choice == 11) {
+            	Database.getInstance().getAllPapers();
+            }
+            else if (choice == 12) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -379,7 +382,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 12) {
+				if(choice == 13) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " went to the researcher menu"));
 				}

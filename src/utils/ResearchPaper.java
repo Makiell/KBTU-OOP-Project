@@ -8,6 +8,8 @@ import wsp.*;
 
 public class ResearchPaper implements Serializable {
 	
+	private static final long serialVersionUID = -3648353719262566497L;
+	
 	private String name;
 	private Vector<Researcher> authors;
 	private int citations;
@@ -22,6 +24,38 @@ public class ResearchPaper implements Serializable {
 		this.date = new Date();
 		this.doi = doi;
 		this.citations = 0;
+	}
+	
+	/**
+	 * @return the authors
+	 */
+	public Vector<Researcher> getAuthors() {
+		return authors;
+	}
+
+	/**
+	 * @return the citations
+	 */
+	public int getCitations() {
+		return citations;
+	}
+	
+	/**
+	 * @return the date
+	 */
+	public Date getDate() {
+		return date;
+	}
+	
+	/**
+	 * @return the pages
+	 */
+	public int getPages() {
+		return pages;
+	}
+
+	public void increaseCitations() {
+		this.citations++;
 	}
 
 	@Override

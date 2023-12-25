@@ -1,6 +1,7 @@
 package database;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.stream.Collectors;
@@ -28,7 +29,8 @@ public class Database implements Serializable {
     private HashMap<User, Vector<Log>> userLogs = new HashMap<User, Vector<Log>>();
     private Vector<Researcher> researchers = new Vector<Researcher>();
     private Vector<ResearchJournal> journals = new Vector<ResearchJournal>();
-    private Vector<Organisation> organisations = new Vector<Organisation>();;
+    private Vector<Organisation> organisations = new Vector<Organisation>();
+    private Vector<ResearchPaper> papers = new Vector<ResearchPaper>();
 
 
     static{
@@ -124,6 +126,7 @@ public class Database implements Serializable {
     }
 
     public Vector<News> getNews() {
+    	
         return news;
     }
 
@@ -137,6 +140,36 @@ public class Database implements Serializable {
 
     public Vector<Researcher> getResearchers() {
         return researchers;
+    }
+    
+    public Researcher getTopCitedResearcher() {
+    	Collections.sort(this.researchers, new ResearcherCitationsComparator());
+    	return researchers.firstElement();
+    }
+    
+    public void getAllPapers() {
+    	System.out.println("In which order do you want to get papers?");
+    	System.out.println("1. Sorted by date");
+    	System.out.println("2. Sorted by citations");
+    	System.out.println("3. Sorted by number of pages");
+    	
+    	int choice = StaticMethods.validate(1, 3);
+    	
+    	if(choice == 1) {
+    		Collections.sort(this.papers, new PaperDateComparator());
+    		StaticMethods.printList(papers);
+    		return;
+    	}
+    	if(choice == 2) {
+    		Collections.sort(this.papers, new PaperCitationsComparator());
+    		StaticMethods.printList(papers);
+    		return;
+    	}
+    	if(choice == 3) {
+    		Collections.sort(this.papers, new PaperPagesComparator());
+    		StaticMethods.printList(papers);
+    		return;
+    	}
     }
 
     public Vector<Teacher> getTeachers(){
@@ -176,6 +209,18 @@ public class Database implements Serializable {
     
     public Vector<ResearchJournal> getJournals(){
     	return journals;
+    }
+    
+    public Vector<ResearchPaper> getPapersWithoutThis(Researcher r){
+    	Vector<ResearchPaper> p = new Vector<ResearchPaper>();
+    	
+    	for(ResearchPaper rp : this.papers) {
+    		if(!rp.getAuthors().contains(r)) {
+    			p.add(rp);
+    		}
+    	}
+    	
+    	return p;
     }
 
     public void addUser(User u) {
@@ -229,6 +274,10 @@ public class Database implements Serializable {
 
     public void addResearcher(Researcher r) {
         this.researchers.add(r);
+    }
+    
+    public void addPaper(ResearchPaper rp) {
+    	this.papers.add(rp);
     }
 
     public void addOrganisation(Organisation or) {
