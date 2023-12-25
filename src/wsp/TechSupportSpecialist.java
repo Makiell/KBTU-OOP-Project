@@ -89,11 +89,11 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	
     	if(researcher == null) {
     		options = new String[] {"View orders",
-    				"Accept order", "Reject order", "Exit" };
+    				"Accept order", "Reject order", "View all papers", "Exit" };
     	}
     	else {
     		options = new String[] {"View orders",
-    				"Accept order", "Reject order", "Exit", "View researcher menu"};
+    				"Accept order", "Reject order", "View all paper", "Exit", "View researcher menu"};
     	}
     	
     	
@@ -119,6 +119,10 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		}
     		
     		else if(choice == 4) {
+            	Database.getInstance().getAllPapers();
+            }
+    		
+    		else if(choice == 5) {
     			try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -127,8 +131,9 @@ public class TechSupportSpecialist extends Employee implements Serializable {
 				}
     			break;
     		}
+    		
     		else if(researcher != null) {
-				if(choice == 5) {
+				if(choice == 6) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " went to the researcher menu"));
 				}

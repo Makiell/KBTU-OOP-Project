@@ -1,6 +1,7 @@
 package wsp;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -21,34 +22,56 @@ public class Researcher<T> implements Serializable {
 		this.papers = new Vector<ResearchPaper>();
 		this.projects = new Vector<ResearchProject>();
 	}
-	
-	
-	public void printPapers() {
-		
-		for(ResearchPaper p : papers) {
-			System.out.println(p);
-		}
-	}
-	
 
 	public T getUser() {
 		return user;
 	}
 
-
 	public void setUser(T user) {
 		this.user = user;
 	}
+	
     public int gethIndex(){
         return hIndex;
     }
 	
+	/**
+	 * @return the papers
+	 */
+	public Vector<ResearchPaper> getPapers() {
+		return papers;
+	}
+
+
 	public void viewPapers() {
 		
 		if(papers.isEmpty()) {
 			System.out.println("No papers");
 			return;
 		}
+		
+		System.out.println("In which order do you want to get papers?");
+    	System.out.println("1. Sorted by date");
+    	System.out.println("2. Sorted by citations");
+    	System.out.println("3. Sorted by number of pages");
+    	
+    	int choice = StaticMethods.validate(1, 3);
+    	
+    	if(choice == 1) {
+    		Collections.sort(this.papers, new PaperDateComparator());
+    		StaticMethods.printList(papers);
+    		return;
+    	}
+    	if(choice == 2) {
+    		Collections.sort(this.papers, new PaperCitationsComparator());
+    		StaticMethods.printList(papers);
+    		return;
+    	}
+    	if(choice == 3) {
+    		Collections.sort(this.papers, new PaperPagesComparator());
+    		StaticMethods.printList(papers);
+    		return;
+    	}
 		
 		StaticMethods.printList(papers);
 	}
@@ -178,9 +201,33 @@ public class Researcher<T> implements Serializable {
 		
 		String doi = in.nextLine();
 		
+		if(!Database.getInstance().getPapersWithoutThis(this).isEmpty()) {
+			
+			System.out.println("Do you want to cite?\n1-Yes \n2-No");
+			
+			int choice = StaticMethods.validate(1, 2);
+			
+			if(choice == 1) {
+				System.out.println("Which paper do you want to cite?");
+				
+				Vector<ResearchPaper> papers = Database.getInstance().getPapersWithoutThis(this);
+				
+				StaticMethods.printList(papers);
+				
+				int paperChoice = StaticMethods.validate(1, papers.size());
+				
+				ResearchPaper paper = papers.get(paperChoice-1);
+				
+				paper.increaseCitations();
+				
+			}
+		}
+		
 		ResearchPaper newPaper = new ResearchPaper(name, authors, pages, doi);
 		
 		this.papers.add(newPaper);
+		
+		Database.getInstance().addPaper(newPaper);
 		
 		System.out.println("New paper added " + newPaper);
 		

@@ -114,7 +114,7 @@ public class GraduateStudent extends Student implements Serializable {
     	
     	while (true) {
         	String[] options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "View one News", "Exit", "View researcher menu" };
+					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "View one News", "View all papers", "Exit", "View researcher menu" };
 			
             System.out.println("\n----Graduate student Menu----");
             StaticMethods.printList(List.of(options));
@@ -142,11 +142,14 @@ public class GraduateStudent extends Student implements Serializable {
             else if (choice == 7) {
                 organisationMenu();
             }
-            else if (choice == 8) {
+            else if(choice == 8) {
+            	Database.getInstance().getAllPapers();
+            }
+            else if (choice == 9) {
                 viewOneNews();
                 Database.getInstance().addLog(this, new Log("Graduate Student " + this.getUsername() + " viewed a one News"));
             }
-            else if (choice == 9) {
+            else if (choice == 10) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -155,7 +158,7 @@ public class GraduateStudent extends Student implements Serializable {
                 }
                 break;
             }
-            else if(choice == 10) {
+            else if(choice == 11) {
             	researcher.viewMenu();
                 Database.getInstance().addLog(this, new Log("Graduate Student " + this.getUsername() + " went to the researcher menu"));
             }

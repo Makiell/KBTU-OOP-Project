@@ -28,6 +28,19 @@ public abstract class User implements Serializable {
 		return journals;
 	}
 	
+	public void viewTopResearcher() {
+		System.out.println("----Top Cited Researcher----");
+		int citations = 0;
+		Researcher r = Database.getInstance().getTopCitedResearcher();
+		Vector<ResearchPaper> papers = r.getPapers();
+		for(ResearchPaper rp : papers) {
+			citations += rp.getCitations();
+		}
+		User u = (User)r.getUser();
+		System.out.println(u.getFirstName() + " " + u.getLastName() + " Citations = " + citations);
+		System.out.println();
+	}
+	
 	public void viewNotifications() {
 		System.out.println("----New Notifications----");
 		StaticMethods.printList(messages);
@@ -69,6 +82,7 @@ public abstract class User implements Serializable {
     }	
 	
 	public void authentification() {
+		this.viewTopResearcher();
 		this.viewNews();
 		this.viewNotifications();
 		this.viewMenu();

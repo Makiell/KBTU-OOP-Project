@@ -294,11 +294,11 @@ public class Teacher extends Employee implements Serializable {
     	
     	if(researcher == null) {
     		options = new String[] { "View courses", "View students", "View marks", "Put marks",
-					"View rate", "View one News", "Send order", "Send request", "Exit" };
+					"View rate", "View one News", "Send order", "Send request", "View all papers", "Exit" };
     	}
     	else {
     		options = new String[] { "View courses", "View students", "View marks", "Put marks",
-					"View rate", "View one News", "Send order", "Send request", "Exit", "View researcher menu"};
+					"View rate", "View one News", "Send order", "Send request", "View all papers", "Exit", "View researcher menu"};
     	}
     	
     	
@@ -333,7 +333,10 @@ public class Teacher extends Employee implements Serializable {
     		else if (choice == 8) {
     			sendRequest();
     		}
-    		else if (choice == 9) {
+    		else if(choice == 9) {
+            	Database.getInstance().getAllPapers();
+            }
+    		else if (choice == 10) {
     			try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -343,7 +346,7 @@ public class Teacher extends Employee implements Serializable {
 				break;
     		}
     		else if(researcher != null) {
-				if(choice == 10) {
+				if(choice == 11) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " went to the researcher menu"));
 				}

@@ -120,10 +120,10 @@ public class Dean extends Teacher implements Serializable {
     	Researcher researcher = Database.getInstance().isResearcher(this);
     	
     	if(researcher == null) {
-    		 options = new String[]{"View all requests", "Sign Requests", "View one News", "Exit"};
+    		 options = new String[]{"View all requests", "Sign Requests", "View one News", "View all papers", "Exit"};
     	}
     	else {
-    		 options = new String[]{"View all requests", "Sign Requests", "View one News", "Exit", "View researcher menu"};
+    		 options = new String[]{"View all requests", "Sign Requests", "View one News", "View all papers", "Exit", "View researcher menu"};
     	}
        
 
@@ -144,7 +144,10 @@ public class Dean extends Teacher implements Serializable {
             	viewOneNews();
                 Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " viewed a one News"));
             }
-            else if (choice == 4) {
+            else if(choice == 4) {
+            	Database.getInstance().getAllPapers();
+            }
+            else if (choice == 5) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -153,7 +156,7 @@ public class Dean extends Teacher implements Serializable {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 5) {
+				if(choice == 6) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " went to the researcher menu"));
 				}
