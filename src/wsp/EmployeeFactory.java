@@ -47,9 +47,9 @@ public class EmployeeFactory {
         
         Employee newEmployee = new Employee(username, password, firstName, lastName);
 		
-        Database.getInstance().addEmployee(newEmployee);
-        
-        System.out.println("Employee added " + newEmployee);
+        if(Database.getInstance().addEmployee(newEmployee)) {
+        	System.out.println("Employee added " + newEmployee);
+        }
         
         return newEmployee;
         
@@ -88,9 +88,9 @@ public class EmployeeFactory {
         
         Teacher newTeacher = new Teacher(username, password, firstName, lastName, title, faculty);
 		
-        Database.getInstance().addEmployee(newTeacher);
-        
-        System.out.println("Teacher added " + newTeacher);
+        if(Database.getInstance().addEmployee(newTeacher)) {
+        	System.out.println("Teacher added " + newTeacher);
+        }
         
         return newTeacher;
 	}
@@ -120,9 +120,9 @@ public class EmployeeFactory {
         
         Manager newManager = new Manager(username, password, firstName, lastName, title);
 		
-        Database.getInstance().addEmployee(newManager);
-        
-        System.out.println("Manager added " + newManager);
+        if(Database.getInstance().addEmployee(newManager)) {
+        	System.out.println("Manager added " + newManager);
+        }
         
         return newManager;
 	}
@@ -142,10 +142,10 @@ public class EmployeeFactory {
         
         TechSupportSpecialist newTechSupport = new TechSupportSpecialist(username, password, firstName, lastName);
 		
-        Database.getInstance().addEmployee(newTechSupport);
-        
-        System.out.println("Tech Support added " + newTechSupport);
-        
+        if(Database.getInstance().addEmployee(newTechSupport)) {
+        	System.out.println("Tech Support added " + newTechSupport);
+        }
+
         return newTechSupport;
 	}
 	
@@ -183,10 +183,10 @@ public class EmployeeFactory {
         
         Dean newDean = new Dean(username, password, firstName, lastName, faculty);
 		
-        Database.getInstance().addEmployee(newDean);
-        
-        System.out.println("Dean added " + newDean);
-        
+        if(Database.getInstance().addEmployee(newDean)) {
+        	System.out.println("Dean added " + newDean);
+        }
+
         return newDean;
 	}
 }

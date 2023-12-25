@@ -17,11 +17,23 @@ public abstract class User implements Serializable {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private Vector<String> messages = new Vector<>();
+	private Vector<String> messages;
+	private Vector<ResearchJournal> journals;
 	
 	public Vector<String> getMessage(){
 		return messages;
-	};
+	}
+	
+	public Vector<ResearchJournal> getJournals() {
+		return journals;
+	}
+	
+	public void viewNotifications() {
+		System.out.println("----New Notifications----");
+		StaticMethods.printList(messages);
+		messages.clear();
+		System.out.println();
+	}
 	
 	public void addMessage(String mes) {
 		this.messages.add(mes);
@@ -31,8 +43,8 @@ public abstract class User implements Serializable {
 		StaticMethods.printList(this.messages);
 	}
 	
-	public void handleEvent(ResearchPaper paper) {
-		this.addMessage("Dear " + this.firstName +" "+ this.lastName + " to journal was added new papers!\n" + paper);
+	public void handleEvent(ResearchPaper paper, ResearchJournal rj) {
+		this.addMessage("Dear " + this.firstName +" "+ this.lastName + " to " + rj.getName() + " was added new papers!\n" + paper);
 	}
 	
 	public User(String username, String password, String firstName, String lastName) {
@@ -47,13 +59,18 @@ public abstract class User implements Serializable {
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.messages = new Vector<>();
+		this.journals = new Vector<>();
 	}
 
 	public int getId()
     {
         return id;
-    }	public void authentification() {
+    }	
+	
+	public void authentification() {
 		this.viewNews();
+		this.viewNotifications();
 		this.viewMenu();
 	}
 	
@@ -68,8 +85,15 @@ public abstract class User implements Serializable {
 			System.out.println();
 		}
 	}
+	
 	public void viewOneNews() {
 		Vector <News> news = Database.getInstance().getNews();
+		
+		if(news.isEmpty()) {
+			System.out.println("No news");
+			return;
+		}
+		
 		System.out.println("----NEWS----");
 		
 		for (int i = 0; i < news.size(); i++) {
@@ -106,6 +130,7 @@ public abstract class User implements Serializable {
 		    }
 		}
 	}
+	
 	public void viewComments(News n) {
 		Vector <String> comments = n.getComments();
 		
@@ -121,6 +146,10 @@ public abstract class User implements Serializable {
 		}
 	}
 	
+	public void viewJournals() {
+		StaticMethods.printList(journals);
+	}
+	
 	public void addComment(News n) {
 		System.out.println("----Enter your comment----");
 		
@@ -133,11 +162,6 @@ public abstract class User implements Serializable {
 	
 	public abstract void viewMenu();
 	public abstract void changeInfo();
-	
-//	public void logOut() {
-//		
-//	}
-	
 	
 	
 	public String getUsername() {
@@ -186,7 +210,7 @@ public abstract class User implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstName, id, lastName, password, username);
+		return Objects.hash(firstName, lastName, password, username);
 	}
 
 	@Override
@@ -198,7 +222,7 @@ public abstract class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(firstName, other.firstName) && id == other.id && Objects.equals(lastName, other.lastName)
+		return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName)
 				&& Objects.equals(password, other.password) && Objects.equals(username, other.username);
 	}
 	

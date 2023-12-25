@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Vector;
 
 import database.Database;
@@ -29,8 +30,22 @@ public class Course implements Serializable {
 		this.type = type;
 		this.faculty = faculty;
 	}
-	
-	
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Course other = (Course) obj;
+		return credits == other.credits && faculty == other.faculty && Objects.equals(name, other.name)
+				&& type == other.type;
+	}
+
+
 	public String getName() {
 		return name;
 	}

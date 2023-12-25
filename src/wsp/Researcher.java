@@ -65,10 +65,15 @@ public class Researcher<T> implements Serializable {
 	
 	public void addPaperToJournal() {
 		
+		Vector<ResearchJournal> journals = Database.getInstance().getJournals();
+		
+		if(journals.isEmpty()) {
+			System.out.println("No journals.");
+			return;
+		}
+		
 		System.out.println("Enter 0 to return back.");
 		System.out.println("Choose the journal:");
-		
-		Vector<ResearchJournal> journals = Database.getInstance().getJournals();
 		
 		StaticMethods.printList(journals);
 		
@@ -90,15 +95,19 @@ public class Researcher<T> implements Serializable {
 		
 		journal.addPaper(paper);
 		
-		System.out.println(paper + " added to " + journal);
+		System.out.println(paper + " added to " + journal.getName());
+	}
+	
+	public void viewJournals() {
+		StaticMethods.printList(Database.getInstance().getJournals());
 	}
 	
 	public void viewMenu() {
 		
 		while(true) {
-			String userMenu = "View " + user.getClass().getName() + " menu";
+			String userMenu = "Exit to " + user.getClass().getName().substring(4) + " menu";
 			String[] options = new String[] {
-					"View papers", "Create paper", "View projects", "Add paper to journal", userMenu, "Exit"
+					"View papers", "Create paper", "View projects", "View journals", "Add paper to journal", userMenu
 			};
 			
 			StaticMethods.printList(List.of(options));
@@ -115,9 +124,11 @@ public class Researcher<T> implements Serializable {
 				viewProjects();
 			}
 			else if(choice == 4) {
+				viewJournals();
+			}
+			else if(choice == 5) {
 				addPaperToJournal();
 			}
-			
 			else if(choice==6) {
 				break;
 			}

@@ -6,6 +6,9 @@ import java.util.Vector;
 import wsp.User;
 
 public class ResearchJournal implements Serializable, Observed {
+	
+	private static final long serialVersionUID = -8045146890425399823L;
+	
 	String name;
 	Vector<ResearchPaper> papers = new Vector<>();
 	Vector<User> subscribers = new Vector<>();
@@ -16,7 +19,7 @@ public class ResearchJournal implements Serializable, Observed {
 	
 	public void addPaper(ResearchPaper paper) {
 		this.papers.add(paper);
-		this.notifyObservers(paper);
+		this.notifyObservers(paper, this);
 	}
 	
 	public void removePaper(ResearchPaper paper) {
@@ -35,15 +38,19 @@ public class ResearchJournal implements Serializable, Observed {
 	}
 	
 	@Override
-	public void notifyObservers(ResearchPaper paper) {
+	public void notifyObservers(ResearchPaper paper, ResearchJournal rj) {
 		for(User u: subscribers) {
-			u.handleEvent(paper);
+			u.handleEvent(paper, rj);
 		}
 		
 	}
 	
 	public String toString() {
-		return "Journal " + name;
+		return "Journal " + name + ", papers =" + papers + ", subs =" + subscribers;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 }

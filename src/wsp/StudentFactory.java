@@ -45,9 +45,9 @@ public class StudentFactory {
         
         Student newStudent = new Student(username, password, firstName, lastName, faculty);
 		
-        Database.getInstance().addStudent(newStudent);
-        
-        System.out.println("Student added " + newStudent);
+        if(Database.getInstance().addStudent(newStudent)) {
+        	System.out.println("Student added " + newStudent);
+        }
         
         return newStudent;
         
@@ -86,9 +86,9 @@ public class StudentFactory {
         
         Student newGraduateStudent = new GraduateStudent(username, password, firstName, lastName, faculty, grade);
 		
-        Database.getInstance().addStudent(newGraduateStudent);
-        
-        System.out.println("Student added " + newGraduateStudent);
+        if(Database.getInstance().addStudent(newGraduateStudent)) {
+        	System.out.println("Student added " + newGraduateStudent);
+        }
         
         return newGraduateStudent;
         
