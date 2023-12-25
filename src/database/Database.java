@@ -9,10 +9,12 @@ import java.util.stream.Collectors;
 import wsp.*;
 import utils.*;
 
+/**
+ * The Database class represents the storage for various entities in the system.
+ */
 public class Database implements Serializable {
 
     private static Database INSTANCE;
-//    private static final long serialVersionUID = 5909273364633485948L;
 
     private static final long serialVersionUID = 4496003716159423929L;
 
@@ -32,7 +34,10 @@ public class Database implements Serializable {
     private Vector<Organisation> organisations = new Vector<Organisation>();
     private Vector<ResearchPaper> papers = new Vector<ResearchPaper>();
 
-
+    /**
+    * Static block to initialize the singleton instance of the Database.
+    * If the serialized database file exists, it is loaded. Otherwise, a new instance is created.
+    */
     static{
         if(new File("database.ser").exists()) {
             try {
@@ -52,26 +57,49 @@ public class Database implements Serializable {
     private Database() {
     }
 
+    /**
+     * Retrieves the singleton instance of the Database.
+     * 
+     * @return The singleton instance of the Database.
+     */
     public static Database getInstance() {
         return INSTANCE;
     }
-
+    
+    /**
+     * Loads the serialized database from the file.
+     * 
+     * @return The deserialized Database instance.
+     * @throws IOException            If an I/O error occurs while reading the file.
+     */
     private static Database loadDatabase() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("database.ser"));
         return (Database) ois.readObject();
     }
-
+    
+    /**
+     * Saves the current state of the database by serializing it to a file.
+     * 
+     * @throws IOException If an I/O error occurs while writing to the file.
+     */
     public void saveDatabase() throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.ser"));
         oos.writeObject(INSTANCE);
         oos.close();
     }
-
+    
+    /**
+    * This method is automatically called during the initialization of the Database singleton.
+    * The default administrator is added only if the database is empty.
+    */
     private void initializeDefaultAdmin() {
         Admin defaultAdmin = new Admin("admin", "admin", "AdminName", "AdminSurname");
         addAdmin(defaultAdmin);
     }
-
+    
+    /**
+     * The method for logging in system
+     */
     public void login() {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -106,7 +134,11 @@ public class Database implements Serializable {
         authentificatedUser.authentification();
 
     }
-
+    
+    /**
+     * Method to get all users without admin
+     * @return all users without admin
+     */
     public Vector<User> getUsers() {
     	Vector<User> withoutAdmin = (Vector<User>) this.users.clone();
     	withoutAdmin.removeAll(this.admins);
@@ -142,11 +174,23 @@ public class Database implements Serializable {
         return researchers;
     }
     
+    /**
+     * Method to get the most cited researcher
+     * @return Top cited researcher
+     */
     public Researcher getTopCitedResearcher() {
     	Collections.sort(this.researchers, new ResearcherCitationsComparator());
     	return researchers.firstElement();
     }
     
+    /**
+     * Retrieves and prints the list of research papers based on the user's sorting preference.
+     * The user is prompted to choose the sorting order:
+     * 1. Sorted by date
+     * 2. Sorted by citations
+     * 3. Sorted by the number of pages
+     * The sorted list of papers is then printed to the console.
+     */
     public void getAllPapers() {
     	System.out.println("In which order do you want to get papers?");
     	System.out.println("1. Sorted by date");
@@ -171,7 +215,7 @@ public class Database implements Serializable {
     		return;
     	}
     }
-
+    
     public Vector<Teacher> getTeachers(){
         Vector<Teacher> teachers = employees.stream()
                 .filter(employee -> employee instanceof Teacher)
@@ -211,6 +255,12 @@ public class Database implements Serializable {
     	return journals;
     }
     
+    /**
+     * Retrieves a vector of research papers that do not have the specified researcher as an author.
+     * 
+     * @param The researcher for whom papers are not to be included.
+     * @return A vector of research papers without the specified researcher as an author.
+     */
     public Vector<ResearchPaper> getPapersWithoutThis(Researcher r){
     	Vector<ResearchPaper> p = new Vector<ResearchPaper>();
     	
@@ -288,6 +338,14 @@ public class Database implements Serializable {
         this.admins.add(a);
         addUser(a);
     }
+    
+    /**
+     * Adds a log entry for a user to the database.
+     * If the user already has existing logs, the new log entry is appended to the existing logs.
+     * 
+     * @param u The user for whom the log entry is being added.
+     * @param l The log entry to be added.
+     */
     public void addLog(User u, Log l) {
     	Vector<Log> logs;
     	if (this.userLogs.get(u) == null) {
@@ -305,6 +363,14 @@ public class Database implements Serializable {
     	return userLogs.get(u);
     }
     
+    /**
+     * Checks if the specified user is associated with a researcher in the database.
+     * If a researcher with the specified user is found, the corresponding researcher
+     * object is returned; otherwise, null is returned.
+     * 
+     * @param u The user for whom the association with a researcher is checked.
+     * @return The researcher associated with the user, or null if no association is found.
+     */
     public Researcher isResearcher(User u) {
 		for(Researcher r : researchers) {
 			if(r.getUser() == u) {

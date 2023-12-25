@@ -8,6 +8,13 @@ import java.util.Scanner;
 
 import database.Database;
 
+
+/**
+ * The User class is an abstract class representing a generic user in the system.
+ * It provides common functionality for all roles in system, such as viewing
+ * top researchers, news, notifications, and journals. It also handles comments on news
+ * and defines an abstract method for viewing the user-specific menu and changing user information.
+ */
 public abstract class User implements Serializable {
 	
 	private static final long serialVersionUID = -2636065254513175824L;
@@ -17,17 +24,33 @@ public abstract class User implements Serializable {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private Vector<String> messages;
+	private Vector<String> notifications;
 	private Vector<ResearchJournal> journals;
 	
-	public Vector<String> getMessage(){
-		return messages;
+	
+	/**
+     * Retrieves the vector containing notifications for the user.
+     *
+     * @return The vector of notifications for the user.
+     */
+	public Vector<String> getNotifications(){
+		return notifications;
 	}
 	
+	
+	/**
+     * Retrieves the vector containing journals subscribed by the user.
+     *
+     * @return The vector of journals subscribed by the user.
+     */
 	public Vector<ResearchJournal> getJournals() {
 		return journals;
 	}
 	
+	
+	/**
+     * Displays the top cited researcher among all researchers along with their total citations.
+     */
 	public void viewTopResearcher() {
 		System.out.println("----Top Cited Researcher----");
 		int citations = 0;
@@ -41,25 +64,52 @@ public abstract class User implements Serializable {
 		System.out.println();
 	}
 	
+	/**
+     * Displays and clears new notifications for the user.
+     */
 	public void viewNotifications() {
 		System.out.println("----New Notifications----");
-		StaticMethods.printList(messages);
-		messages.clear();
+		if(notifications.isEmpty()) {
+			System.out.println("No new notifications.");
+			return;
+		}
+		StaticMethods.printList(notifications);
+		notifications.clear();
 		System.out.println();
 	}
 	
-	public void addMessage(String mes) {
-		this.messages.add(mes);
+	
+	/**
+     * Adds a new notifications to the user's notifications vector.
+     *
+     * @param message The notification to be added.
+     */
+	public void addNotification(String mes) {
+		this.notifications.add(mes);
 	}
 	
-	public void viewMessages() {
-		StaticMethods.printList(this.messages);
-	}
 	
+	/**
+     * Handles an event related to a new research paper in subscribed research journal, adding a notification
+     * to the user's messages vector.
+     *
+     * @param paper The research paper related to the event.
+     * @param rj The research journal related to the event.
+     */
 	public void handleEvent(ResearchPaper paper, ResearchJournal rj) {
-		this.addMessage("Dear " + this.firstName +" "+ this.lastName + " to " + rj.getName() + " was added new papers!\n" + paper);
+		this.addNotification("Dear " + this.firstName +" "+ this.lastName + " to " + rj.getName() + " was added new papers!\n" + paper);
 	}
 	
+	
+	/**
+     * Constructs a new `User` with the specified username, password, first name, and last name.
+     * Auto increment id of new user to ensure users have unique ids.
+     *
+     * @param username The username of the user.
+     * @param password The password of the user.
+     * @param firstName The first name of the user.
+     * @param lastName The last name of the user.
+     */
 	public User(String username, String password, String firstName, String lastName) {
 		if(Database.getInstance().getUsers().isEmpty()) {
 			this.id = 1;
@@ -72,15 +122,20 @@ public abstract class User implements Serializable {
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.messages = new Vector<>();
+		this.notifications = new Vector<>();
 		this.journals = new Vector<>();
 	}
 
-	public int getId()
-    {
+	public int getId(){
         return id;
     }	
 	
+	
+	/**
+	 * Authenticates the user by displaying information about top researchers, news,
+	 * notifications, and the user-specific menu. This method serves as an entry point
+	 * for users to interact with the system after successful login.
+	 */
 	public void authentification() {
 		this.viewTopResearcher();
 		this.viewNews();
@@ -88,6 +143,10 @@ public abstract class User implements Serializable {
 		this.viewMenu();
 	}
 	
+	
+	/**
+     * Displays news available in the system.
+     */
 	public void viewNews() {
 		Vector <News> news = Database.getInstance().getNews();
 		System.out.println("----NEWS----");
@@ -100,6 +159,11 @@ public abstract class User implements Serializable {
 		}
 	}
 	
+	
+	/**
+     * Displays detailed information about a selected news item, including comments.
+     * Provides the option to add a comment.
+     */
 	public void viewOneNews() {
 		Vector <News> news = Database.getInstance().getNews();
 		
@@ -145,6 +209,11 @@ public abstract class User implements Serializable {
 		}
 	}
 	
+	/**
+     * Displays comments for a specific news article.
+     *
+     * @param n The news article for which to display comments.
+     */
 	public void viewComments(News n) {
 		Vector <String> comments = n.getComments();
 		
@@ -160,10 +229,20 @@ public abstract class User implements Serializable {
 		}
 	}
 	
+	
+	/**
+     * Displays the list of journals subscribed by the user.
+     */
 	public void viewJournals() {
 		StaticMethods.printList(journals);
 	}
 	
+	
+	/**
+     * Adds a comment to a specific news.
+     *
+     * @param n The news article to which the comment will be added.
+     */
 	public void addComment(News n) {
 		System.out.println("----Enter your comment----");
 		
@@ -174,7 +253,17 @@ public abstract class User implements Serializable {
 		
 	}
 	
+	
+	/**
+     * Abstract method to be implemented by subclasses for displaying
+     * the user-specific menu in the system.
+     */
 	public abstract void viewMenu();
+	
+	/**
+     * Abstract method to be implemented by subclasses for allowing users
+     * to change their information in the system.
+     */
 	public abstract void changeInfo();
 	
 	

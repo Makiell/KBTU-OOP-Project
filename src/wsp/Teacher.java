@@ -11,6 +11,12 @@ import utils.*;
 import wsp.*;
 import enums.*;
 
+
+/**
+ * The Teacher class represents a teacher in the system. Teachers are associated
+ * with a specific faculty and can teach multiple courses. They can also conduct lessons
+ * and provide marks to students.
+ */
 public class Teacher extends Employee implements Serializable {
 
     private TeacherTitle typeTeacher;
@@ -19,7 +25,18 @@ public class Teacher extends Employee implements Serializable {
     private Map<Course, Vector<Lesson>> lessons = new HashMap <Course, Vector<Lesson>>();
     private Vector<Double> rate;
 
-
+    
+    /**
+     * Constructs a Teacher object with the specified attributes.
+     * if the created teacher is a professor, then a researcher is automatically added.
+     *
+     * @param username    The username of the teacher.
+     * @param password    The password of the teacher.
+     * @param firstName   The first name of the teacher.
+     * @param lastName    The last name of the teacher.
+     * @param typeTeacher The title of the teacher (e.g., ASSISTANT, ASSOCIATE_PROFESSOR).
+     * @param faculty     The faculty to which the teacher belongs.
+     */
     public Teacher(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,
                    Faculty faculty) {
         super(username, password, firstName, lastName);
@@ -36,19 +53,42 @@ public class Teacher extends Employee implements Serializable {
     public TeacherTitle getTypeTeacher() {
         return typeTeacher;
     }
-
+    
+    /**
+     * Gets the courses taught by the teacher.
+     *
+     * @return A vector containing the courses taught by the teacher.
+     */
     public Vector<Course> getCourses() {
         return courses;
     }
 
+    
+    /**
+     * Gets the faculty to which the teacher belongs.
+     *
+     * @return The faculty of the teacher.
+     */
     public Faculty getFaculty() {
         return faculty;
     }
 
+    
+    /**
+     * Gets the lessons conducted by the teacher for each course.
+     *
+     * @return A map where each course is associated with a vector of lessons.
+     */
     public Map<Course, Vector<Lesson>> getLessons() {
         return lessons;
     }
-
+    
+    
+    /**
+     * Gets the average rating of the teacher.
+     *
+     * @return The average rating of the teacher.
+     */
     public double getRate() {
     	double sum = 0;
     	for(Double i : this.rate) {
@@ -72,11 +112,20 @@ public class Teacher extends Employee implements Serializable {
     public void setLessons(Map<Course, Vector<Lesson>> lessons) {
         this.lessons = lessons;
     }
-
+    
+    /**
+     * Adds a rating to the teacher's list of ratings.
+     *
+     * @param rate The rating to be added.
+     */
     public void setRate(double rate) {
         this.rate.add(rate);
     }
 
+    
+    /**
+     * Displays the courses taught by the teacher.
+     */
     public void viewCourses() {
         System.out.println("Courses taught by " + getUsername() + ":");
         for (Course course : courses) {
@@ -84,7 +133,11 @@ public class Teacher extends Employee implements Serializable {
         }
         Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " viewed his courses"));
     }
-
+    
+    
+    /**
+     * Displays the students enrolled in a specific course taught by the teacher.
+     */
     public void viewStudents() {
         if (courses.isEmpty()) {
             System.out.println("No courses");
@@ -118,7 +171,11 @@ public class Teacher extends Employee implements Serializable {
         }
         Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " viewed students by course " + selectedCourse.getName()));
     }
-
+    
+    
+    /**
+	 * Displays the marks for the course taught by the teacher.
+	 */
     public void viewMarks() {
         if(courses.isEmpty()) {
             System.out.println("No courses");
@@ -142,7 +199,9 @@ public class Teacher extends Employee implements Serializable {
     }
 
 	
-    
+    /**
+	 * Changes the information of the teacher such as username, password, first name, or last name.
+	 */
     public void changeInfo() {
     	System.out.println("What do you want to change?");
 		
@@ -178,6 +237,12 @@ public class Teacher extends Employee implements Serializable {
 		}
     }
 
+    
+    /**
+	 * Displays the marks for a specific course taught by the teacher.
+	 *
+	 * @param selectedCourse The course for which to display the marks.
+	 */
     public void viewMarks(Course selectedCourse) {
 
         if (!lessons.containsKey(selectedCourse)) {
@@ -195,6 +260,10 @@ public class Teacher extends Employee implements Serializable {
         Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " viewed marks by course " + selectedCourse.getName()));
     }
 
+    
+    /**
+	 * Allows the teacher to input marks for students in a specific course.
+	 */
     public void putMarks() {
     	System.out.println("Select s course to input marks: ");
     	
@@ -285,6 +354,12 @@ public class Teacher extends Employee implements Serializable {
     	}
     }
     
+    
+    /**
+     * Displays the teacher's menu, allowing them to perform various actions such as viewing courses, students,
+     * marks, putting marks, viewing rate, viewing news, sending orders and requests, viewing papers, and exiting.
+     * If the teacher is also a researcher, an additional option to view the researcher menu is available.
+     */
     @Override
     public void viewMenu() {
     	
@@ -354,7 +429,9 @@ public class Teacher extends Employee implements Serializable {
     	}
     }
 
-
+    /**
+     * Displays the teacher's rating.
+     */
     public void viewRate() {
         System.out.println("Teacher's rating: " + this.getRate());
     }

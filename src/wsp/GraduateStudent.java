@@ -11,8 +11,26 @@ import database.*;
 import utils.Organisation;
 import utils.StaticMethods;
 
+
+/**
+ * The GraduateStudent class represents a graduate student in the academic system.
+ * It extends the Student class and implements specific functionalities for graduate students.
+ */
 public class GraduateStudent extends Student implements Serializable {
-    Grade grade;
+	
+    private Grade grade;
+    
+    /**
+     * Constructs a GraduateStudent object with the specified parameters.
+     * Automatically adds user as a researcher.
+     *
+     * @param username  The username of the graduate student.
+     * @param password  The password of the graduate student.
+     * @param firstName The first name of the graduate student.
+     * @param lastName  The last name of the graduate student.
+     * @param faculty   The faculty to which the graduate student belongs.
+     * @param grade     The grade (Master's or PhD) of the graduate student.
+     */
     public GraduateStudent(String username, String password, String firstName, String lastName, Faculty faculty, Grade grade) {
         super(username, password, firstName, lastName, faculty);
         this.grade = grade;
@@ -20,10 +38,21 @@ public class GraduateStudent extends Student implements Serializable {
         Database.getInstance().addResearcher(researcher);
     }
 
+    /**
+     * Gets the grade of the graduate student (Master's or PhD).
+     *
+     * @return The grade of the graduate student.
+     */
     public Grade getGrade() {
         return grade;
     }
 
+    
+    /**
+     * Sets the grade of the graduate student (Master's or PhD).
+     *
+     * @param grade The new grade to set.
+     */
     public void setGrade(Grade grade) {
         this.grade = grade;
     }
@@ -48,6 +77,10 @@ public class GraduateStudent extends Student implements Serializable {
                 "] " + super.toString();
     }
     
+    /**
+     * Changes the information of the graduate student, including username, password, first name,
+     * last name, and grade. Provides a menu for the user to choose the information to change.
+     */
     public void changeInfo() {
     	System.out.println("What do you want to change?");
 		
@@ -107,6 +140,12 @@ public class GraduateStudent extends Student implements Serializable {
         super.createOrganisation();
     }
 
+    
+    /**
+     * Displays the graduate student's menu, allowing them to perform various actions such as viewing transcript, viewing
+     * marks for a course, registering for a course, viewing a teacher for a course, viewing all courses, rating teachers,
+     * accessing the organization menu, viewing all papers, viewing one news, exiting and additional option to view the researcher menu.
+     */
     @Override
     public void viewMenu() {
     	

@@ -6,6 +6,9 @@ import java.util.Vector;
 
 import wsp.*;
 
+/**
+ * The ResearchPaper class represents a research paper with citations, name, number of pages, doi.
+ */
 public class ResearchPaper implements Serializable {
 	
 	private static final long serialVersionUID = -3648353719262566497L;
@@ -53,7 +56,10 @@ public class ResearchPaper implements Serializable {
 	public int getPages() {
 		return pages;
 	}
-
+	
+	/**
+     * Increases the number of citations for the research paper.
+     */
 	public void increaseCitations() {
 		this.citations++;
 	}

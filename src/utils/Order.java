@@ -7,6 +7,9 @@ import java.io.Serializable;
 import database.Database;
 import enums.*;
 
+/**
+ * The Order class represents a support order created by a employee.
+ */
 public class Order implements Serializable {
     private Status status;
     private String message;
@@ -20,22 +23,37 @@ public class Order implements Serializable {
     }
 
     public Status getStatus() {
-        return status; }
+        return status; 
+    }
 
     public String getMessage() {
-        return message; }
-
+        return message; 
+    }
+    
+    /**
+     * Gets the tech support specialist to whom the order is assigned.
+     *
+     * @return The tech support specialist to whom the order is assigned.
+     */
     public TechSupportSpecialist getTo() {
-        return to; }
+        return to; 
+    }
 
     public void setStatus(Status status) {
-        this.status = status; }
+        this.status = status; 
+    }
 
     public void setMessage(String message) {
         this.message = message;
     }
-
-    public void setTo(TechSupportSpecialist to) {  this.to = to;
+    
+    /**
+     * Sets the tech support specialist to whom the order is assigned.
+     *
+     * @param to The new tech support specialist to whom the order is assigned.
+     */
+    public void setTo(TechSupportSpecialist to) {  
+    	this.to = to;
     }
 
     @Override

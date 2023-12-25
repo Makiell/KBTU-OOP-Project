@@ -10,8 +10,21 @@ import enums.TeacherTitle;
 import enums.TypeManager;
 import utils.StaticMethods;
 
+
+/**
+ * The EmployeeFactory class is responsible for creating different types of employees
+ * based on the user's choice. It provides methods to add various types of employees
+ * such as regular employees, teachers, managers, tech support specialists, and deans.
+ */
 public class EmployeeFactory {
 	
+	
+	/**
+     * Creates and returns an Employee based on the specified choice.
+     * 
+     * @param choice The user's choice to determine the type of employee.
+     * @return The created Employee object.
+     */
 	public Employee getEmployee(int choice) {
 		
 		if(choice == 4) {
@@ -32,6 +45,12 @@ public class EmployeeFactory {
 		return null;
 	}
 	
+	/**
+     * Adds a regular employee to the system by taking user input for username,
+     * password, first name, and last name.
+     * 
+     * @return The created Employee object.
+     */
 	public Employee addEmployee() {
 		Scanner in = new Scanner(System.in);
 		
@@ -55,6 +74,13 @@ public class EmployeeFactory {
         
 	}
 	
+	
+	/**
+     * Adds a teacher to the system by taking user input for username, password,
+     * first name, last name, faculty, and teacher title.
+     * 
+     * @return The created Teacher object.
+     */
 	public Employee addTeacher() {
 		Scanner in = new Scanner(System.in);
 		
@@ -95,6 +121,12 @@ public class EmployeeFactory {
         return newTeacher;
 	}
 	
+	 /**
+     * Adds a manager to the system by taking user input for username, password,
+     * first name, last name, and type.
+     * 
+     * @return The created Manager object.
+     */
 	public Employee addManager() {
 		Scanner in = new Scanner(System.in);
 		
@@ -127,6 +159,12 @@ public class EmployeeFactory {
         return newManager;
 	}
 	
+	/**
+     * Adds a tech support specialist to the system by taking user input for
+     * username, password, first name, and last name.
+     * 
+     * @return The created TechSupportSpecialist object.
+     */
 	public Employee addTechSupport() {
 		Scanner in = new Scanner(System.in);
 		
@@ -149,6 +187,12 @@ public class EmployeeFactory {
         return newTechSupport;
 	}
 	
+	/**
+     * Adds a dean to the system by taking user input for username, password, first name,
+     * last name, and faculty. Checks if a dean for the specified faculty already exists.
+     * 
+     * @return The created Dean object, or null if a dean for the faculty already exists.
+     */
 	public Employee addDean() {
 		Scanner in = new Scanner(System.in);
 		

@@ -11,18 +11,42 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The Manager class represents a manager in the academic system.
+ * It extends the Employee class and provides functionalities specific to managers.
+ */
 public class Manager extends Employee{
+	
 	private TypeManager typeManager;
 
+	 /**
+     * Constructs a Manager object with the specified parameters.
+     *
+     * @param username    The username of the manager.
+     * @param password    The password of the manager.
+     * @param firstName   The first name of the manager.
+     * @param lastName    The last name of the manager.
+     * @param typeManager The type of manager (e.g., Academic Manager, Research Manager).
+     */
 	public Manager(String username, String password, String firstName, String lastName, TypeManager typeManager) {
 		super(username, password, firstName, lastName);
 		this.typeManager = typeManager;
 	}
-
+	
+	/**
+     * Gets the type of manager (e.g., Academic Manager, Research Manager).
+     *
+     * @return The type of manager.
+     */
 	public TypeManager getTypeManager() {
 		return typeManager;
 	}
 
+	/**
+     * Sets the type of manager (e.g., Academic Manager, Research Manager).
+     *
+     * @param typeManager The new type of manager to set.
+     */
 	public void setTypeManager(TypeManager typeManager) {
 		this.typeManager = typeManager;
 	}
@@ -44,6 +68,9 @@ public class Manager extends Employee{
 		return Objects.hash(super.hashCode(), typeManager);
 	}
 
+	/**
+     * Creates a statistical report based on the GPA distribution of students and the highest h-index researcher.
+     */
 	public void createStatisticReport() {
         Vector<Student> students = Database.getInstance().getStudents();
         Vector<Researcher> researchers = Database.getInstance().getResearchers();
@@ -81,6 +108,9 @@ public class Manager extends Employee{
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " created statistic report"));
 	}
 
+	 /**
+     * Adds a new course to the system. Takes input from the manager for course details.
+     */
 	public void addCourse() {
 		
 		Scanner in = new Scanner(System.in);
@@ -119,6 +149,9 @@ public class Manager extends Employee{
 
 	}
 	
+	/**
+     * Changes the information of the manager, including username, password, first name, last name, and type.
+     */
 	public void changeInfo() {
     	System.out.println("What do you want to change?");
 		
@@ -166,7 +199,10 @@ public class Manager extends Employee{
 	        this.typeManager = type;
 		}
     }
-
+	
+	/**
+     * Creates a news entry in the system. Takes input from the manager for news details.
+     */
 	public void createNews() {
 		
 		Scanner s = new Scanner(System.in);
@@ -185,6 +221,9 @@ public class Manager extends Employee{
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " create new News"));
 	}
 
+	/**
+     * Views all requests in the system.
+     */
 	public void viewRequests() {
 		Vector<Request> dbrequests = Database.getInstance().getRequests();
 		System.out.println("List of Requests:");
@@ -192,6 +231,9 @@ public class Manager extends Employee{
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " viewed all requests"));
 	}
 
+	/**
+     * Edits an existing news entry. Allows the manager to modify the topic, title, or text of the news.
+     */
 	public void editNews() {
 		System.out.println("What news do you want to change?");
 		Scanner s = new Scanner(System.in);
@@ -238,9 +280,11 @@ public class Manager extends Employee{
 			return;
 		}
 
-
 	}
 
+	/**
+     * Assigns a course to a teacher. Allows the manager to choose a course and a teacher for the assignment.
+     */
 	public void assignCourseForTeacher() {
 		System.out.println("Enter 0 to return back.");
 		System.out.println("Which course you want to assign:");
@@ -277,6 +321,9 @@ public class Manager extends Employee{
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername()+ " Assigned course " + course.getName() + " with teacher " + teacher.getFirstName() + " " + teacher.getLastName()));
 	}
 	
+	/**
+     * Adds a lesson to a teacher for a specific course. Allows the manager to choose a teacher, course, and lesson details.
+     */
 	public void addLesson() {
 		
 		Vector<Teacher> teachers = Database.getInstance().getTeachers();
@@ -354,12 +401,18 @@ public class Manager extends Employee{
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " added Lesson " + newLesson));
 		
 	}
-
+	
+	/**
+     * Views the list of students in the system.
+     */
 	public void viewStudents() {
 		StaticMethods.printList(Database.getInstance().getStudents());
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " viewed all Students"));
 	}
 
+	/**
+     * Views the list of teachers in the system.
+     */
 	public void viewTeachers() {
 
         Vector<Teacher> teachers = Database.getInstance().getTeachers();
@@ -373,7 +426,9 @@ public class Manager extends Employee{
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " viewed all Teachers"));
 	}
 	
-	
+	 /**
+     * Creates a research journal in the system. Takes input from the manager for the name of the journal.
+     */
 	public void createJournal() {
 		System.out.println("Enter 0 to return back");
 		System.out.println("Enter the name:");
@@ -391,6 +446,13 @@ public class Manager extends Employee{
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " created a Journal " + name));
 	}
 
+	/**
+	 * Displays the manager's menu, allowing them to perform various actions such as creating a statistical report,
+	 * adding a course, adding a lesson to a teacher, creating news, viewing requests, editing news, assigning a course
+	 * for a teacher, viewing students, viewing teachers, creating a journal, viewing all papers, and
+	 * exiting. 
+	 * If the manager is also a researcher, an additional option to view the researcher menu is available.
+	 */
 	public void viewMenu() {
 		String[] options;
 		

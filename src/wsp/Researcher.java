@@ -10,39 +10,74 @@ import java.util.Vector;
 import database.Database;
 import utils.*;
 
+/**
+ * The Researcher class represents a researcher in the academic system.
+ * It provides functionalities for viewing papers, creating papers, viewing projects,
+ * viewing journals, and adding papers to a journal.
+ *
+ * @param <T> The type of user associated with the researcher.
+ */
 public class Researcher<T> implements Serializable {
+	
     private static final long serialVersionUID = -8619146448875960868L;
+    
 	private T user;
 	private Vector<ResearchProject> projects;
 	private Vector<ResearchPaper> papers;
 	private int hIndex;
 	
+	/**
+     * Constructs a Researcher object with the specified user.
+     *
+     * @param user The user associated with the researcher.
+     */
 	public Researcher(T user) {
 		this.user = user;
 		this.papers = new Vector<ResearchPaper>();
 		this.projects = new Vector<ResearchProject>();
 	}
 
+	/**
+     * Gets the user associated with the researcher.
+     *
+     * @return The user associated with the researcher.
+     */
 	public T getUser() {
 		return user;
 	}
 
+	/**
+     * Sets the user associated with the researcher.
+     *
+     * @param user The new user to set.
+     */
 	public void setUser(T user) {
 		this.user = user;
 	}
 	
+	
+	/**
+     * Gets the h-index of the researcher.
+     *
+     * @return The h-index of the researcher.
+     */
     public int gethIndex(){
         return hIndex;
     }
 	
-	/**
-	 * @return the papers
-	 */
+    /**
+     * Gets the list of papers associated with the researcher.
+     *
+     * @return The list of papers associated with the researcher.
+     */
 	public Vector<ResearchPaper> getPapers() {
 		return papers;
 	}
 
-
+	
+	/**
+     * Views the papers associated with the researcher in a specified order.
+     */
 	public void viewPapers() {
 		
 		if(papers.isEmpty()) {
@@ -76,6 +111,10 @@ public class Researcher<T> implements Serializable {
 		StaticMethods.printList(papers);
 	}
 	
+	
+	/**
+     * Views the projects associated with the researcher.
+     */
 	public void viewProjects() {
 		
 		if(projects.isEmpty()) {
@@ -86,6 +125,10 @@ public class Researcher<T> implements Serializable {
 		StaticMethods.printList(projects);
 	}
 	
+	
+	/**
+     * Adds a paper to a research journal.
+     */
 	public void addPaperToJournal() {
 		
 		Vector<ResearchJournal> journals = Database.getInstance().getJournals();
@@ -121,10 +164,19 @@ public class Researcher<T> implements Serializable {
 		System.out.println(paper + " added to " + journal.getName());
 	}
 	
+	
+	/**
+     * Views the research journals in the system.
+     */
 	public void viewJournals() {
 		StaticMethods.printList(Database.getInstance().getJournals());
 	}
 	
+	
+	/**
+     * Views the menu for the researcher, providing options to view papers, create papers, view projects,
+     * view journals, and add papers to a journal.
+     */
 	public void viewMenu() {
 		
 		while(true) {
@@ -160,6 +212,9 @@ public class Researcher<T> implements Serializable {
 	}
 
 
+	/**
+     * Creates a new research paper. Asks the researcher for paper details such as name, pages, and DOI.
+     */
 	private void createPaper() {
 		System.out.println("Enter 0 to return back.");
 		System.out.println("Enter the name:");
@@ -238,8 +293,6 @@ public class Researcher<T> implements Serializable {
 	public String toString() {
 		return "Researcher [user=" + user + ", hIndex=" + hIndex + "]";
 	}
-	
-	
 	
 	
 }

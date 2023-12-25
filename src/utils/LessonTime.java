@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import enums.Day;
 
+/**
+ * The `LessonTime` class represents the time for a lesson, including the day of the week,
+ * start time, and end time.
+ */
 public class LessonTime implements Serializable {
 	private Day dayOfTheWeek;
 	private int startTime;

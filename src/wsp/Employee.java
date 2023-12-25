@@ -8,6 +8,13 @@ import database.*;
 import enums.*;
 import utils.*;
 
+/**
+ * The Employee class represents an employee user in the system.
+ * It extends the User class and provides additional functionalities
+ * specific to employees, such as sending requests and orders.
+ * 
+ * @see User
+ */
 public class Employee extends User implements Serializable {
 	
 	private static final long serialVersionUID = 3585353902952762348L;
@@ -16,11 +23,22 @@ public class Employee extends User implements Serializable {
         super(username, password, firstName, lastName);
         // TODO Auto-generated constructor stub
     }
-
+    
+    /**
+     * Sends a message to another user.
+     * 
+     * @param message The message to be sent.
+     * @param user The user to whom the message is sent.
+     */
     public void sendMessage(String message, User user) {
         System.out.println("Sending message to " + user.getUsername() + ": " + message);
     }
 
+    
+    /**
+     * Sends an emergency request to a Dean. The user can choose the Dean, emergency level,
+     * and provide a message.
+     */
     public void sendRequest() {
     	
     	Vector<Dean> deans = Database.getInstance().getDeans();
@@ -64,7 +82,12 @@ public class Employee extends User implements Serializable {
         System.out.println(newRequest + " sent successfully");
 
     }
-
+    
+    
+    /**
+     * Sends an order to a Tech Support Specialist. The user can choose the specialist
+     * and provide a message.
+     */
     public void sendOrder() {
     	Vector<TechSupportSpecialist> TechSupportSpecialists = Database.getInstance().getTechSupports();
     	
@@ -95,7 +118,12 @@ public class Employee extends User implements Serializable {
         Database.getInstance().addOrder(newOrder);
         System.out.println(newOrder + " sent successfully");
     }
-
+    
+    /**
+     * Displays the employee menu, allowing them to perform various actions such as sending a request, sending an order,
+     * viewing one news, viewing all papers, saving the database, and exiting. 
+     * If the employee is also a researcher, an additional option to view the researcher menu is available.
+     */
 	@Override
 	public void viewMenu() {
 		String[] options;
@@ -150,7 +178,11 @@ public class Employee extends User implements Serializable {
 	public String toString() {
 		return "Employee " + super.toString();
 	}
-
+	
+	
+	/**
+     * Allows to change employee's information, such as username, password, first name, and last name.
+     */
 	public void changeInfo() {
     	System.out.println("What do you want to change?");
 		

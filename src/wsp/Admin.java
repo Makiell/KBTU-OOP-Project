@@ -10,7 +10,10 @@ import database.*;
 import utils.*;
 import enums.*;
 
-
+/**
+ * The Admin class represents an superuser in the system.
+ * Admins have the ability to manage users, create researchers, and perform various administrative tasks.
+ */
 public class Admin extends User implements Serializable {
 	
 	private static final long serialVersionUID = 6257279098772643532L;
@@ -20,7 +23,10 @@ public class Admin extends User implements Serializable {
 		super(username, password, firstName, lastName);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	/**
+     * Adds a researcher, either from an existing user or by creating a new user.
+     */
 	public void addResearcher() {
 		String[] options = new String[] {
 				"Add researcher to existing user", "Create researcher from new user"
@@ -67,7 +73,9 @@ public class Admin extends User implements Serializable {
 		}
 	}
 
-	
+	/**
+     * Creates a new user based on the chosen user type.
+     */
 	public void createUser() {
 		System.out.println("Which user do you want to create?");
 		String[] options = new String[] {
@@ -94,10 +102,17 @@ public class Admin extends User implements Serializable {
 		}
 	}
 	
+	/**
+     * Displays a list of all users in the system.
+     */
 	private void seeAllUsers() {
 		StaticMethods.printList(Database.getInstance().getUsers());
 	}
 	
+	
+	/**
+     * Updates the information of selected user.
+     */
 	public void updateUser() {
 		StaticMethods.printList(Database.getInstance().getUsers());
 		System.out.println("Which user do you want to change? 0 for return back");
@@ -112,6 +127,9 @@ public class Admin extends User implements Serializable {
 	}
 	
 	
+	/**
+     * Removes a user from the system.
+     */
 	public void removeUser() {
 		System.out.println("Choose user to delete:");
 		
@@ -132,6 +150,10 @@ public class Admin extends User implements Serializable {
 		
 	}
 	
+	
+	/**
+     * Displays the log files for a selected user.
+     */
 	public void seeLogFiles() {
 		System.out.println("Enter 0 to return back");
 		System.out.println("Choose user to see logs:");
@@ -158,11 +180,15 @@ public class Admin extends User implements Serializable {
 		StaticMethods.printList(logs);
 	}
 
+	/**
+	 * Displays the main menu for administrators, allowing them to perform various actions such as
+	 * creating new users, managing user information, viewing log files
+	 */
 	@Override
 	public void viewMenu() {
 		
 		String[] options = new String[] {
-				"Create new user", "See all users", "Update info of user", "Remove user", "See log files","View one news", "Exit"
+				"Create new user", "See all users", "Update info of user", "Remove user", "See log files", "Exit"
 		};
 		
 		while(true) {
@@ -189,10 +215,7 @@ public class Admin extends User implements Serializable {
 			else if (choice == 5) {
 				seeLogFiles();
 			}
-			else if (choice == 6) {
-				viewOneNews();
-			}
-			else if(choice == 7) {
+			else if(choice == 6) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -210,7 +233,6 @@ public class Admin extends User implements Serializable {
 	public String toString() {
 		return "Admin " + super.toString();
 	}
-
 
 
 	@Override

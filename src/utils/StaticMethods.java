@@ -9,15 +9,29 @@ import database.Database;
 import database.Log;
 import wsp.User;
 
+
+/**
+ * The StaticMethods class contains static utility methods used throughout the application.
+ */
 public class StaticMethods {
 
-	
+	/**
+     * Prints the elements of a list with their corresponding indices.
+     *
+     * @param list The list to be printed.
+     */
 	public static void printList(List list) {
 		for(int i = 0; i<list.size(); i++) {
 			System.out.println(i+1+ ") " + list.get(i));
 		}
 	}
 	
+	/**
+     * Validates and returns user input within the range [0, n].
+     *
+     * @param n The upper bound of the range.
+     * @return The validated user input.
+     */
 	public static int validate(int n) {
 		Scanner s = new Scanner(System.in);
 		int choice;
@@ -41,6 +55,13 @@ public class StaticMethods {
 		return choice;
 	}
 	
+	/**
+     * Validates and returns user input within the range [a, n].
+     *
+     * @param a The lower bound of the range.
+     * @param n The upper bound of the range.
+     * @return The validated user input.
+     */
 	public static int validate(int a, int n) {
 		Scanner s = new Scanner(System.in);
 		int choice;
@@ -64,6 +85,13 @@ public class StaticMethods {
 		return choice;
 	}
 	
+	/**
+     * Gets valid user input based on a regular expression.
+     *
+     * @param prompt The prompt to be displayed to the user.
+     * @param regex  The regular expression for validation.
+     * @return The validated user input.
+     */
 	public static String getValidInput(String promt, String regex) {
 		Scanner in = new Scanner(System.in);
 		System.out.println(promt);
@@ -76,6 +104,12 @@ public class StaticMethods {
 		return in.next();
 	}
 	
+	
+	/**
+     * Subscribes the user to a research journal.
+     *
+     * @param u The user to be subscribed.
+     */
 	public static void subscribeJournal(User u) {
 		Vector<ResearchJournal> journals = Database.getInstance().getJournals();
 		if(journals.isEmpty()) {

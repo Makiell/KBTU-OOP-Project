@@ -11,6 +11,11 @@ import java.util.Vector;
 import enums.Status;
 import database.Database;
 
+
+/**
+ * The TechSupportSpecialist class represents a technical support specialist
+ * who can view, accept, and reject orders.
+ */
 public class TechSupportSpecialist extends Employee implements Serializable {
 	
 	private Vector<Order> orders;
@@ -24,6 +29,9 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	return orders;
     }
     
+    /**
+     * Displays and marks orders as viewed by the tech support specialist.
+     */
     public void viewOrders() {
     	Vector<Order> orders = this.getOrders();
     	for(Order o : orders) {
@@ -35,6 +43,11 @@ public class TechSupportSpecialist extends Employee implements Serializable {
         Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " viewed all orders "));
     }
     
+    
+    /**
+     * Accepts a selected order, updates its status.
+     * Displays an error message if the order was already rejected or accepted.
+     */
     public void acceptOrder() {
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
@@ -56,6 +69,11 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		
     }
     
+    
+    /**
+     * Rejects a selected order, updates its status.
+     * Displays an error message if the order was already rejected or accepted.
+     */
     public void rejectOrder() {
     	this.viewOrders();
     	int choice = StaticMethods.validate(getOrders().size());
@@ -81,6 +99,13 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		
     }
     
+    
+    /**
+     * Displays the menu for the tech support specialist, allowing them to view orders,
+     * accept or reject orders, view all papers, save the database, and exit.
+     * If the tech support specialist is also a researcher, an additional option to
+     * view the researcher menu is available.
+     */
     public void viewMenu() {
     	
     	String[] options;

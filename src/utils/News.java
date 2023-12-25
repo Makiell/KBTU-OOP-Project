@@ -3,6 +3,9 @@ package utils;
 import java.io.Serializable;
 import java.util.Vector;
 
+/**
+ * The News class represents a news article with a topic, title, text, and associated comments.
+ */
 public class News implements Serializable {
 	
 	private String topic;

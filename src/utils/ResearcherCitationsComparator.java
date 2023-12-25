@@ -5,6 +5,10 @@ import java.util.Vector;
 
 import wsp.Researcher;
 
+/**
+ * The ResearcherCitationsComparator class is a comparator for comparing researchers based on the total number of citations
+ * received for their research papers.
+ */
 public class ResearcherCitationsComparator implements Comparator<Researcher>  {
 
 	@Override

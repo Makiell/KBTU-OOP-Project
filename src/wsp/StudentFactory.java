@@ -8,8 +8,20 @@ import enums.Faculty;
 import enums.Grade;
 import utils.StaticMethods;
 
+
+/**
+ * The StudentFactory class is responsible for creating instances of the Student class
+ * and its subclasses, such as GraduateStudent. It creates new students with user input.
+ */
 public class StudentFactory {
 	
+	/**
+     * Gets a student based on the provided choice.
+     *
+     * @param choice An integer representing the type of student to create.
+     *               1 for a regular student, 2 for a graduate student.
+     * @return A Student object.
+     */
 	public Student getStudent(int choice) {
 		if(choice == 1) {
 			return addStudent();
@@ -20,6 +32,12 @@ public class StudentFactory {
 		return null;
 	}
 	
+	
+	 /**
+     * Adds a new regular student with user input.
+     *
+     * @return A new Student object created based on user input.
+     */
 	public Student addStudent() {
 		Scanner in = new Scanner(System.in);
 		
@@ -53,6 +71,12 @@ public class StudentFactory {
         
 	}
 	
+	
+	/**
+     * Adds a new graduate student with user input.
+     *
+     * @return A new GraduateStudent object created based on user input.
+     */
 	public Student addGraduateStudent() {
 		Scanner in = new Scanner(System.in);
 		

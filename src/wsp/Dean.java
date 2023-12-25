@@ -15,6 +15,10 @@ import database.Database;
 import utils.Request;
 import utils.StaticMethods;
 
+/**
+ * The Dean class represents a dean user in the system.
+ * Deans have the ability to manage requests, sign emergency requests, view news, and perform other dean-specific tasks.
+ */
 public class Dean extends Teacher implements Serializable {
 
 	private static final long serialVersionUID = 3623621447508671844L;
@@ -32,6 +36,9 @@ public class Dean extends Teacher implements Serializable {
         this.requests = requests;
     }
     
+    /**
+     * Changes specific information of the dean, such as username, password, first name, last name, and faculty.
+     */
     public void changeInfo() {
     	System.out.println("What do you want to change?");
 		
@@ -80,11 +87,17 @@ public class Dean extends Teacher implements Serializable {
 		}
     }
     
+    /**
+     * Displays all requests in the system.
+     */
     public void viewRequests() {
     	StaticMethods.printList(Database.getInstance().getRequests());
         Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " view all requests "));
     }
-
+    
+    /**
+     * Signs emergency requests by accepting them and removing them from the list of pending requests.
+     */
     public void signRequests() {
 
         if (requests.isEmpty()) {
@@ -113,7 +126,11 @@ public class Dean extends Teacher implements Serializable {
         Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " signed request"));
     
     }
-
+    
+    /**
+     * Displays the dean's menu, allowing them to view requests, sign requests, view news, view papers, exit, and
+     * optionally view the researcher menu if they are also a researcher.
+     */
     public void viewMenu() {
     	String[] options;
     	
@@ -168,6 +185,9 @@ public class Dean extends Teacher implements Serializable {
         requests.add(request);
     }
 
+    /**
+     * Adds a request to the list of requests associated with the Dean.
+     */
     @Override
     public String toString() {
         return "Dean " + super.toString();

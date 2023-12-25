@@ -2,6 +2,10 @@ package utils;
 
 import java.io.Serializable;
 
+/**
+ * The Mark class represents the mark of course for a student, including two attestations
+ * and a final exam.
+ */
 public class Mark implements Serializable {
 	
 	
@@ -11,19 +15,34 @@ public class Mark implements Serializable {
 	private Double attestation2;
 	private Double finalExam;
 	
+	
+	 /**
+     * Constructs a new Mark with default values for attestations and the final exam.
+     */
 	public Mark() {
 		this.attestation1 = null;
 		this.attestation2 = null;
 		this.finalExam = null;
 	}
 
-
+	/**
+     * Constructs a new Mark with the specified values for attestations and the final exam.
+     *
+     * @param attestation1 The mark for the first attestation.
+     * @param attestation2 The mark for the second attestation.
+     * @param finalExam    The mark for the final exam.
+     */
 	public Mark(double attestation1, double attestation2, double finalExam) {
 		this.attestation1 = attestation1;
 		this.attestation2 = attestation2;
 		this.finalExam = finalExam;
 	}
 	
+	/**
+     * Calculates and returns the GPA based on the sum of the marks for attestations and the final exam.
+     *
+     * @return The calculated GPA.
+     */
 	public double getGpa() {
 		double sum = attestation1 + attestation2 + finalExam;
 		if(sum>=95) {
@@ -59,6 +78,11 @@ public class Mark implements Serializable {
         return 0.0;
 	}
 	
+	/**
+     * Returns the mark for the first attestation.
+     *
+     * @return The mark for the first attestation.
+     */
 	public Double getAtt() {
 		return attestation1;
 	}
