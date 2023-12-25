@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19ab8109-784d-4e3a-8643-b23a69068c68" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/bin/database/Log.class" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bin/enums/Day.class" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bin/utils/LessonTime.class" afterDir="false" />
@@ -31,6 +32,11 @@
       <change beforePath="$PROJECT_DIR$/bin/wsp/TechSupportSpecialist.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/TechSupportSpecialist.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/wsp/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/Test.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/wsp/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/User.class" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/untitled/untitled.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/bin/.gitignore" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,10 +75,18 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/n_ory/OneDrive/Документы/GitHub/KBTU-OOP-Project/untitled/src/Main.java",
     "settings.editor.selected.configurable": "database.data.views.appearance",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-249ae16d76d6-a618e4d4" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -82,6 +96,9 @@
       <option name="presentableId" value="Default" />
       <updated>1703503810756</updated>
       <workItem from="1703503812222" duration="549000" />
+      <workItem from="1703505031786" duration="50000" />
+      <workItem from="1703505091125" duration="42000" />
+      <workItem from="1703505142043" duration="244000" />
     </task>
     <servers />
   </component>
@@ -91,4 +108,18 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
+<<<<<<< Updated upstream
+=======
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/untitled/src/Main.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+>>>>>>> Stashed changes
 </project>
