@@ -1,11 +1,7 @@
 package wsp;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.*;
 
 import database.Database;
 import utils.*;
@@ -24,7 +20,7 @@ public class Researcher<T> implements Serializable {
 	private T user;
 	private Vector<ResearchProject> projects;
 	private Vector<ResearchPaper> papers;
-	private int hIndex;
+	private int hIndex = 0;
 	
 	/**
      * Constructs a Researcher object with the specified user.
@@ -74,10 +70,30 @@ public class Researcher<T> implements Serializable {
 		return papers;
 	}
 
-	
-	/**
-     * Views the papers associated with the researcher in a specified order.
-     */
+    public int calculatehIndex(){
+        Vector<Integer> citations = new Vector<Integer>();
+
+        if(this.papers == null){
+            System.out.println("You does not have any research papers.");
+        }
+        else{
+            Comparator<ResearchPaper> citaComparator = new PaperCitationsComparator();
+            this.papers.sort(citaComparator);
+            for(int i = 0; i < this.papers.size(); i++){
+                ResearchPaper researchPaper = this.papers.get(i);
+                citations.add(researchPaper.getCitations());
+            }
+        }
+        for (int i = 0; i < citations.size(); i++) {
+            if (citations.get(i) >= hIndex + 1) {
+                hIndex++;
+            } else {
+                break;
+            }
+        }
+        return hIndex;
+
+    }
 	public void viewPapers() {
 		
 		if(papers.isEmpty()) {
