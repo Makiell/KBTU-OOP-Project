@@ -5,7 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19ab8109-784d-4e3a-8643-b23a69068c68" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_12_15_23__1_12_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_12_15_23__1_12_AM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/database/Log.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/enums/Day.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/utils/LessonTime.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/utils/Observed.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/utils/SortStudents.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/wsp/EmployeeFactory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/wsp/StudentFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/database/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/database/Database.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/utils/Lesson.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/utils/Lesson.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/utils/Mark.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/utils/Mark.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/utils/ResearchJournal.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/utils/ResearchJournal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/utils/ResearchPaper.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/utils/ResearchPaper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/utils/StaticMethods.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/utils/StaticMethods.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/Admin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/Dean.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/Dean.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/GraduateStudent.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/GraduateStudent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/Manager.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/Manager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/Researcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/Researcher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/Student.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/Teacher.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/Teacher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/TechSupportSpecialist.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/TechSupportSpecialist.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/Test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/wsp/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/wsp/User.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,19 +40,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2a25PCBbHzL3gAqF7ENo2C2248e" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Test.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "Nurlybek",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "21",
@@ -56,5 +87,8 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
