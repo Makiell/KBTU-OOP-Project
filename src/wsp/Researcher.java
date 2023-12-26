@@ -173,6 +173,10 @@ public class Researcher<T> implements Serializable {
 		
 		ResearchJournal journal = journals.get(choice-1);
 		
+		if(papers.isEmpty()) {
+			u.getLanguage().noPapers();
+			return;
+		}
 		u.getLanguage().choosePaperToAdd();
 		
 		StaticMethods.printList(papers);

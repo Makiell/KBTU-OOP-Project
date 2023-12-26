@@ -310,7 +310,7 @@ public class Teacher extends Employee implements Serializable {
     	if (studentChoice == 0) {
     		return;
     	}
-    	Student selectedStudent = Database.getInstance().getStudents().get(studentChoice);
+    	Student selectedStudent = Database.getInstance().getStudents().get(studentChoice-1);
     	
     	Mark previousMark = selectedStudent.getTranscript().get(selectedCourse);
     	

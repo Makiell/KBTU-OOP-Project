@@ -184,7 +184,7 @@ public class Database implements Serializable {
     	if(researchers.isEmpty()) {
     		return null;
     	}
-    	return researchers.firstElement();
+    	return researchers.lastElement();
     }
     
     /**

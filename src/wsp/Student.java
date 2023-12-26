@@ -27,6 +27,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
     private HashMap<Course, Mark> transcript;
     private Faculty faculty;
     private Organisation organisation;
+    private int credits = 0;
 
     
     /**
@@ -72,8 +73,11 @@ public class Student extends User implements Serializable, Comparable<Student> {
     	for(Map.Entry<Course, Mark> entry: transcript.entrySet()) {
     		Mark mark = entry.getValue();
     		Course course = entry.getKey();
-    		sum += mark.getGpa()*course.getCredits();
-    		sumCredit += course.getCredits();
+    		if(mark.getAtt()!=null) {
+    			sum += mark.getGpa()*course.getCredits();
+        		sumCredit += course.getCredits();
+    		}
+    		
     	}
     	this.gpa = sum / sumCredit;
     }
@@ -193,6 +197,11 @@ public class Student extends User implements Serializable, Comparable<Student> {
      * possible to register students for the course through managers
      */
     public void registerToCourse(Course course) {
+    	if(this.credits+course.getCredits() > 21) {
+    		System.out.println("More than 21 credits.");
+    		return;
+    	}
+    	this.credits = this.credits + course.getCredits();
         this.courses.add(course);
         this.transcript.put(course, new Mark());
         this.getLanguage().courseRegistrationSuccesfully(course.getName());
