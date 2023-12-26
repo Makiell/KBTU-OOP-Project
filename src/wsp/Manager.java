@@ -100,11 +100,11 @@ public class Manager extends Employee{
             }
         }
 
-		System.out.println("The number of students with GPA 4.0:" + gpamax);
-        System.out.println("The number of students with GPA from 3.99 to 3.00:" + gpahigh);
-        System.out.println("The number of students with GPA from 2.99 to 2.00:" + gpamedium);
-        System.out.println("The number of students with GPA is less than 2.00:" + countother);
-		System.out.println("The researcher with the highest H-index:" + maxResearcher.toString());
+		this.getLanguage().GPAMAX(gpamax);
+		this.getLanguage().GPAHIGH(gpahigh);
+		this.getLanguage().GPAMEDIUM(gpamedium);
+		this.getLanguage().COUNTOTHER(countother);
+		this.getLanguage().hINDEX(maxResearcher.toString());
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " created statistic report"));
 	}
 
@@ -115,8 +115,8 @@ public class Manager extends Employee{
 		
 		Scanner in = new Scanner(System.in);
 		
-		System.out.println("Enter 0 to return back.");
-		System.out.println("Enter the number of credits of the course: ");
+		this.getLanguage().enterReturnBack();
+		this.getLanguage().enterTheNumverOfCreditsOfTheCourse();
 		
 		int input = StaticMethods.validate(10);
 		
@@ -124,16 +124,16 @@ public class Manager extends Employee{
 			return;
 		}
 		
-		System.out.println("Enter name of course:");
+		this.getLanguage().enterNameOfCourse();
 		String name = in.nextLine();
 		
-		System.out.println("Choose for which faculty is this course:");
+		this.getLanguage().chooseForWhichFacultyIsThisCouse();
 		Faculty[] options = Faculty.values();
 		StaticMethods.printList(List.of(options));
 		int facultyChoice = StaticMethods.validate(1, options.length);
 		Faculty faculty = options[facultyChoice-1];
 		
-		System.out.println("Choose type of this course for " + faculty + ":");
+		this.getLanguage().chooseTypeOfThisCoursefor(faculty.name());
 		TypeCourse[] optionsType = TypeCourse.values();
 		StaticMethods.printList(List.of(optionsType));
 		int typeCourse = StaticMethods.validate(1, optionsType.length);
@@ -143,7 +143,7 @@ public class Manager extends Employee{
 		
 		Database.getInstance().addCourse(newCourse);
 		
-		System.out.println("Course added " + newCourse);
+		this.getLanguage().courseAdded(newCourse.toString());
 
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " added new Course " + newCourse.getName()));
 
@@ -153,14 +153,14 @@ public class Manager extends Employee{
      * Changes the information of the manager, including username, password, first name, last name, and type.
      */
 	public void changeInfo() {
-    	System.out.println("What do you want to change?");
+		this.getLanguage().whatDoYouWantToChange();
 		
 		String[] options = new String[] {
 				"Username", "Password", "First name", "Last name", "Type"
 		};
 		
 		StaticMethods.printList(List.of(options));
-		System.out.println("Enter 0 to return back");
+		this.getLanguage().enterReturnBack();
 		int choice = StaticMethods.validate(options.length);
 		Scanner in = new Scanner(System.in);
 		
@@ -168,25 +168,25 @@ public class Manager extends Employee{
 			return;
 		}
 		else if(choice == 1) {
-			System.out.println("Enter new username");
+			this.getLanguage().enterNewUsername();
 			String newUsername = in.nextLine();
 			this.setUsername(newUsername);
 		}
 		else if(choice == 2) {
-			System.out.println("Enter new password");
+			this.getLanguage().enterNewPassword();
 			String newPassword = in.nextLine();
 			this.setPassword(newPassword);
 		}
 		else if(choice == 3) {
-			String firstName = StaticMethods.getValidInput("Enter new first name:", "[a-zA-Z]+");
+			String firstName = StaticMethods.getValidInput(this.getLanguage().enterNewFirstName(), "[a-zA-Z]+");
 			this.setFirstName(firstName);
 		}
 		else if(choice == 4) {
-			String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
+			String lastName = StaticMethods.getValidInput(this.getLanguage().enterNewLastName(), "[a-zA-Z]+");
 			this.setLastName(lastName);
 		}
 		else if(choice == 5) {
-			System.out.println("Choose type:");
+			this.getLanguage().chooseType();
 	        
 	        TypeManager[] optionsType = TypeManager.values();
 	        
@@ -206,13 +206,13 @@ public class Manager extends Employee{
 	public void createNews() {
 		
 		Scanner s = new Scanner(System.in);
-		System.out.println("News topic:");
+		this.getLanguage().newTopic();
 		String topic = s.nextLine();
 		
-		System.out.println("News title:");
+		this.getLanguage().newTitle();
 		String title = s.nextLine();
 		
-		System.out.println("News text:");
+		this.getLanguage().newText();
 		String text = s.nextLine();
 		
 		News newNews = new News(topic, title, text);
@@ -226,7 +226,7 @@ public class Manager extends Employee{
      */
 	public void viewRequests() {
 		Vector<Request> dbrequests = Database.getInstance().getRequests();
-		System.out.println("List of Requests:");
+		this.getLanguage().listOfRequests();
 		StaticMethods.printList(dbrequests);
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " viewed all requests"));
 	}
@@ -235,12 +235,12 @@ public class Manager extends Employee{
      * Edits an existing news entry. Allows the manager to modify the topic, title, or text of the news.
      */
 	public void editNews() {
-		System.out.println("What news do you want to change?");
+		this.getLanguage().whatNewsDoYouWantToChange();
 		Scanner s = new Scanner(System.in);
 		
 		Vector<News> dbnews = Database.getInstance().getNews();
 		StaticMethods.printList(dbnews);
-		System.out.println("Enter 0 to return back");
+		this.getLanguage().enterReturnBack();
 		
 		int newschoice = StaticMethods.validate(dbnews.size());
 		
@@ -250,30 +250,29 @@ public class Manager extends Employee{
 		
 		News news = dbnews.get(newschoice - 1);
 		
-		System.out.println("Which of part do you want to change?" + "\n 1 - Topic" + "\n 2 - Title"
-				+ "\n 3 - Text" + "\n 0 - exit");
+		this.getLanguage().whichOfPartDoYouWantToChange();
 		
 		int editchoice = StaticMethods.validate(3);
 
 		if (editchoice == 1) {
-			System.out.println("Enter new topic:");
+			this.getLanguage().enterNewTopic();
 			String topic = s.nextLine();
 			news.setTopic(topic);
 			System.out.println("Update news:" + news.toString());
             Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " updated the news topic " + news.getTitle()));
 		} 
 		else if (editchoice == 2) {
-			System.out.println("Enter new title:");
+			this.getLanguage().enterNewTitle();
 			String title = s.nextLine();
 			news.setTitle(title);
 			System.out.println("Update news:" + news.toString());
             Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " updated the news title " + news.getTitle()));
 		} 
 		else if (editchoice == 3) {
-			System.out.println("Enter new text:");
+			this.getLanguage().enterNewText();
 			String text = s.nextLine();
 			news.setText(text);
-			System.out.println("Update news:" + news.toString());
+			this.getLanguage().updateNews(news.toString());
             Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " updated the news text " + news.getTitle()));
 		} 
 		else if (editchoice == 0) {
@@ -286,8 +285,8 @@ public class Manager extends Employee{
      * Assigns a course to a teacher. Allows the manager to choose a course and a teacher for the assignment.
      */
 	public void assignCourseForTeacher() {
-		System.out.println("Enter 0 to return back.");
-		System.out.println("Which course you want to assign:");
+		this.getLanguage().enterReturnBack();
+		this.getLanguage().whichCourseYouWantToAssign();
 		
 		Vector<Course> courses = Database.getInstance().getCourses();
 		
@@ -301,7 +300,7 @@ public class Manager extends Employee{
 		
 		Course course = courses.get(courseChoice-1);
 		
-		System.out.println("Which teacher would you like to assign the " + course.getName() + " course to?");
+		this.getLanguage().whichTeacherWouldYouLikeToAssignThe(course.getName());
 		
 		Vector<Teacher> teachers = Database.getInstance().getTeachers();
 		
@@ -317,7 +316,7 @@ public class Manager extends Employee{
 		
 		teacher.getLessons().put(course, new Vector<Lesson>());
 		
-		System.out.println(course.getName() + " assigned to " + teacher.getFirstName() + " " + teacher.getLastName());
+		this.getLanguage().assignedTo(course.getName(), teacher.getFirstName(), teacher.getLastName());
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername()+ " Assigned course " + course.getName() + " with teacher " + teacher.getFirstName() + " " + teacher.getLastName()));
 	}
 	
@@ -329,12 +328,12 @@ public class Manager extends Employee{
 		Vector<Teacher> teachers = Database.getInstance().getTeachers();
 		
 		if(teachers.isEmpty()) {
-			System.out.println("No teachers");
+			this.getLanguage().noTeachers();
 			return;
 		}
 		
-		System.out.println("Enter 0 to return back.");
-		System.out.println("To which teacher would you like to add the lesson?");
+		this.getLanguage().enterReturnBack();
+		this.getLanguage().whichTeacherWouldYouLikeToAddTheLesson();
 
         StaticMethods.printList(teachers);
 		
@@ -347,11 +346,11 @@ public class Manager extends Employee{
 		Teacher teacher = teachers.get(teacherChoice-1);
 		
 		if(teacher.getCourses().isEmpty()) {
-			System.out.println("No courses for this teacher");
+			this.getLanguage().noCoursesForThisTeacher();
 			return;
 		}
 		
-		System.out.println("To which course of " + teacher.getFirstName() + " " + teacher.getLastName() + " do you want to add lesson?");
+		this.getLanguage().toWhichCourseOf(teacher.getFirstName(), teacher.getLastName());
 		
 		Vector<Course> courses = teacher.getCourses();
 		
@@ -361,7 +360,7 @@ public class Manager extends Employee{
 		
 		Course course = courses.get(courseChoice-1);
 		
-		System.out.println("Enter the type of lesson:");
+		this.getLanguage().enterTheTypeOfLesson();
 		
 		TypeLesson[] types = TypeLesson.values();
 		
@@ -371,7 +370,7 @@ public class Manager extends Employee{
 		
 		TypeLesson typeLesson = types[typeChoice-1];
 		
-		System.out.println("Enter the day:");
+		this.getLanguage().enterTheDay();
 		
 		Day[] days = Day.values();
 		
@@ -381,11 +380,11 @@ public class Manager extends Employee{
 		
 		Day day = days[dayChoice-1];
 		
-		System.out.println("Enter the lesson start time:");
+		this.getLanguage().enterTheLessonStartTime();
 		
 		int time = StaticMethods.validate(8, 18);
 		
-		System.out.println("Enter the room");
+		this.getLanguage().enterTheRoom();
 		
 		int room = StaticMethods.validate(100, 700);
 		
@@ -397,7 +396,7 @@ public class Manager extends Employee{
 		
 		teacher.getLessons().put(course, lessons);
 		
-		System.out.println("Added " + newLesson);
+		this.getLanguage().added(newLesson.toString());
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " added Lesson " + newLesson));
 		
 	}
@@ -418,7 +417,7 @@ public class Manager extends Employee{
         Vector<Teacher> teachers = Database.getInstance().getTeachers();
         
         if(teachers.isEmpty()) {
-        	System.out.println("No teachers");
+        	this.getLanguage().noTeachers();
         	return;
         }
 
@@ -430,8 +429,8 @@ public class Manager extends Employee{
      * Creates a research journal in the system. Takes input from the manager for the name of the journal.
      */
 	public void createJournal() {
-		System.out.println("Enter 0 to return back");
-		System.out.println("Enter the name:");
+		this.getLanguage().enterReturnBack();
+		this.getLanguage().enterTheName();
 		Scanner in = new Scanner(System.in);
 		String name = in.nextLine();
 		if(name.equals("0")) {
@@ -442,7 +441,7 @@ public class Manager extends Employee{
 		
 		Database.getInstance().addJournal(newJournal);
 		
-		System.out.println("New journal created " + newJournal);
+		this.getLanguage().newJournalCreated(newJournal.toString());
         Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " created a Journal " + name));
 	}
 
@@ -460,21 +459,16 @@ public class Manager extends Employee{
 		while (true) {
 			
 			if(researcher == null) {
-				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
-						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers", "Create journal",
-						"View all papers",
-						"Exit" };
+				options = this.getLanguage().managerMenu();
 			}
 			else {
-				options = new String[] { "Create a statistical report", "Add course", "Add lesson to teacher", "Create news",
-						"View Requests", "Edit news", "Assign Course For Teacher", "View Students", "View Teachers", "Create journal",
-						"Exit", "View all papers", "View researcher menu"};
+				options = this.getLanguage().managerResearcherMenu();
 			}
 			
-			System.out.println("----Manager Menu----");
+			this.getLanguage().managerHeader();
 			StaticMethods.printList(List.of(options));
 			
-			System.out.print("Enter your choice: ");
+			this.getLanguage().enterYourChoice();
 			int choice = StaticMethods.validate(1, options.length);
 			
 			if (choice == 1) {
@@ -510,7 +504,10 @@ public class Manager extends Employee{
 			else if(choice == 11) {
             	Database.getInstance().getAllPapers();
             }
-			else if (choice == 12) {
+			else if(choice == 12) {
+				this.changeLanguage();
+			}
+			else if (choice == 13) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -520,7 +517,7 @@ public class Manager extends Employee{
 				break;
 			}
 			else if(researcher != null) {
-				if(choice == 13) {
+				if(choice == 14) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " went to the researcher menu"));
 				}

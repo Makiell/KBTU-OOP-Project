@@ -3,12 +3,11 @@ package wsp;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Vector;
 
 import database.*;
 import utils.*;
-import enums.*;
+import language.*;
 
 /**
  * The Admin class represents an superuser in the system.
@@ -28,18 +27,16 @@ public class Admin extends User implements Serializable {
      * Adds a researcher, either from an existing user or by creating a new user.
      */
 	public void addResearcher() {
-		String[] options = new String[] {
-				"Add researcher to existing user", "Create researcher from new user"
-		};
+		String[] options = this.getLanguage().addResearcherOptions();
 		
 		StaticMethods.printList(List.of(options));
 		
-		System.out.println("What do you want to do?");
+		this.getLanguage().whatDoYouWantToDo();
 		int choice = StaticMethods.validate(1, 2);
 		
 		if(choice == 1) {
 			StaticMethods.printList(Database.getInstance().getUsers());
-			System.out.println("Choose user:");
+			this.getLanguage().chooseUser();
 			
 			int userChoice = StaticMethods.validate(1, Database.getInstance().getUsers().size());
 			
@@ -49,11 +46,9 @@ public class Admin extends User implements Serializable {
 		}
 		else if(choice == 2) {
 			
-			System.out.println("Which user do you want to create?");
+			this.getLanguage().whichUserDoYouWantToCreate();
 			
-			String[] optionsToCreate = new String[] {
-					"Student", "Graduate Student", "Employee", "Teacher", "Manager", "Tech Support Specialist", "Dean", 
-			};
+			String[] optionsToCreate = this.getLanguage().addResearcherOptionsCreate();
 			
 			StaticMethods.printList(List.of(optionsToCreate));
 			int choiceUser = StaticMethods.validate(1, optionsToCreate.length);
@@ -77,13 +72,11 @@ public class Admin extends User implements Serializable {
      * Creates a new user based on the chosen user type.
      */
 	public void createUser() {
-		System.out.println("Which user do you want to create?");
-		String[] options = new String[] {
-				"Student", "Graduate Student", "Researcher", "Employee", "Teacher", "Manager", "Tech Support Specialist", "Dean", 
-		};
+		this.getLanguage().whichUserDoYouWantToCreate();
+		String[] options = this.getLanguage().createUserOptions();
 		
 		StaticMethods.printList(List.of(options));
-		System.out.println("Enter 0 to return back.");
+		this.getLanguage().enterReturnBack();
 		int choice = StaticMethods.validate(options.length);
 		
 		if(choice == 0) {
@@ -115,7 +108,7 @@ public class Admin extends User implements Serializable {
      */
 	public void updateUser() {
 		StaticMethods.printList(Database.getInstance().getUsers());
-		System.out.println("Which user do you want to change? 0 for return back");
+		this.getLanguage().updateUserWhichUserDoYouWantToChange();
 		
 		int choice = StaticMethods.validate(Database.getInstance().getUsers().size());
 		
@@ -131,11 +124,11 @@ public class Admin extends User implements Serializable {
      * Removes a user from the system.
      */
 	public void removeUser() {
-		System.out.println("Choose user to delete:");
+		this.getLanguage().removeUserChooseUserToDelete();
 		
 		StaticMethods.printList(Database.getInstance().getUsers());
 		
-		System.out.println("Enter 0 to return back");
+		this.getLanguage().enterReturnBack();
 		
 		int choice = StaticMethods.validate(Database.getInstance().getUsers().size());
 		
@@ -155,8 +148,8 @@ public class Admin extends User implements Serializable {
      * Displays the log files for a selected user.
      */
 	public void seeLogFiles() {
-		System.out.println("Enter 0 to return back");
-		System.out.println("Choose user to see logs:");
+		this.getLanguage().enterReturnBack();
+		this.getLanguage().seeLogFilesChooseUserToSeeLogs();
 		
 		Vector<User> users = Database.getInstance().getUsers();
 		
@@ -173,7 +166,7 @@ public class Admin extends User implements Serializable {
 		Vector<Log> logs = Database.getInstance().seeLogs(u);
 				
 		if(logs==null) {
-			System.out.println("No logs for this user.");
+			this.getLanguage().seeLogFilesNoLogsForThisUser();
 			return;
 		}
 		
@@ -187,13 +180,14 @@ public class Admin extends User implements Serializable {
 	@Override
 	public void viewMenu() {
 		
-		String[] options = new String[] {
-				"Create new user", "See all users", "Update info of user", "Remove user", "See log files", "Exit"
-		};
-		
 		while(true) {
+			
+			LanguageInterface userLanguage = this.getLanguage();
+			
+			String[] options = userLanguage.adminMenu();
+			
 			System.out.println();
-			System.out.println("----Admin Menu----");
+			System.out.println(userLanguage.adminHeader());
 			StaticMethods.printList(List.of(options));
 			int choice = StaticMethods.validate(options.length);
 			
@@ -215,7 +209,10 @@ public class Admin extends User implements Serializable {
 			else if (choice == 5) {
 				seeLogFiles();
 			}
-			else if(choice == 6) {
+			else if (choice == 6) {
+				changeLanguage();
+			}
+			else if(choice == 7) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {

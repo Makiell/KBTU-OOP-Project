@@ -40,14 +40,14 @@ public class Dean extends Teacher implements Serializable {
      * Changes specific information of the dean, such as username, password, first name, last name, and faculty.
      */
     public void changeInfo() {
-    	System.out.println("What do you want to change?");
+    	this.getLanguage().whatDoYouWantToChange();
 		
 		String[] options = new String[] {
 				"Username", "Password", "First name", "Last name", "Faculty"
 		};
 		
 		StaticMethods.printList(List.of(options));
-		System.out.println("Enter 0 to return back");
+		this.getLanguage().enterReturnBack();
 		int choice = StaticMethods.validate(options.length);
 		Scanner in = new Scanner(System.in);
 		
@@ -55,25 +55,25 @@ public class Dean extends Teacher implements Serializable {
 			return;
 		}
 		else if(choice == 1) {
-			System.out.println("Enter new username");
+			this.getLanguage().enterNewUsername();
 			String newUsername = in.nextLine();
 			this.setUsername(newUsername);
 		}
 		else if(choice == 2) {
-			System.out.println("Enter new password");
+			this.getLanguage().enterNewPassword();
 			String newPassword = in.nextLine();
 			this.setPassword(newPassword);
 		}
 		else if(choice == 3) {
-			String firstName = StaticMethods.getValidInput("Enter new first name:", "[a-zA-Z]+");
+			String firstName = StaticMethods.getValidInput(this.getLanguage().enterNewFirstName(), "[a-zA-Z]+");
 			this.setFirstName(firstName);
 		}
 		else if(choice == 4) {
-			String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
+			String lastName = StaticMethods.getValidInput(this.getLanguage().enterNewLastName(), "[a-zA-Z]+");
 			this.setLastName(lastName);
 		}
 		else if(choice == 5) {
-			System.out.println("Choose faculty:");
+			this.getLanguage().chooseFaculty();
 	        
 	        Faculty[] optionsFaculty = Faculty.values();
 	        
@@ -101,15 +101,15 @@ public class Dean extends Teacher implements Serializable {
     public void signRequests() {
 
         if (requests.isEmpty()) {
-            System.out.println("No requests");
+        	this.getLanguage().noRequests();
             return;
         }
 
-        System.out.println("----Emergency Requests----");
+        this.getLanguage().emergencyRequests();
         
         StaticMethods.printList(requests);
 
-        System.out.println("Enter the request number to sign (or 0 to exit):");
+        this.getLanguage().enterTheRequestNumberToSign();
 
         int choice = StaticMethods.validate(requests.size());
         
@@ -121,8 +121,8 @@ public class Dean extends Teacher implements Serializable {
         selectedRequest.setStatus(Status.ACCEPTED);
         requests.remove(selectedRequest);
         
-        System.out.println("Dean signed request: " + selectedRequest);
-        System.out.println("The request was successfully signed and deleted.");
+        this.getLanguage().deanSignedRequest(selectedRequest.toString());
+        this.getLanguage().TheRequestWasSuccesfully();
         Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " signed request"));
     
     }
@@ -137,34 +137,49 @@ public class Dean extends Teacher implements Serializable {
     	Researcher researcher = Database.getInstance().isResearcher(this);
     	
     	if(researcher == null) {
-    		 options = new String[]{"View all requests", "Sign Requests", "View one News", "View all papers", "Exit"};
+    		 options = this.getLanguage().deanMenu();
     	}
     	else {
-    		 options = new String[]{"View all requests", "Sign Requests", "View one News", "View all papers", "Exit", "View researcher menu"};
+    		 options = this.getLanguage().deanResearcherMenu();
     	}
        
 
         while (true) {
             System.out.println();
-            System.out.println("----Dean Menu----");
+            this.getLanguage().deanHeader();
             StaticMethods.printList(List.of(options));
 
             int choice = StaticMethods.validate(1, options.length);
             
-            if(choice == 1) {
+            if (choice == 1) {
+    			viewCourses();
+    		}
+    		else if(choice == 2) {
+    			viewStudents();
+    		}
+    		else if (choice == 3) {
+    			viewMarks();
+    		}
+    		else if (choice == 4) {
+    			putMarks();
+    		}
+            if(choice == 5) {
             	viewRequests();
             }
-            if (choice == 2) {
+            if (choice == 6) {
                 signRequests();
             } 
-            else if (choice == 3) {
+            else if (choice == 7) {
             	viewOneNews();
                 Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " viewed a one News"));
             }
-            else if(choice == 4) {
+            else if(choice == 8) {
             	Database.getInstance().getAllPapers();
             }
-            else if (choice == 5) {
+            else if(choice == 9) {
+            	this.changeLanguage();
+            }
+            else if (choice == 10) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -173,7 +188,7 @@ public class Dean extends Teacher implements Serializable {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 6) {
+				if(choice == 11) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " went to the researcher menu"));
 				}

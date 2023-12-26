@@ -74,7 +74,8 @@ public class Researcher<T> implements Serializable {
         Vector<Integer> citations = new Vector<Integer>();
 
         if(this.papers == null){
-            System.out.println("You does not have any research papers.");
+            User u = (User)this.getUser();
+            u.getLanguage().noPapers();
         }
         else{
             Comparator<ResearchPaper> citaComparator = new PaperCitationsComparator();
@@ -97,7 +98,8 @@ public class Researcher<T> implements Serializable {
 	public void viewPapers() {
 		
 		if(papers.isEmpty()) {
-			System.out.println("No papers");
+			User u = (User)this.getUser();
+            u.getLanguage().noPapers();
 			return;
 		}
 		
@@ -134,7 +136,8 @@ public class Researcher<T> implements Serializable {
 	public void viewProjects() {
 		
 		if(projects.isEmpty()) {
-			System.out.println("No projects");
+			User u = (User)this.getUser();
+            u.getLanguage().noProjects();
 			return;
 		}
 		
@@ -147,15 +150,18 @@ public class Researcher<T> implements Serializable {
      */
 	public void addPaperToJournal() {
 		
+		User u = (User)this.getUser();
+		
 		Vector<ResearchJournal> journals = Database.getInstance().getJournals();
 		
 		if(journals.isEmpty()) {
-			System.out.println("No journals.");
+			
+            u.getLanguage().noJournals();
 			return;
 		}
 		
-		System.out.println("Enter 0 to return back.");
-		System.out.println("Choose the journal:");
+		u.getLanguage().enterReturnBack();
+		u.getLanguage().chooseTheJournal();
 		
 		StaticMethods.printList(journals);
 		
@@ -167,7 +173,7 @@ public class Researcher<T> implements Serializable {
 		
 		ResearchJournal journal = journals.get(choice-1);
 		
-		System.out.println("Choose paper to add:");
+		u.getLanguage().choosePaperToAdd();
 		
 		StaticMethods.printList(papers);
 		
@@ -177,7 +183,7 @@ public class Researcher<T> implements Serializable {
 		
 		journal.addPaper(paper);
 		
-		System.out.println(paper + " added to " + journal.getName());
+		u.getLanguage().addedTo(paper.toString(), journal.getName());
 	}
 	
 	
@@ -195,12 +201,13 @@ public class Researcher<T> implements Serializable {
      */
 	public void viewMenu() {
 		
+		User u = (User)this.getUser();
+		
 		while(true) {
-			String userMenu = "Exit to " + user.getClass().getName().substring(4) + " menu";
-			String[] options = new String[] {
-					"View papers", "Create paper", "View projects", "View journals", "Add paper to journal", userMenu
-			};
+
+			String[] options = u.getLanguage().researcherMenu();
 			
+			System.out.println(u.getLanguage().researcherHeader());
 			StaticMethods.printList(List.of(options));
 			
 			int choice = StaticMethods.validate(1, options.length);
@@ -232,8 +239,9 @@ public class Researcher<T> implements Serializable {
      * Creates a new research paper. Asks the researcher for paper details such as name, pages, and DOI.
      */
 	private void createPaper() {
-		System.out.println("Enter 0 to return back.");
-		System.out.println("Enter the name:");
+		User u = (User)this.getUser();
+		u.getLanguage().enterReturnBack();
+		u.getLanguage().enterTheName();
 		
 		Scanner in = new Scanner(System.in);
 		
@@ -246,16 +254,15 @@ public class Researcher<T> implements Serializable {
 		Vector<Researcher> authors = new Vector<Researcher>();
 		authors.add(this);
 		
-		System.out.println("Enter the number of pages:");
-		
-		
+		u.getLanguage().enterTheNumberOfPages();
+	
 		int pages;
 		while(true) {
 			try {
 				pages = in.nextInt();
 				while(pages<=0) {
 					
-					System.out.println("Enter valid number of pages.");
+					u.getLanguage().enterValidNumberOfPages();
 					pages = in.nextInt();
 					
 				}
@@ -263,12 +270,12 @@ public class Researcher<T> implements Serializable {
 				break;
 			}
 			catch(InputMismatchException e) {
-				System.out.println("Enter valid number");
+				u.getLanguage().enterValidNumber();
 				in.nextLine();
 			}
 		}
 		
-		System.out.println("Enter the doi:");
+		u.getLanguage().enterTheDoi();
 		
 		String doi = in.nextLine();
 		
@@ -300,7 +307,7 @@ public class Researcher<T> implements Serializable {
 		
 		Database.getInstance().addPaper(newPaper);
 		
-		System.out.println("New paper added " + newPaper);
+		u.getLanguage().newPaperAdded(newPaper.toString());
 		
 	}
 

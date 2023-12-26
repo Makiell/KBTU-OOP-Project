@@ -82,14 +82,14 @@ public class GraduateStudent extends Student implements Serializable {
      * last name, and grade. Provides a menu for the user to choose the information to change.
      */
     public void changeInfo() {
-    	System.out.println("What do you want to change?");
+    	this.getLanguage().whatDoYouWantToChange();
 		
 		String[] options = new String[] {
 				"Username", "Password", "First name", "Last name", "Grade"
 		};
 		
 		StaticMethods.printList(List.of(options));
-		System.out.println("Enter 0 to return back");
+		this.getLanguage().enterReturnBack();
 		int choice = StaticMethods.validate(options.length);
 		Scanner in = new Scanner(System.in);
 		
@@ -97,21 +97,21 @@ public class GraduateStudent extends Student implements Serializable {
 			return;
 		}
 		else if(choice == 1) {
-			System.out.println("Enter new username");
+			this.getLanguage().enterNewUsername();
 			String newUsername = in.nextLine();
 			this.setUsername(newUsername);
 		}
 		else if(choice == 2) {
-			System.out.println("Enter new password");
+			this.getLanguage().enterNewPassword();
 			String newPassword = in.nextLine();
 			this.setPassword(newPassword);
 		}
 		else if(choice == 3) {
-			String firstName = StaticMethods.getValidInput("Enter new first name:", "[a-zA-Z]+");
+			String firstName = StaticMethods.getValidInput(this.getLanguage().enterNewFirstName(), "[a-zA-Z]+");
 			this.setFirstName(firstName);
 		}
 		else if(choice == 4) {
-			String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
+			String lastName = StaticMethods.getValidInput(this.getLanguage().enterNewLastName(), "[a-zA-Z]+");
 			this.setLastName(lastName);
 		}
 		else if(choice == 5) {
@@ -121,7 +121,7 @@ public class GraduateStudent extends Student implements Serializable {
 			else {
 				this.grade = Grade.MASTER;
 			}
-			System.out.println("New grade " + this.grade);
+			this.getLanguage().newGrade(this.grade.name());
 		}
     }
 
@@ -182,13 +182,16 @@ public class GraduateStudent extends Student implements Serializable {
                 organisationMenu();
             }
             else if(choice == 8) {
-            	Database.getInstance().getAllPapers();
+            	viewOneNews();
+                Database.getInstance().addLog(this, new Log("Graduate Student " + this.getUsername() + " viewed a one News"));  	
             }
             else if (choice == 9) {
-                viewOneNews();
-                Database.getInstance().addLog(this, new Log("Graduate Student " + this.getUsername() + " viewed a one News"));
+            	Database.getInstance().getAllPapers();
             }
             else if (choice == 10) {
+            	this.changeLanguage();
+            }
+            else if (choice == 11) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -197,7 +200,7 @@ public class GraduateStudent extends Student implements Serializable {
                 }
                 break;
             }
-            else if(choice == 11) {
+            else if(choice == 12) {
             	researcher.viewMenu();
                 Database.getInstance().addLog(this, new Log("Graduate Student " + this.getUsername() + " went to the researcher menu"));
             }

@@ -54,16 +54,17 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	Order o = getOrders().get(choice-1);
     	if(o.getStatus() == Status.REJECTED)
     	{
-    		System.out.println("ERROR! Order was already rejected!");
+    		this.getLanguage().orderWasAlreadyRejected();
+    		return;
     	}
     	if(o.getStatus() == Status.ACCEPTED)
     	{
-    		System.out.println("ERROR! Order was already accepted");
+    		this.getLanguage().orderWasAlreadyAccepted();
     		return;
     	}
     	else {
     		o.setStatus(Status.ACCEPTED);
-			System.out.println("Order has been accepted!");
+    		this.getLanguage().orderHasBeenAccepted();
             Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " accepted order "));
     	}
     		
@@ -80,20 +81,20 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	Order o = getOrders().get(choice-1);
     	if(o.getStatus() == Status.REJECTED)
     	{
-    		System.out.println("ERROR! Order was already rejected!");
+    		this.getLanguage().orderWasAlreadyRejected();
     		return;
     	}
     		
     	if(o.getStatus() == Status.ACCEPTED)
     	{
-    		System.out.println("ERROR! Order was already accepted");
+    		this.getLanguage().orderHasBeenAccepted();
     		return;
     	}
     		
     	else
     	{
     		o.setStatus(Status.REJECTED);
-			System.out.println("Order has been rejected!");
+    		this.getLanguage().orderHasBeenRejected();
 			Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " rejected the order"));
     	}
     		
@@ -113,22 +114,20 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	Researcher researcher = Database.getInstance().isResearcher(this);
     	
     	if(researcher == null) {
-    		options = new String[] {"View orders",
-    				"Accept order", "Reject order", "View all papers", "Exit" };
+    		options = this.getLanguage().techSupportSpecialistMenu();
     	}
     	else {
-    		options = new String[] {"View orders",
-    				"Accept order", "Reject order", "View all paper", "Exit", "View researcher menu"};
+    		options = this.getLanguage().techSupportSpecialistResearcherMenu();
     	}
     	
     	
     	while(true) {
     		 
-    		System.out.println("----Tech support specialist menu----");
+    		this.getLanguage().techSupportSpecialistHeader();
     		
     		StaticMethods.printList(List.of(options));
     		
-    		System.out.println("Enter your choice: ");
+    		this.getLanguage().enterYourChoice();
     		int choice = StaticMethods.validate(1, options.length);
     		
     		if(choice == 1) {
@@ -148,6 +147,10 @@ public class TechSupportSpecialist extends Employee implements Serializable {
             }
     		
     		else if(choice == 5) {
+    			this.changeLanguage();
+    		}
+    		
+    		else if(choice == 6) {
     			try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -158,7 +161,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		}
     		
     		else if(researcher != null) {
-				if(choice == 6) {
+				if(choice == 7) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " went to the researcher menu"));
 				}
