@@ -89,7 +89,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     	
     	if(researcher == null) {
     		options = new String[] {"View orders",
-    				"Accept order", "Reject order", "Exit" };
+    				"Accept order", "Reject order", "Exit" 
     	}
     	else {
     		options = new String[] {"View orders",
