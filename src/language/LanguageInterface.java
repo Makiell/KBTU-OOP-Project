@@ -4,7 +4,7 @@ package language;
 public interface LanguageInterface {
 //---------------------------------------------------------------------------------------------------------------
 	void newNotifications();
-	void handleEventUser(String paper, String journal, String firstName, String lastName);
+	String handleEventUser(String paper, String journal, String firstName, String lastName);
 	void news();
 	void noNews();
 	void enterTheNumberOfTheNews();
@@ -19,6 +19,7 @@ public interface LanguageInterface {
 	
 	
 //---------------------------------------------------------------------------------------------------------------
+	String studentHeader();
     String[] studentMenu();
     void viewTranscript();
     void courseDoesntHaveMarks();
@@ -40,6 +41,7 @@ public interface LanguageInterface {
 
 //---------------------------------------------------------------------------------------------------------------  
     
+    String teacherHeader();
     String[] teacherMenu();
     
     void courseTaughtBy(String username);
@@ -47,7 +49,7 @@ public interface LanguageInterface {
     void marksFor(String selectedCourseName);
     void noMarks(String mark,String studentUsername);
     void noStudentEnrolledIn(String selectedCourseName);
-    void previousMarksForStudent(String selectedStudentUsername);
+    void previousMarksForStudent(String selectedStudentUsername, String mark);
     void newMarksForStudents(String selectedStudentUsername);
     void teachersRating(double rate);
     
@@ -69,6 +71,7 @@ public interface LanguageInterface {
     String[] teacherResearcherMenu();
 
 //---------------------------------------------------------------------------------------------------------------
+    String adminHeader();
     String[] adminMenu();
     
     String[] addResearcherOptions();
@@ -84,7 +87,7 @@ public interface LanguageInterface {
     void seeLogFilesNoLogsForThisUser();
     
 //---------------------------------------------------------------------------------------------------------------    
-    
+    String managerHeader();
     String[] managerMenu();
     void GPAMAX(double gpamax);
     void GPAHIGH(double gpahigh);
@@ -137,6 +140,8 @@ public interface LanguageInterface {
     String[] managerResearcherMenu();
     
 //---------------------------------------------------------------------------------------------------------------    
+    
+    String deanHeader();
     String[] deanMenu();
     
     void chooseFaculty();
@@ -149,6 +154,8 @@ public interface LanguageInterface {
     String[] deanResearcherMenu();
     
 //------------------------------------------------------------------------------------------------------------------
+    
+    String techSupportSpecialistHeader();
     String[] techSupportSpecialistMenu();
     void orderWasAlreadyRejected();
     void orderWasAlreadyAccepted();
@@ -157,10 +164,14 @@ public interface LanguageInterface {
     
     String[] techSupportSpecialistResearcherMenu();
 //-----------------------------------------------------------------------------------------------------------------------
+    
+    String graduateStudentHeader();
     String[] graduateStudentMenu();
 
-    void newGrade(double grade);
+    void newGrade(String grade);
 //-----------------------------------------------------------------------------------------------------------------------
+    String employeeHeader();
+    
     String[] employeeMenu();
     
     void SendingMessageTo(String message, String Username);
@@ -176,6 +187,8 @@ public interface LanguageInterface {
     String[] employeeResearcherMenu();
     
 //-----------------------------------------------------------------------------------------------------------------------    
+    String researcherHeader();
+    
     String[] researcherMenu();
     
     void noPapers();
@@ -203,7 +216,7 @@ public interface LanguageInterface {
     String[] changeInfoOptions();
     void enterNewUsername();
     void enterNewPassword();
-    void enterNewFirstName();
-    void enterNewLastName();
+    String enterNewFirstName();
+    String enterNewLastName();
 }
 

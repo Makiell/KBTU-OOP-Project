@@ -180,6 +180,9 @@ public class Database implements Serializable {
      */
     public Researcher getTopCitedResearcher() {
     	Collections.sort(this.researchers, new ResearcherCitationsComparator());
+    	if(researchers.isEmpty()) {
+    		return null;
+    	}
     	return researchers.firstElement();
     }
     

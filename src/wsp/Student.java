@@ -120,7 +120,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
      * Views the transcript of the student.
      */
     public void viewTranscript() {
-        System.out.println("Transcript:");
+    	this.getLanguage().viewTranscript();
         for (Map.Entry<Course, Mark> entry : transcript.entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue().toString());
         }
@@ -132,16 +132,16 @@ public class Student extends User implements Serializable, Comparable<Student> {
      */
     public void viewMarks() {
         if(courses.isEmpty()) {
-            System.out.println("No courses");
+        	this.getLanguage().noCoursesYet();
             return;
         }
         else{
             StaticMethods.printList(courses);
         }
 
-        System.out.println("Please enter your choice:");
+        this.getLanguage().enterYourChoice();
 
-        System.out.println("Enter 0 to return back");
+        this.getLanguage().enterReturnBack();
         int coursechoice = StaticMethods.validate(courses.size());
 
         if(coursechoice == 0) {
@@ -152,11 +152,11 @@ public class Student extends User implements Serializable, Comparable<Student> {
 
         Mark mark = transcript.get(course);
         if (mark == null) {
-            System.out.println("Course doesnt have marks");
+        	this.getLanguage().courseDoesntHaveMarks();
             return;
         }
         else {
-            System.out.println("Course: " + course.getName() + " Mark: " + mark.toString());
+        	this.getLanguage().courseMark(course.getName(), mark.toString());
             Database.getInstance().addLog(this, new Log("Student " + this.getUsername()+ " viewed Marks for Course " + course.getName()));
         }
 
@@ -167,7 +167,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
      */
     public void getCourseFromDB() {
         if(Database.getInstance().getCourses().isEmpty()) {
-            System.out.println("No courses yet...");
+        	this.getLanguage().noCoursesYet();
             return;
         }
 
@@ -178,7 +178,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
 
         StaticMethods.printList(coursesToShow);
 
-        System.out.println("Enter 0 to return back");
+        this.getLanguage().noCoursesYet();
         int coursechoice = StaticMethods.validate(coursesToShow.size());
         if(coursechoice == 0) {
             return;
@@ -195,7 +195,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
     public void registerToCourse(Course course) {
         this.courses.add(course);
         this.transcript.put(course, new Mark());
-        System.out.println("Course " + course.getName() + " registration successful!");
+        this.getLanguage().courseRegistrationSuccesfully(course.getName());
         Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " registrated to course " + course.getName()));
     }
 
@@ -204,23 +204,23 @@ public class Student extends User implements Serializable, Comparable<Student> {
      */
     public void viewTeacherForCourse() {
     	if(this.courses.isEmpty()) {
-    		System.out.println("No courses");
+    		this.getLanguage().noCourses();
     		return;
     	}
-        System.out.println("All courses:");
+        this.getLanguage().allCourses();
         StaticMethods.printList(courses);
         int coursechoice = StaticMethods.validate(courses.size());
         Course course = courses.get(coursechoice - 1);
         if (!courses.contains(course)) {
-            System.out.println("Student not registered for this course");
+            this.getLanguage().studentNotRegisteredForThisCourse();
             return;
         }
         Vector<Teacher> teachers = course.getTeachers();
         if (teachers == null || teachers.isEmpty()) {
-            System.out.println("No teachers");
+            this.getLanguage().noTeachers();
             return;
         }
-        System.out.println("Teachers for course " + course.getName() + ":");
+        this.getLanguage().teacherForCourse(course.getName());
         for (Teacher teacher : teachers) {
             System.out.println(teacher.toString() + " (" + teacher.getTypeTeacher() + ")");
             Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed all Teachers"));
@@ -234,10 +234,10 @@ public class Student extends User implements Serializable, Comparable<Student> {
     public void viewCourses() {
 
         if(Database.getInstance().getCourses().isEmpty()) {
-            System.out.println("No courses yet...");
+            this.getLanguage().noCoursesYet();
         }
 
-        System.out.println("Courses:");
+        this.getLanguage().courses();
         StaticMethods.printList(Database.getInstance().getCourses());
         Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed All courses"));
     }
@@ -251,12 +251,12 @@ public class Student extends User implements Serializable, Comparable<Student> {
 
         StaticMethods.printList(teachers);
 
-        System.out.println("Please select the teacher you want to evaluate:");
+        this.getLanguage().pleaseSelectTheTeacherYourWantToEvaluate();
         
         int teacherchoice = StaticMethods.validate(1, teachers.size());
         Teacher teacher = teachers.get(teacherchoice - 1);
         
-        System.out.println("Your assessment of this teacher:");
+        this.getLanguage().yourAssessmentOfThisTeacher();
         
         int rate = StaticMethods.validate(10);
         
@@ -269,11 +269,10 @@ public class Student extends User implements Serializable, Comparable<Student> {
      * Displays the organization-related menu, providing options to join, leave, or create an organization.
      */
     public void organisationMenu() {
-        System.out.println("Please enter your choice:");
-        System.out.println("1 - Join in a organisation");
-        System.out.println("2 - Leave in a organisation");
-        System.out.println("3 - Create in a organisation");
-        System.out.println("Enter 0 to return back");
+        this.getLanguage().enterYourChoice();
+        String[] options = this.getLanguage().organisationMenu();
+        StaticMethods.printList(List.of(options));
+        this.getLanguage().enterReturnBack();
         int choiceorg = StaticMethods.validate(3);
         if(choiceorg == 0) {
             return;
@@ -303,9 +302,9 @@ public class Student extends User implements Serializable, Comparable<Student> {
 
         if (!organisations.isEmpty()) {
         	
-        	System.out.println("List of organisation:");
+        	this.getLanguage().listOfOrganisation();
         	StaticMethods.printList(organisations);
-            System.out.println("Enter 0 to return back");
+        	this.getLanguage().enterReturnBack();
             int orgchoice = StaticMethods.validate(organisations.size());
 
             if(orgchoice == 0) {
@@ -323,7 +322,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
             Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " viewed joined organisation" + organisation.getName()));
         }
         else {
-            System.out.println("At the moment we dont have any organisations");
+        	this.getLanguage().atTheMomentWeDontHaveAnyOrganizations();
         }
     }
 
@@ -346,7 +345,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
      */
     public void createOrganisation() {
         Scanner s = new Scanner(System.in);
-        System.out.println("Name your organisation:");
+        this.getLanguage().nameYourOrganisation();
         String name = s.nextLine();
         Organisation organisation = new Organisation(name, this);
         this.organisation = organisation;
@@ -359,14 +358,12 @@ public class Student extends User implements Serializable, Comparable<Student> {
      * Changes the information of the student, such as username, password, first name, or last name.
      */
     public void changeInfo() {
-        System.out.println("What do you want to change?");
+    	this.getLanguage().whatDoYouWantToChange();
 
-        String[] options = new String[] {
-                "Username", "Password", "First name", "Last name"
-        };
-
+        String[] options = this.getLanguage().changeInfoOptions();
+        
         StaticMethods.printList(List.of(options));
-        System.out.println("Enter 0 to return back");
+        this.getLanguage().enterReturnBack();
         int choice = StaticMethods.validate(options.length);
         Scanner in = new Scanner(System.in);
 
@@ -374,21 +371,21 @@ public class Student extends User implements Serializable, Comparable<Student> {
             return;
         }
         else if(choice == 1) {
-            System.out.println("Enter new username");
+        	this.getLanguage().enterNewUsername();
             String newUsername = in.nextLine();
             this.setUsername(newUsername);
         }
         else if(choice == 2) {
-            System.out.println("Enter new password");
+        	this.getLanguage().enterNewPassword();
             String newPassword = in.nextLine();
             this.setPassword(newPassword);
         }
         else if(choice == 3) {
-            String firstName = StaticMethods.getValidInput("Enter new first name:", "[a-zA-Z]+");
+            String firstName = StaticMethods.getValidInput(this.getLanguage().enterNewFirstName(), "[a-zA-Z]+");
             this.setFirstName(firstName);
         }
         else if(choice == 4) {
-            String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
+            String lastName = StaticMethods.getValidInput(this.getLanguage().enterNewLastName(), "[a-zA-Z]+");
             this.setLastName(lastName);
         }
 
@@ -409,18 +406,16 @@ public class Student extends User implements Serializable, Comparable<Student> {
 			Researcher researcher = Database.getInstance().isResearcher(this);
 			
 			if(researcher != null) {
-				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-						"View Teacher for a Course", "View All Courses", "View subscribed journals", "Rate Teachers", "Organisation", "View one News", "Subscribe journal", "View all papers", "Exit", "View researcher menu" };
+				options = this.getLanguage().studentMenu();
 			}
 			else {
-				options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-						"View Teacher for a Course", "View All Courses", "View subscribed journals", "Rate Teachers", "Organisation", "View one News", "Subscribe journal", "View all papers", "Exit" };
+				options = this.getLanguage().studentResearcherMenu();
 			}
 			
-            System.out.println("\n----Student Menu----");
+            System.out.println(this.getLanguage().studentHeader());
             StaticMethods.printList(List.of(options));
 
-            System.out.print("Enter your choice: ");
+            this.getLanguage().enterYourChoice();
             int choice = StaticMethods.validate(1, options.length);
 
             if (choice == 1) {
@@ -457,7 +452,10 @@ public class Student extends User implements Serializable, Comparable<Student> {
             else if(choice == 11) {
             	Database.getInstance().getAllPapers();
             }
-            else if (choice == 12) {
+            else if(choice == 12) {
+            	this.changeLanguage();
+            }
+            else if (choice == 13) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -467,7 +465,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 13) {
+				if(choice == 14) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " went to the researcher menu"));
 				}

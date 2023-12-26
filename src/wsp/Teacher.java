@@ -127,7 +127,7 @@ public class Teacher extends Employee implements Serializable {
      * Displays the courses taught by the teacher.
      */
     public void viewCourses() {
-        System.out.println("Courses taught by " + getUsername() + ":");
+    	this.getLanguage().courseTaughtBy(this.getFirstName());
         for (Course course : courses) {
             System.out.println("- " + course.getName());
         }
@@ -140,19 +140,19 @@ public class Teacher extends Employee implements Serializable {
      */
     public void viewStudents() {
         if (courses.isEmpty()) {
-            System.out.println("No courses");
+        	this.getLanguage().noCourses();
             return;
         }
         
-        System.out.println("Enter the course:");
+        this.getLanguage().enterTheCourse();
         for (int i = 0; i<courses.size(); i++) {
     		Course c = courses.get(i);
     		System.out.println((i + 1) + ". " + c.getName());
     	}
     	System.out.println();
 
-        System.out.println("Please enter your choice:");
-        System.out.println("Enter 0 to exit");
+    	this.getLanguage().enterYourChoice();
+    	this.getLanguage().enterReturnBack();
         int courseChoice = StaticMethods.validate(courses.size());
 
         if (courseChoice == 0) {
@@ -163,7 +163,7 @@ public class Teacher extends Employee implements Serializable {
 
         Vector<Student> students = Database.getInstance().getStudents();
 
-        System.out.println("Students enrolled in " + selectedCourse.getName() + ":");
+        this.getLanguage().studentsEnrolledIn(selectedCourse.getName());
         for (Student student : students) {
             if (student.getCourses().contains(selectedCourse)) {
                 System.out.println("- " + student.getUsername());
@@ -178,14 +178,14 @@ public class Teacher extends Employee implements Serializable {
 	 */
     public void viewMarks() {
         if(courses.isEmpty()) {
-            System.out.println("No courses");
+        	this.getLanguage().noCourses();
             return;
         }
         
-        System.out.println("Please enter your choice:");
+        this.getLanguage().enterYourChoice();
         StaticMethods.printList(courses);
         
-        System.out.println("Enter 0 for return back");
+        this.getLanguage().enterReturnBack();
         int courseChoice = StaticMethods.validate(courses.size());
         
         if(courseChoice == 0) {
@@ -203,14 +203,12 @@ public class Teacher extends Employee implements Serializable {
 	 * Changes the information of the teacher such as username, password, first name, or last name.
 	 */
     public void changeInfo() {
-    	System.out.println("What do you want to change?");
+    	this.getLanguage().whatDoYouWantToChange();
 		
-		String[] options = new String[] {
-				"Username", "Password", "First name", "Last name"
-		};
+		String[] options = this.getLanguage().changeInfoOptions();
 		
 		StaticMethods.printList(List.of(options));
-		System.out.println("Enter 0 to return back");
+		this.getLanguage().enterReturnBack();
 		int choice = StaticMethods.validate(options.length);
 		Scanner in = new Scanner(System.in);
 		
@@ -218,21 +216,21 @@ public class Teacher extends Employee implements Serializable {
 			return;
 		}
 		else if(choice == 1) {
-			System.out.println("Enter new username");
+			this.getLanguage().enterNewUsername();
 			String newUsername = in.nextLine();
 			this.setUsername(newUsername);
 		}
 		else if(choice == 2) {
-			System.out.println("Enter new password");
+			this.getLanguage().enterNewPassword();
 			String newPassword = in.nextLine();
 			this.setPassword(newPassword);
 		}
 		else if(choice == 3) {
-			String firstName = StaticMethods.getValidInput("Enter new first name:", "[a-zA-Z]+");
+			String firstName = StaticMethods.getValidInput(this.getLanguage().enterNewFirstName(), "[a-zA-Z]+");
 			this.setFirstName(firstName);
 		}
 		else if(choice == 4) {
-			String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
+			String lastName = StaticMethods.getValidInput(this.getLanguage().enterNewLastName(), "[a-zA-Z]+");
 			this.setLastName(lastName);
 		}
     }
@@ -246,11 +244,11 @@ public class Teacher extends Employee implements Serializable {
     public void viewMarks(Course selectedCourse) {
 
         if (!lessons.containsKey(selectedCourse)) {
-            System.out.println("No lessons for this course");
+        	this.getLanguage().noLessonsForThisCourse();
             return;
         }
         
-        System.out.println("Marks for " + selectedCourse.getName() + ":");
+        this.getLanguage().marksFor(selectedCourse.getName());
         for (Student student : Database.getInstance().getStudents()) {
             if (student.getCourses().contains(selectedCourse)) {
                 Mark mark = student.getTranscript().get(selectedCourse);
@@ -265,10 +263,10 @@ public class Teacher extends Employee implements Serializable {
 	 * Allows the teacher to input marks for students in a specific course.
 	 */
     public void putMarks() {
-    	System.out.println("Select s course to input marks: ");
+    	this.getLanguage().selectSCourseToInputMarks();
     	
     	if(courses.isEmpty()) {
-    		System.out.println("You are not assigned to any courses");
+    		this.getLanguage().yourAreNotAssignedToAnyCourses();
     		return;
     	}
 
@@ -287,7 +285,7 @@ public class Teacher extends Employee implements Serializable {
     	
     	Vector <Lesson> courseLessons = lessons.get(selectedCourse);
     	if (courseLessons.isEmpty()) {
-    		System.out.println("No lessons recorded for the course");
+    		this.getLanguage().noLessonsRecordedForTheCourse();
     		return;
     	}
     	
@@ -297,16 +295,16 @@ public class Teacher extends Employee implements Serializable {
     			.collect(Collectors.toCollection(Vector::new));
     			
     	if(students.isEmpty()) {
-    		System.out.println("No student enrolled in " + selectedCourse.getName());
+    		this.getLanguage().noStudentEnrolledIn(selectedCourse.getName());
     		return;
     	}
     	
-    	System.out.println("Select a student to input marks:");
-    	System.out.println("Students enrolled in " + selectedCourse.getName() + ":");
+    	this.getLanguage().selectAStudentToInputMarks();
+    	this.getLanguage().studentsEnrolledIn(selectedCourse.getName());
     	
     	StaticMethods.printList(students);
     	
-    	System.out.println("Choose a student or enter 0 to exit");
+    	this.getLanguage().chooseAStudentOrExit();
     	int studentChoice = StaticMethods.validate(students.size());
     	
     	if (studentChoice == 0) {
@@ -317,37 +315,37 @@ public class Teacher extends Employee implements Serializable {
     	Mark previousMark = selectedStudent.getTranscript().get(selectedCourse);
     	
     	if(previousMark.getAtt() != null) {
-    		System.out.println("Previous marks for student: " + selectedStudent.getUsername() + ": " + previousMark.toString());
+    		this.getLanguage().previousMarksForStudent(selectedStudent.getFirstName(), previousMark.toString());
     	}
     	else {
-    		System.out.println("New marks for student: " + selectedStudent.getUsername());
+    		this.getLanguage().newMarksForStudents(selectedStudent.getFirstName());
     		
     		Scanner input = new Scanner(System.in);
     		
         	while(true) {
         		try {
-        			System.out.println("First attestation: ");
+        			this.getLanguage().firstAttestation();
             		double attestation1 = Math.abs(input.nextDouble());
             		
-            		System.out.println("Second attestation: ");
+            		this.getLanguage().secondAttestation();
             		double attestation2 = Math.abs(input.nextDouble());
             		
-            		System.out.println("Final exam: ");
+            		this.getLanguage().finalExam();
             		double finalExam = Math.abs(input.nextDouble());
             		
             		if(attestation1 + attestation2 > 60 || finalExam > 40) {
-            			System.out.println("Error: please enter marks correctly!");
+            			this.getLanguage().ErrorPleaseEnterMarksCorrectly();
             		}
             		else {
             			Mark newMark = new Mark(attestation1, attestation2, finalExam);
             			selectedStudent.getTranscript().put(selectedCourse, newMark);
-            			System.out.println("The marks have been submitted succesfully");
+            			this.getLanguage().theMarksHaveBennSubmittedSuccesfully();
                         Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " gave the student " + selectedStudent.getUsername() + " by course " + selectedCourse.getName()));
             			break;
             		}
         		}
         		catch(InputMismatchException e) {
-        			System.out.println("Error: please enter marks correctly!");
+        			this.getLanguage().ErrorPleaseEnterMarksCorrectly();
         			input.nextLine();
         		}	
         	}
@@ -368,18 +366,16 @@ public class Teacher extends Employee implements Serializable {
     	Researcher researcher = Database.getInstance().isResearcher(this);
     	
     	if(researcher == null) {
-    		options = new String[] { "View courses", "View students", "View marks", "Put marks",
-					"View rate", "View one News", "Send order", "Send request", "View all papers", "Exit" };
+    		options = this.getLanguage().teacherMenu();
     	}
     	else {
-    		options = new String[] { "View courses", "View students", "View marks", "Put marks",
-					"View rate", "View one News", "Send order", "Send request", "View all papers", "Exit", "View researcher menu"};
+    		options = this.getLanguage().teacherResearcherMenu();
     	}
     	
     	
     	while (true) {
     		System.out.println();
-    		System.out.println("----Teacher Menu----");
+    		this.getLanguage().teacherHeader();
     		StaticMethods.printList(List.of(options));
         	int choice = StaticMethods.validate(1, options.length);
     		
@@ -411,7 +407,10 @@ public class Teacher extends Employee implements Serializable {
     		else if(choice == 9) {
             	Database.getInstance().getAllPapers();
             }
-    		else if (choice == 10) {
+    		else if(choice == 10) {
+    			this.changeLanguage();
+    		}
+    		else if (choice == 11) {
     			try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -421,7 +420,7 @@ public class Teacher extends Employee implements Serializable {
 				break;
     		}
     		else if(researcher != null) {
-				if(choice == 11) {
+				if(choice == 12) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " went to the researcher menu"));
 				}
@@ -433,7 +432,7 @@ public class Teacher extends Employee implements Serializable {
      * Displays the teacher's rating.
      */
     public void viewRate() {
-        System.out.println("Teacher's rating: " + this.getRate());
+        this.getLanguage().teachersRating(getRate());
     }
 
 

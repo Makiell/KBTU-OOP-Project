@@ -31,7 +31,7 @@ public class Employee extends User implements Serializable {
      * @param user The user to whom the message is sent.
      */
     public void sendMessage(String message, User user) {
-        System.out.println("Sending message to " + user.getUsername() + ": " + message);
+        
     }
 
     
@@ -44,12 +44,12 @@ public class Employee extends User implements Serializable {
     	Vector<Dean> deans = Database.getInstance().getDeans();
     	
     	if(deans.isEmpty()) {
-    		System.out.println("No deans");
+    		this.getLanguage().noDeans();
     		return;
     	}
     	
-    	System.out.println("Enter 0 to return back.");
-    	System.out.println("Choose the dean:");
+    	
+    	this.getLanguage().chooseTheDean();
     	
     	StaticMethods.printList(deans);
     	
@@ -61,7 +61,7 @@ public class Employee extends User implements Serializable {
     	
     	Dean dean = deans.get(choice-1);
     	
-    	System.out.println("Enter the emergency level:");
+    	this.getLanguage().enterTheEmergencyLevel();
     	
     	Emergency[] emergencyList = Emergency.values();
     	
@@ -71,7 +71,7 @@ public class Employee extends User implements Serializable {
     	
     	Emergency emergency = emergencyList[emergencyChoice-1];
     	
-    	System.out.println("Enter the message:");
+    	this.getLanguage().enterTheMessage();
     	Scanner in = new Scanner(System.in);
     	String message = in.nextLine();
     	
@@ -79,7 +79,7 @@ public class Employee extends User implements Serializable {
     	
         Database.getInstance().addRequest(newRequest);
         
-        System.out.println(newRequest + " sent successfully");
+        this.getLanguage().sentSuccesfully(newRequest.toString());
 
     }
     
@@ -92,12 +92,12 @@ public class Employee extends User implements Serializable {
     	Vector<TechSupportSpecialist> TechSupportSpecialists = Database.getInstance().getTechSupports();
     	
     	if(TechSupportSpecialists.isEmpty()) {
-    		System.out.println("No tech supports");
+    		this.getLanguage().noTechSupports();
     		return;
     	}
     	
-    	System.out.println("Enter 0 to return back.");
-    	System.out.println("Choose the tech support:");
+    	this.getLanguage().enterReturnBack();
+    	this.getLanguage().chooseTheTechSupport();
     	
     	StaticMethods.printList(TechSupportSpecialists);
     	
@@ -109,14 +109,14 @@ public class Employee extends User implements Serializable {
     	
     	TechSupportSpecialist techSupport = TechSupportSpecialists.get(choice-1);
     	
-    	System.out.println("Enter the message:");
+    	this.getLanguage().enterTheMessage();
     	Scanner in = new Scanner(System.in);
     	String message = in.nextLine();
     	
     	Order newOrder = new Order(message, techSupport);
     	
         Database.getInstance().addOrder(newOrder);
-        System.out.println(newOrder + " sent successfully");
+        this.getLanguage().sentSuccesfully(newOrder.toString());
     }
     
     /**
@@ -131,16 +131,16 @@ public class Employee extends User implements Serializable {
     	Researcher researcher = Database.getInstance().isResearcher(this);
     	
     	if(researcher == null) {
-    		 options = new String[]{"Send request", "Send order", "View one News", "View all papers", "Exit"};
+    		 options = this.getLanguage().employeeMenu();
     	}
     	else {
-    		 options = new String[]{"Send request", "Send order", "View one News", "View all papers", "Exit", "View researcher menu"};
+    		 options = this.getLanguage().employeeResearcherMenu();
     	}
        
 
         while (true) {
             System.out.println();
-            System.out.println("----Employee Menu----");
+            this.getLanguage().employeeHeader();
             StaticMethods.printList(List.of(options));
 
             int choice = StaticMethods.validate(1, options.length);
@@ -148,7 +148,7 @@ public class Employee extends User implements Serializable {
             if(choice == 1) {
             	sendRequest();
             }
-            if (choice == 2) {
+            else if (choice == 2) {
                 sendOrder();
             } 
             else if (choice == 3) {
@@ -157,7 +157,10 @@ public class Employee extends User implements Serializable {
             else if(choice == 4) {
             	Database.getInstance().getAllPapers();
             }
-            else if (choice == 5) {
+            else if(choice == 5) {
+            	this.changeLanguage();
+            }
+            else if (choice == 6) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -166,7 +169,7 @@ public class Employee extends User implements Serializable {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 6) {
+				if(choice == 7) {
 					researcher.viewMenu();
 				}
 			}
@@ -184,14 +187,14 @@ public class Employee extends User implements Serializable {
      * Allows to change employee's information, such as username, password, first name, and last name.
      */
 	public void changeInfo() {
-    	System.out.println("What do you want to change?");
+		this.getLanguage().whatDoYouWantToChange();
 		
 		String[] options = new String[] {
 				"Username", "Password", "First name", "Last name"
 		};
 		
 		StaticMethods.printList(List.of(options));
-		System.out.println("Enter 0 to return back");
+		this.getLanguage().enterReturnBack();
 		int choice = StaticMethods.validate(options.length);
 		Scanner in = new Scanner(System.in);
 		
@@ -199,21 +202,21 @@ public class Employee extends User implements Serializable {
 			return;
 		}
 		else if(choice == 1) {
-			System.out.println("Enter new username");
+			this.getLanguage().enterNewUsername();
 			String newUsername = in.nextLine();
 			this.setUsername(newUsername);
 		}
 		else if(choice == 2) {
-			System.out.println("Enter new password");
+			this.getLanguage().enterNewPassword();
 			String newPassword = in.nextLine();
 			this.setPassword(newPassword);
 		}
 		else if(choice == 3) {
-			String firstName = StaticMethods.getValidInput("Enter new first name:", "[a-zA-Z]+");
+			String firstName = StaticMethods.getValidInput(this.getLanguage().enterNewFirstName(), "[a-zA-Z]+");
 			this.setFirstName(firstName);
 		}
 		else if(choice == 4) {
-			String lastName = StaticMethods.getValidInput("Enter new last name:", "[a-zA-Z]+");
+			String lastName = StaticMethods.getValidInput(this.getLanguage().enterNewLastName(), "[a-zA-Z]+");
 			this.setLastName(lastName);
 		}
     }

@@ -7,7 +7,7 @@ import java.util.Vector;
 import java.util.Scanner;
 
 import database.Database;
-
+import language.*;
 
 /**
  * The User class is an abstract class representing a generic user in the system.
@@ -26,6 +26,7 @@ public abstract class User implements Serializable {
 	private String lastName;
 	private Vector<String> notifications;
 	private Vector<ResearchJournal> journals;
+	private LanguageInterface language = new EnglishLanguage();
 	
 	
 	/**
@@ -55,6 +56,9 @@ public abstract class User implements Serializable {
 		System.out.println("----Top Cited Researcher----");
 		int citations = 0;
 		Researcher r = Database.getInstance().getTopCitedResearcher();
+		if(r == null) {
+			return;
+		}
 		Vector<ResearchPaper> papers = r.getPapers();
 		for(ResearchPaper rp : papers) {
 			citations += rp.getCitations();
@@ -68,7 +72,7 @@ public abstract class User implements Serializable {
      * Displays and clears new notifications for the user.
      */
 	public void viewNotifications() {
-		System.out.println("----New Notifications----");
+		this.getLanguage().newNotifications();
 		if(notifications.isEmpty()) {
 			System.out.println("No new notifications.");
 			return;
@@ -76,6 +80,23 @@ public abstract class User implements Serializable {
 		StaticMethods.printList(notifications);
 		notifications.clear();
 		System.out.println();
+	}
+	
+	
+	public void changeLanguage() {
+		System.out.println(" 1 - Русский\n 2 - Қазақша\n 3 - English");
+		
+		int choice = StaticMethods.validate(1, 3);
+		
+		if(choice == 1) {
+			this.setLanguage(new RussianLanguage());
+		}
+		else if(choice == 2) {
+			this.setLanguage(new KazakhLanguage());
+		}
+		else if(choice == 3) {
+			this.setLanguage(new EnglishLanguage());
+		}
 	}
 	
 	
@@ -97,7 +118,7 @@ public abstract class User implements Serializable {
      * @param rj The research journal related to the event.
      */
 	public void handleEvent(ResearchPaper paper, ResearchJournal rj) {
-		this.addNotification("Dear " + this.firstName +" "+ this.lastName + " to " + rj.getName() + " was added new papers!\n" + paper);
+		this.addNotification(this.getLanguage().handleEventUser(paper.toString(), rj.getName(), firstName, lastName));
 	}
 	
 	
@@ -149,7 +170,7 @@ public abstract class User implements Serializable {
      */
 	public void viewNews() {
 		Vector <News> news = Database.getInstance().getNews();
-		System.out.println("----NEWS----");
+		this.getLanguage().news();
 		
 		for (int i = 0; i < news.size(); i++) {
 			News n = news.get(i);
@@ -168,11 +189,11 @@ public abstract class User implements Serializable {
 		Vector <News> news = Database.getInstance().getNews();
 		
 		if(news.isEmpty()) {
-			System.out.println("No news");
+			this.getLanguage().noNews();
 			return;
 		}
 		
-		System.out.println("----NEWS----");
+		this.getLanguage().news();
 		
 		for (int i = 0; i < news.size(); i++) {
 			News n = news.get(i);
@@ -181,7 +202,7 @@ public abstract class User implements Serializable {
 			System.out.println();
 		}
 		
-		System.out.println("Enter the number of the news to view or 0 to exit:");
+		this.getLanguage().enterTheNumberOfTheNews();
 		int choice = StaticMethods.validate(news.size());
 
 		if (choice == 0) {
@@ -189,7 +210,7 @@ public abstract class User implements Serializable {
 		}
 		else {
 			News selectedNews = news.get(choice-1);
-			System.out.println("----Selected News----");
+			this.getLanguage().selectedNews();
 			System.out.println(selectedNews.toString());
 			System.out.println();
 				
@@ -197,14 +218,14 @@ public abstract class User implements Serializable {
 			
 			Scanner in = new Scanner(System.in);
 				
-			System.out.println("Do you want to add a comment? (+/-)");
+			this.getLanguage().doYouWantToAddAComment();
 			String answer = in.nextLine();
 	
 		    if (answer.equals("+")) {
 		        addComment(selectedNews);
 		    }
 		    else {
-		    	System.out.println("Your decided that no want to add a comment");
+		    	this.getLanguage().yourDecidedThatNoWant();
 		    }
 		}
 	}
@@ -218,11 +239,11 @@ public abstract class User implements Serializable {
 		Vector <String> comments = n.getComments();
 		
 		if(comments.isEmpty()) {
-			System.out.println("No comments available");
+			this.getLanguage().noCommentsAvailable();
 			
 		}
 		else {
-			System.out.println("----Comments----");
+			this.getLanguage().comments();
 			for (String comment : comments) {
 				System.out.println(" - " + comment);
 			}
@@ -244,12 +265,12 @@ public abstract class User implements Serializable {
      * @param n The news article to which the comment will be added.
      */
 	public void addComment(News n) {
-		System.out.println("----Enter your comment----");
+		this.getLanguage().enterYourComment();
 		
 		Scanner input = new Scanner(System.in);
 		String comment = input.nextLine();
 		n.getComments().add(comment);
-		System.out.println("Comment add successfully");
+		this.getLanguage().commentAddSuccesfully();
 		
 	}
 	
@@ -283,6 +304,14 @@ public abstract class User implements Serializable {
 
 	public String getPassword() {
 		return password;
+	}
+	
+	public LanguageInterface getLanguage() {
+		return language;
+	}
+	
+	public void setLanguage(LanguageInterface language) {
+		this.language = language;
 	}
 	
 	public void setUsername(String username) {

@@ -1,14 +1,16 @@
 package language;
 
-public class EnglishLanguage implements LanguageInterface{
+import java.io.Serializable;
+
+public class EnglishLanguage implements LanguageInterface, Serializable {
 	@Override
 	public void newNotifications() {
 	    System.out.println("----New Notification----");
 
 	}
 	@Override
-	public void handleEventUser(String paper, String journal, String firstName, String lastName) {
-	    System.out.println("Dear " + firstName + " " + lastName + ", new articles have been added to " + journal + ":\n" + paper);
+	public String handleEventUser(String paper, String journal, String firstName, String lastName) {
+	    return "Dear " + firstName + " " + lastName + ", new articles have been added to " + journal + ":\n" + paper;
 
 	}
 
@@ -72,19 +74,26 @@ public class EnglishLanguage implements LanguageInterface{
 
 	}
 	//---------------------------------------------------------------------------------------------------------------
+	public String studentHeader() {
+		return "\n----Student Menu----";
+	}
+	
 	@Override
 	public String[] studentMenu() {
 	    return new String[] {
-	        "----Student Menu----",
-	        "1 - View Transcript",
-	        "2 - View Marks for a Course",
-	        "3 - Register for a Course",
-	        "4 - View Teacher for a Course",
-	        "5 - View All Courses",
-	        "6 - Rate Teachers",
-	        "7 - Organization",
-	        "8 - View News",
-	        "0 - Exit"
+	        "View Transcript",
+	        "View Marks for a Course",
+	        "Register for a Course",
+	        "View Teacher for a Course",
+	        "View All Courses",
+	        "View subscribed journals",
+	        "Rate Teachers",
+	        "Organization",
+	        "View News",
+	        "Subscribe journal",
+	        "View all papers",
+	        "Change language",
+	        "Exit"
 	    };
 	}
 
@@ -138,10 +147,9 @@ public class EnglishLanguage implements LanguageInterface{
 	@Override
 	public String[] organisationMenu() {
 	    return new String[] {
-	        "1 - Join an organization",
-	        "2 - Leave an organization",
-	        "3 - Create an organization",
-	        "4 - Exit"
+	        "Join an organization",
+	        "Leave an organization",
+	        "Create an organization",
 	    };
 	}
 
@@ -170,33 +178,41 @@ public class EnglishLanguage implements LanguageInterface{
 	}
 	public String[] studentResearcherMenu() {
 	    return new String[] {
-	        "----Student-Researcher Menu----",
-	        "1 - View Transcript",
-	        "2 - View Marks for a Course",
-	        "3 - Register for a Course",
-	        "4 - View Teacher for a Course",
-	        "5 - View All Courses",
-	        "6 - Rate Teachers",
-	        "7 - Organization",
-	        "8 - View News",
-	        "9 - View Researcher Menu",
-	        "0 - Exit"
+    		"View Transcript",
+	        "View Marks for a Course",
+	        "Register for a Course",
+	        "View Teacher for a Course",
+	        "View All Courses",
+	        "View subscribed journals",
+	        "Rate Teachers",
+	        "Organization",
+	        "View News",
+	        "Subscribe journal",
+	        "View all papers",
+	        "Change language",
+	        "Exit",
+	        "View Researcher Menu",
 	    };
 	}
 	//---------------------------------------------------------------------------------------------------------------
+	public String teacherHeader() {
+		return "----Teacher Menu----";
+	}
+	
 	@Override
 	public String[] teacherMenu() {
 	    return new String[] {
-	        "----Teacher Menu----",
-	        "1 - View Courses",
-	        "2 - View Students",
-	        "3 - View Marks",
-	        "4 - Add Marks",
-	        "5 - View Ratings",
-	        "6 - View One News",
-	        "7 - Send Order",
-	        "8 - Send Request",
-	        "9 - Exit"
+	    		"View Courses",
+		        "View Students",
+		        "View Marks",
+		        "Add Marks",
+		        "View Ratings",
+		        "View One News",
+		        "Send Order",
+		        "Send Request",
+		        "View all papers",
+		        "Change language",
+		        "Exit",
 	    };
 
 	}
@@ -232,8 +248,8 @@ public class EnglishLanguage implements LanguageInterface{
 	}
 
 	@Override
-	public void previousMarksForStudent(String selectedStudentUsername) {
-	    System.out.println("Previous marks for student: " + selectedStudentUsername);
+	public void previousMarksForStudent(String selectedStudentUsername, String mark) {
+	    System.out.println("Previous marks for student: " + selectedStudentUsername + ": " + mark);
 
 	}
 
@@ -325,31 +341,36 @@ public class EnglishLanguage implements LanguageInterface{
 	public String[] teacherResearcherMenu() {
 
 	    return new String[] {
-	        "----Teacher-Researcher Menu----",
-	        "1 - View Courses",
-	        "2 - View Students",
-	        "3 - View Marks",
-	        "4 - Add Marks",
-	        "5 - View Ratings",
-	        "6 - View One News",
-	        "7 - Send Order",
-	        "8 - Send Request",
-	        "9 - Exit",
-	        "10 - View Researcher Menu"
+	        "View Courses",
+	        "View Students",
+	        "View Marks",
+	        "Add Marks",
+	        "View Ratings",
+	        "View One News",
+	        "Send Order",
+	        "Send Request",
+	        "View all papers",
+	        "Change language",
+	        "Exit",
+	        "View Researcher Menu"
 	    };
 	}
 	//---------------------------------------------------------------------------------------------------------------
+	
+	public String adminHeader() {
+		return "----Admin Menu----";
+	}
+	
 	@Override
 	public String[] adminMenu() {
 	    return new String[] {
-	        "----Admin Menu----",
-	        "1 - Create a new user",
-	        "2 - View all users",
-	        "3 - Update user information",
-	        "4 - Delete user",
-	        "5 - View journal files",
-	        "6 - View One News",
-	        "7 - Exit"
+	        "Create a new user",
+	        "View all users",
+	        "Update user information",
+	        "Delete user",
+	        "View log files",
+	        "Change language",
+	        "Exit"
 	    };
 	}
 	@Override
@@ -378,14 +399,14 @@ public class EnglishLanguage implements LanguageInterface{
 	@Override
 	public String[] addResearcherOptionsCreate() {
 	    return new String[] {
-	        "Student", "Graduate student", "Employee", "Teacher", "Head", "Technical support specialist", "Dean"
+	        "Student", "Graduate student", "Employee", "Teacher", "Manager", "Technical support specialist", "Dean"
 	    };
 	}
 
 	@Override
 	public String[] createUserOptions() {
 	    return new String[] {
-	        "Student", "Graduate student", "Employee", "Teacher", "Head", "Technical support specialist", "Dean", "Researcher"
+	        "Student", "Graduate student", "Researcher", "Employee", "Teacher", "Manager", "Technical support specialist", "Dean", 
 	    };
 	}
 
@@ -413,21 +434,26 @@ public class EnglishLanguage implements LanguageInterface{
 
 	}
 	//---------------------------------------------------------------------------------------------------------------
+	public String managerHeader() {
+		return "----Manager Menu----";
+	}
+	
 	@Override
 	public String[] managerMenu() {
 	    return new String[] {
-	        "----Manager Menu----",
-	        "1 - Create a statistical report",
-	        "2 - Add a course",
-	        "3 - Add a lesson to a teacher",
-	        "4 - Create news",
-	        "5 - View requests",
-	        "6 - Edit news",
-	        "7 - Assign a course to a teacher",
-	        "8 - View students",
-	        "9 - View teachers",
-	        "10 - Create a journal",
-	        "11 - Exit"
+	        "Create a statistical report",
+	        "Add a course",
+	        "Add a lesson to a teacher",
+	        "Create news",
+	        "View requests",
+	        "Edit news",
+	        "Assign a course to a teacher",
+	        "View students",
+	        "View teachers",
+	        "Create a journal",
+	        "View all papers",
+	        "Change language",
+	        "Exit"
 	    };
 	}
 
@@ -638,30 +664,36 @@ public class EnglishLanguage implements LanguageInterface{
 	@Override
 	public String[] managerResearcherMenu() {
 		return new String[] { 
-				"----Researcher-Manager Menu----",
-				"1 - Create a statistical report", 
-				"2 - Add a course", 
-				"3 - Add a lesson to a teacher", 
-				"4 - Create news",
-				"5 - View requests", 
-				"6 - Edit news", 
-				"7 - Assign a course to a teacher", 
-				"8 - View students", 
-				"9 - View teachers", 
-				"10 - Create a journal",
-				"11 - Exit",
-				"12 - View Researcher Menu"
+				"Create a statistical report",
+		        "Add a course",
+		        "Add a lesson to a teacher",
+		        "Create news",
+		        "View requests",
+		        "Edit news",
+		        "Assign a course to a teacher",
+		        "View students",
+		        "View teachers",
+		        "Create a journal",
+		        "View all papers",
+		        "Change language",
+		        "Exit",
+				"View Researcher Menu"
 		};
 	}
 //---------------------------------------------------------------------------------------------------------------
+	public String techSupportSpecialistHeader() {
+		return "----Tech Support Specialist Menu----";
+	}
+	
 	@Override
 	public String[] techSupportSpecialistMenu() {
 		return new String[] {
-				"----Tech Support Specialist Menu----  ",
-				"1 - View orders",
-				"2 - Accept order", 
-				"3 - Reject order", 
-				"4 - Exit" 
+				"View orders",
+				"Accept order", 
+				"Reject order",
+				"View all papers",
+		        "Change language",
+				"Exit" 
 		};
 	}
 	
@@ -692,23 +724,33 @@ public class EnglishLanguage implements LanguageInterface{
 	@Override
 	public String[] techSupportSpecialistResearcherMenu() {
 		return new String[] {
-				"----Researcher-Tech Support Specialist Menu----  ",
-				"1 - View orders",
-				"2 - Accept order", 
-				"3 - Reject order", 
-				"4 - Exit",
-				"5 - View Researcher Menu"
+				"View orders",
+				"Accept order", 
+				"Reject order",
+				"View all papers",
+		        "Change language",
+				"Exit",
+				"View Researcher Menu"
 		};
 	}
 //---------------------------------------------------------------------------------------------------------------
+	public String deanHeader() {
+		return "----Dean Menu----";
+	}
+	
 	@Override
 	public String[] deanMenu() {
 		return new String[] {
-				"----Dean Menu----",
-				"1 - View all requests",
-				"2 - Sign requests", 
-				"3 - View one news", 
-				"4 - Exit"
+				"View Courses",
+		        "View Students",
+		        "View Marks",
+		        "Add Marks",
+				"View all requests",
+				"Sign requests", 
+				"View one news", 
+				"View all papers",
+		        "Change language",
+				"Exit"
 		};
 	}
 	
@@ -751,46 +793,61 @@ public class EnglishLanguage implements LanguageInterface{
 	@Override
 	public String[] deanResearcherMenu() {
 		return new String[] {
-				"----Researcher-Dean Menu----",
-				"1 - View all requests",
-				"2 - Sign requests", 
-				"3 - View one news", 
-				"4 - Exit",
-				"5 - View Researcher Menu"
+				"View Courses",
+		        "View Students",
+		        "View Marks",
+		        "Add Marks",
+				"View all requests",
+				"Sign requests", 
+				"View one news", 
+				"View all papers",
+		        "Change language",
+				"Exit",
+				"View Researcher Menu"
 		};
 	}
 //---------------------------------------------------------------------------------------------------------------
+	public String graduateStudentHeader() {
+		return "----Graduate Student Menu----";
+	}
+	
 	@Override
 	public String[] graduateStudentMenu() {
 		return new String[] { 
-				"----Graduate Student Menu----",
-				"1 - View transcript", 
-				"2 - View marks for a course", 
-				"3 - Register for a course",
-				"4 - View teacher for a course", 
-				"5 - View all courses", 
-				"6 - Rate teachers", 
-				"7 - Organization", 
-				"8 - View one news", 
-				"9 - Exit", 
-				"10 - View Researcher Menu" 
+				"View transcript", 
+				"View marks for a course", 
+				"Register for a course",
+				"View teacher for a course", 
+				"View all courses", 
+				"Rate teachers", 
+				"Organization", 
+				"View one news",
+				"View all papers",
+		        "Change language",
+				"Exit",
+				"View Researcher Menu" 
 		};
 	}
 	
 	@Override
-	public void newGrade(double grade) {
+	public void newGrade(String grade) {
 		System.out.println("New grade: " + grade);
 		
 	}
 //---------------------------------------------------------------------------------------------------------------
+	public String employeeHeader() {
+		return "----Employee Menu----";
+	}
+	
 	@Override
 	public String[] employeeMenu() {
 		return new String[]{
-				"----Employee Menu----",
-				"1 - Send request", 
-				"2 - Send order", 
-				"3 - View one news", 
-				"4 - Exit"
+				"Send request", 
+				"Send order", 
+				"View one news",
+				"View all papers",
+		        "Change language",
+				"Exit"
 				};
 	}
 	
@@ -844,25 +901,29 @@ public class EnglishLanguage implements LanguageInterface{
 	@Override
 	public String[] employeeResearcherMenu() {
 		return new String[]{
-				"----Researcher-Employee Menu----",
-				"1 - Send request", 
-				"2 - Send order", 
-				"3 - View one news", 
-				"4 - Exit", 
-				"5 - View Researcher Menu"
+				"Send request", 
+				"Send order", 
+				"View one news",
+				"View all papers",
+		        "Change language",
+				"Exit",
+				"View Researcher Menu"
 				};
 	}
 //---------------------------------------------------------------------------------------------------------------
+	public String researcherHeader() {
+		return "----Researcher Menu----";
+	}
+	
 	@Override
 	public String[] researcherMenu() {
 		return new String[] {
-				"----Researcher Menu----",
-				"1 - View documents", 
-				"2 - Create a paper", 
-				"3 - View projects", 
-				"4 - View journals", 
-				"5 - Add an article to a journal", 
-				"6 - Exit"
+				"View papers", 
+				"Create a paper", 
+				"View projects", 
+				"View journals", 
+				"Add paper to a journal", 
+				"Exit"
 		};
 	}
 	
@@ -976,10 +1037,10 @@ public class EnglishLanguage implements LanguageInterface{
 	@Override
 	public String[] changeInfoOptions() {
 		return new String[] {
-				"1 - Username",
-				"2 - Password",
-				"3 - First Name",
-				"4 - Last Name"
+				"Username",
+				"Password",
+				"First Name",
+				"Last Name"
 		};
 	}
 
@@ -996,14 +1057,14 @@ public class EnglishLanguage implements LanguageInterface{
 	}
 
 	@Override
-	public void enterNewFirstName() {
-		System.out.println("Enter a new first name");
+	public String enterNewFirstName() {
+		return "Enter a new first name";
 		
 	}
 
 	@Override
-	public void enterNewLastName() {
-		System.out.println("Enter a new last name");
+	public String enterNewLastName() {
+		return "Enter a new last name";
 		
 	}
 
