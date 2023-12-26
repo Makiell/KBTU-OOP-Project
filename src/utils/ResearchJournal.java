@@ -14,9 +14,9 @@ public class ResearchJournal implements Serializable, Observed {
 	
 	private static final long serialVersionUID = -8045146890425399823L;
 	
-	String name;
-	Vector<ResearchPaper> papers = new Vector<>();
-	Vector<User> subscribers = new Vector<>();
+	private String name;
+	private Vector<ResearchPaper> papers = new Vector<>();
+	private Vector<User> subscribers = new Vector<>();
 	
 	public ResearchJournal(String name) {
 		this.name = name;

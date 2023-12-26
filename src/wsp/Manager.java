@@ -34,7 +34,7 @@ public class Manager extends Employee{
 	}
 	
 	/**
-     * Gets the type of manager (e.g., Academic Manager, Research Manager).
+     * Gets the type of manager.
      *
      * @return The type of manager.
      */
@@ -43,7 +43,7 @@ public class Manager extends Employee{
 	}
 
 	/**
-     * Sets the type of manager (e.g., Academic Manager, Research Manager).
+     * Sets the type of manager.
      *
      * @param typeManager The new type of manager to set.
      */

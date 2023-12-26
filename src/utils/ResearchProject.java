@@ -16,4 +16,8 @@ public class ResearchProject implements Serializable {
     public ResearchProject() {
         this.papers = new Vector<>();
     }
+    
+    public void addPaperToProject(ResearchPaper rp) {
+    	this.papers.add(rp);
+    }
 }
