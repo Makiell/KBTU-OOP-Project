@@ -160,7 +160,13 @@ public class Employee extends User implements Serializable {
             else if(choice == 5) {
             	this.changeLanguage();
             }
-            else if (choice == 6) {
+            else if(choice == 6) {
+            	StaticMethods.subscribeJournal(this);
+            }
+            else if(choice == 7) {
+            	StaticMethods.unsubscribeJournal(this);
+            }
+            else if (choice == 8) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -169,7 +175,7 @@ public class Employee extends User implements Serializable {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 7) {
+				if(choice == 9) {
 					researcher.viewMenu();
 				}
 			}

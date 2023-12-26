@@ -179,7 +179,13 @@ public class Dean extends Teacher implements Serializable {
             else if(choice == 9) {
             	this.changeLanguage();
             }
-            else if (choice == 10) {
+            else if(choice == 10) {
+            	StaticMethods.subscribeJournal(this);
+            }
+            else if(choice == 11) {
+            	StaticMethods.unsubscribeJournal(this);
+            }
+            else if (choice == 12) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -188,7 +194,7 @@ public class Dean extends Teacher implements Serializable {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 11) {
+				if(choice == 13) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Dean " + this.getUsername() + " went to the researcher menu"));
 				}

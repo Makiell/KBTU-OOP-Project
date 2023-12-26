@@ -152,13 +152,12 @@ public class GraduateStudent extends Student implements Serializable {
     	Researcher researcher = Database.getInstance().isResearcher(this);
     	
     	while (true) {
-        	String[] options = new String[] { "View Transcript", "View Marks for a Course", "Register for a Course",
-					"View Teacher for a Course", "View All Courses", "Rate Teachers", "Organisation", "View one News", "View all papers", "Exit", "View researcher menu" };
+        	String[] options = this.getLanguage().graduateStudentMenu();
 			
-            System.out.println("\n----Graduate student Menu----");
+            System.out.println(this.getLanguage().graduateStudentHeader());
             StaticMethods.printList(List.of(options));
 
-            System.out.print("Enter your choice:");
+            this.getLanguage().enterYourChoice();
             int choice = StaticMethods.validate(1, options.length);
 
             if (choice == 1) {
@@ -191,7 +190,13 @@ public class GraduateStudent extends Student implements Serializable {
             else if (choice == 10) {
             	this.changeLanguage();
             }
-            else if (choice == 11) {
+            else if(choice == 11) {
+            	StaticMethods.subscribeJournal(this);
+            }
+            else if(choice == 12) {
+            	StaticMethods.unsubscribeJournal(this);
+            }
+            else if (choice == 13) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -200,7 +205,7 @@ public class GraduateStudent extends Student implements Serializable {
                 }
                 break;
             }
-            else if(choice == 12) {
+            else if(choice == 14) {
             	researcher.viewMenu();
                 Database.getInstance().addLog(this, new Log("Graduate Student " + this.getUsername() + " went to the researcher menu"));
             }

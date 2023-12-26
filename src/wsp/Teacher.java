@@ -365,15 +365,18 @@ public class Teacher extends Employee implements Serializable {
     	
     	Researcher researcher = Database.getInstance().isResearcher(this);
     	
-    	if(researcher == null) {
-    		options = this.getLanguage().teacherMenu();
-    	}
-    	else {
-    		options = this.getLanguage().teacherResearcherMenu();
-    	}
+    	
     	
     	
     	while (true) {
+    		
+    		if(researcher == null) {
+        		options = this.getLanguage().teacherMenu();
+        	}
+        	else {
+        		options = this.getLanguage().teacherResearcherMenu();
+        	}
+    		
     		System.out.println();
     		this.getLanguage().teacherHeader();
     		StaticMethods.printList(List.of(options));
@@ -410,7 +413,13 @@ public class Teacher extends Employee implements Serializable {
     		else if(choice == 10) {
     			this.changeLanguage();
     		}
-    		else if (choice == 11) {
+    		else if(choice == 11) {
+            	StaticMethods.subscribeJournal(this);
+            }
+    		else if(choice == 12) {
+            	StaticMethods.unsubscribeJournal(this);
+            }
+    		else if (choice == 13) {
     			try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -420,7 +429,7 @@ public class Teacher extends Employee implements Serializable {
 				break;
     		}
     		else if(researcher != null) {
-				if(choice == 12) {
+				if(choice == 14) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Teacher " + this.getUsername() + " went to the researcher menu"));
 				}

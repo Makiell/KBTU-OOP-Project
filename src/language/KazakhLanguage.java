@@ -94,6 +94,7 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 	            "Журналға жазылу",
 	            "Барлық құжаттарды қарау",
 	            "Тілді өзгерту",
+	            "Журналдан бас тарту",
 	            "Шығу"
 	        };
 	    }
@@ -193,6 +194,7 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 	            "Журналға жазылу",
 	            "Барлық құжаттарды қарау",
 	            "Тілді өзгерту",
+	            "Журналдан бас тарту",
 	            "Шығу",
 	            "Зерттеуші мәзірін көру"
 	        };
@@ -216,6 +218,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 		            "Сұраныс жіберу",
 		            "Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 		            "Шығу"
 		        };
 			
@@ -357,6 +361,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 		            "Сұраныс жіберу",
 		            "Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 		            "Шығу",
 		            "Зерттеуші мәзірін көру"
 		        };
@@ -465,6 +471,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Журнал жасаңыз",
 					"Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 					"Шығу" 
 			};
 		}
@@ -690,6 +698,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Журнал жасаңыз",
 					"Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 					"Шығу",
 					"Зерттеуші мәзірін қарау"
 			};
@@ -708,6 +718,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Сұраныстарды қабылдамау",
 					"Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 					"Шығу" 
 					};
 		}
@@ -745,6 +757,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Сұраныстарды қабылдамау",
 					"Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 					"Шығу",
 					"Зерттеуші мәзірін қарау"
 					};
@@ -767,6 +781,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Бір жаңалықты қарау",
 					"Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 					"Шығу"
 			};
 		}
@@ -820,6 +836,7 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Бір жаңалықты қарау",
 					"Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
 					"Шығу",
 					"Зерттеуші мәзірін қарау"
 			};
@@ -843,6 +860,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Бір жаңалықты қараңыз",
 					"Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 					"Шығу", 
 					"Зерттеуші мәзірін көру" 
 					};
@@ -867,6 +886,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Бір жаңалықты қарау",
 					"Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 					"Шығу"
 					};
 		}
@@ -927,6 +948,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Бір жаңалықты қарау",
 					"Барлық құжаттарды қарау",
 		            "Тілді өзгерту",
+		            "Журналға жазылу",
+		            "Журналдан бас тарту",
 					"Шығу",
 					"Зерттеуші мәзірін қарау"
 					};
@@ -945,6 +968,8 @@ public class KazakhLanguage implements LanguageInterface, Serializable {
 					"Проект көру", 
 					"Журналдарды қарау", 
 					"Журналға мақала қосыңыз", 
+					"Жоба құру",
+					"Жобаға қағаз қосу",
 					"Шығу"
 			};
 		}

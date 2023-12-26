@@ -465,7 +465,7 @@ public class Manager extends Employee{
 				options = this.getLanguage().managerResearcherMenu();
 			}
 			
-			this.getLanguage().managerHeader();
+			System.out.println(this.getLanguage().managerHeader());
 			StaticMethods.printList(List.of(options));
 			
 			this.getLanguage().enterYourChoice();
@@ -507,7 +507,13 @@ public class Manager extends Employee{
 			else if(choice == 12) {
 				this.changeLanguage();
 			}
-			else if (choice == 13) {
+			else if(choice == 13) {
+            	StaticMethods.subscribeJournal(this);
+            }
+			else if(choice == 14) {
+            	StaticMethods.unsubscribeJournal(this);
+            }
+			else if (choice == 15) {
 				try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -517,7 +523,7 @@ public class Manager extends Employee{
 				break;
 			}
 			else if(researcher != null) {
-				if(choice == 14) {
+				if(choice == 16) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Manager " + this.getUsername() + " went to the researcher menu"));
 				}

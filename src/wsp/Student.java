@@ -406,10 +406,10 @@ public class Student extends User implements Serializable, Comparable<Student> {
 			Researcher researcher = Database.getInstance().isResearcher(this);
 			
 			if(researcher != null) {
-				options = this.getLanguage().studentMenu();
+				options = this.getLanguage().studentResearcherMenu();
 			}
 			else {
-				options = this.getLanguage().studentResearcherMenu();
+				options = this.getLanguage().studentMenu();
 			}
 			
             System.out.println(this.getLanguage().studentHeader());
@@ -455,7 +455,10 @@ public class Student extends User implements Serializable, Comparable<Student> {
             else if(choice == 12) {
             	this.changeLanguage();
             }
-            else if (choice == 13) {
+            else if(choice == 13) {
+            	StaticMethods.unsubscribeJournal(this);
+            }
+            else if (choice == 14) {
                 try {
                     Database.getInstance().saveDatabase();
                 } catch (IOException e) {
@@ -465,7 +468,7 @@ public class Student extends User implements Serializable, Comparable<Student> {
                 break;
             }
             else if(researcher != null) {
-				if(choice == 14) {
+				if(choice == 15) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Student " + this.getUsername() + " went to the researcher menu"));
 				}

@@ -8,16 +8,27 @@ import java.util.Vector;
  */
 public class ResearchProject implements Serializable {
 	
+	private String name;
+	
 	private Vector<ResearchPaper> papers;
 	
 	/**
      * Creates a new research project with an empty list of research papers.
      */
-    public ResearchProject() {
+    public ResearchProject(String name) {
+    	this.name = name;
         this.papers = new Vector<>();
     }
     
     public void addPaperToProject(ResearchPaper rp) {
     	this.papers.add(rp);
+    }
+    
+    public String getName() {
+    	return name;
+    }
+    
+    public String toString() {
+    	return "Project " + name + " Number of papers: " + papers.size();
     }
 }

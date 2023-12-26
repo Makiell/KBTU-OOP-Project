@@ -93,6 +93,7 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 	        "Subscribe journal",
 	        "View all papers",
 	        "Change language",
+	        "Unsubscribe journal",
 	        "Exit"
 	    };
 	}
@@ -190,6 +191,7 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 	        "Subscribe journal",
 	        "View all papers",
 	        "Change language",
+	        "Unsubscribe journal",
 	        "Exit",
 	        "View Researcher Menu",
 	    };
@@ -212,6 +214,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 		        "Send Request",
 		        "View all papers",
 		        "Change language",
+		        "Subscribe journal",
+		        "Unsubscribe journal",
 		        "Exit",
 	    };
 
@@ -351,6 +355,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 	        "Send Request",
 	        "View all papers",
 	        "Change language",
+	        "Subscribe journal",
+	        "Unsubscribe journal",
 	        "Exit",
 	        "View Researcher Menu"
 	    };
@@ -453,6 +459,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 	        "Create a journal",
 	        "View all papers",
 	        "Change language",
+	        "Subscribe journal",
+	        "Unsubscribe journal",
 	        "Exit"
 	    };
 	}
@@ -676,6 +684,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 		        "Create a journal",
 		        "View all papers",
 		        "Change language",
+		        "Subscribe journal",
+		        "Unsubscribe journal",
 		        "Exit",
 				"View Researcher Menu"
 		};
@@ -693,6 +703,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 				"Reject order",
 				"View all papers",
 		        "Change language",
+		        "Subscribe journal",
+		        "Unsubscribe journal",
 				"Exit" 
 		};
 	}
@@ -729,6 +741,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 				"Reject order",
 				"View all papers",
 		        "Change language",
+		        "Subscribe journal",
+		        "Unsubscribe journal",
 				"Exit",
 				"View Researcher Menu"
 		};
@@ -750,6 +764,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 				"View one news", 
 				"View all papers",
 		        "Change language",
+		        "Subscribe journal",
+		        "Unsubscribe journal",
 				"Exit"
 		};
 	}
@@ -802,6 +818,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 				"View one news", 
 				"View all papers",
 		        "Change language",
+		        "Subscribe journal",
+		        "Unsubscribe journal",
 				"Exit",
 				"View Researcher Menu"
 		};
@@ -824,6 +842,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 				"View one news",
 				"View all papers",
 		        "Change language",
+		        "Subscribe journal",
+		        "Unsubscribe journal",
 				"Exit",
 				"View Researcher Menu" 
 		};
@@ -847,6 +867,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 				"View one news",
 				"View all papers",
 		        "Change language",
+		        "Subscribe journal",
+		        "Unsubscribe journal",
 				"Exit"
 				};
 	}
@@ -906,6 +928,8 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 				"View one news",
 				"View all papers",
 		        "Change language",
+		        "Subscribe journal",
+		        "Unsubscribe journal",
 				"Exit",
 				"View Researcher Menu"
 				};
@@ -922,7 +946,9 @@ public class EnglishLanguage implements LanguageInterface, Serializable {
 				"Create a paper", 
 				"View projects", 
 				"View journals", 
-				"Add paper to a journal", 
+				"Add paper to a journal",
+				"Create project",
+				"Add paper to project",
 				"Exit"
 		};
 	}

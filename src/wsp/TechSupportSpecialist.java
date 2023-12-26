@@ -149,8 +149,13 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		else if(choice == 5) {
     			this.changeLanguage();
     		}
-    		
     		else if(choice == 6) {
+            	StaticMethods.subscribeJournal(this);
+            }
+    		else if(choice == 7) {
+            	StaticMethods.unsubscribeJournal(this);
+            }
+    		else if(choice == 8) {
     			try {
 					Database.getInstance().saveDatabase();
 				} catch (IOException e) {
@@ -161,7 +166,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     		}
     		
     		else if(researcher != null) {
-				if(choice == 7) {
+				if(choice == 9) {
 					researcher.viewMenu();
                     Database.getInstance().addLog(this, new Log("Tech Support Specialist " + this.getUsername() + " went to the researcher menu"));
 				}

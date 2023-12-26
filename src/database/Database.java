@@ -33,6 +33,7 @@ public class Database implements Serializable {
     private Vector<ResearchJournal> journals = new Vector<ResearchJournal>();
     private Vector<Organisation> organisations = new Vector<Organisation>();
     private Vector<ResearchPaper> papers = new Vector<ResearchPaper>();
+    private Vector<ResearchProject> projects = new Vector<ResearchProject>();
 
     /**
     * Static block to initialize the singleton instance of the Database.
@@ -258,6 +259,10 @@ public class Database implements Serializable {
     	return journals;
     }
     
+    public Vector<ResearchProject> getProjects(){
+    	return projects;
+    }
+    
     /**
      * Retrieves a vector of research papers that do not have the specified researcher as an author.
      * 
@@ -281,7 +286,7 @@ public class Database implements Serializable {
     }
 
     public boolean addStudent(Student s) {
-    	if(this.students.contains(s)) {
+    	if(this.users.contains((User)s)) {
     		System.out.println("Student is not unique");
     		return false;
     	}
@@ -291,7 +296,8 @@ public class Database implements Serializable {
     }
 
     public boolean addEmployee(Employee e) {
-    	if(this.employees.contains(e)) {
+    	
+    	if(this.users.contains((User)e)) {
     		System.out.println("Employee is not unique");
     		return false;
     	}
@@ -331,6 +337,10 @@ public class Database implements Serializable {
     
     public void addPaper(ResearchPaper rp) {
     	this.papers.add(rp);
+    }
+    
+    public void addProject(ResearchProject rp) {
+    	this.projects.add(rp);
     }
 
     public void addOrganisation(Organisation or) {

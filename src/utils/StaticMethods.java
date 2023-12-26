@@ -111,7 +111,8 @@ public class StaticMethods {
      * @param u The user to be subscribed.
      */
 	public static void subscribeJournal(User u) {
-		Vector<ResearchJournal> journals = Database.getInstance().getJournals();
+		Vector<ResearchJournal> journals = (Vector<ResearchJournal>)Database.getInstance().getJournals().clone();
+		journals.removeAll(u.getJournals());
 		if(journals.isEmpty()) {
 			System.out.println("No journals");
 			return;
@@ -138,5 +139,41 @@ public class StaticMethods {
 		System.out.println("Subscribed to " + journal.getName());
 		
 		Database.getInstance().addLog(u, new Log(u.getUsername() + " subscribed to journal " + journal.getName()));
+	}
+	
+	
+	/**
+     * Unsubscribes the user from a research journal.
+     *
+     * @param u The user to be unsubscribed.
+     */
+	public static void unsubscribeJournal(User u) {
+
+		Vector<ResearchJournal> journals = u.getJournals();
+		
+		if(journals.isEmpty()) {
+			System.out.println("No journals");
+			return;
+		}
+		
+		System.out.println("Enter 0 to return back");
+		System.out.println("Choose journal:");
+		
+		printList(u.getJournals());
+		
+		int choice = validate(journals.size());
+		
+		if(choice == 0) {
+			return;
+		}
+		
+		ResearchJournal journal = journals.get(choice-1);
+		
+		journal.removeObserver(u);
+		journals.remove(journal);
+		
+		System.out.println("Unsubscribed from " + journal.getName());
+		
+		Database.getInstance().addLog(u, new Log(u.getUsername() + " unsubscribed from journal " + journal.getName()));
 	}
 }

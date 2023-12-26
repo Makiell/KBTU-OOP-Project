@@ -194,6 +194,66 @@ public class Researcher<T> implements Serializable {
 		StaticMethods.printList(Database.getInstance().getJournals());
 	}
 	
+	/**
+	 * Researcher can create new project
+	 */
+	public void createProject() {
+		User u = (User)this.getUser();
+		u.getLanguage().enterReturnBack();
+		u.getLanguage().enterTheName();
+		
+		Scanner in = new Scanner(System.in);
+		
+		String name = in.nextLine();
+		
+		if(name.equals("0")) {
+			return;
+		}
+		
+		
+		ResearchProject newProject = new ResearchProject(name);
+		
+		this.projects.add(newProject);
+		
+		Database.getInstance().addProject(newProject);
+		
+		System.out.println("Project was created " + newProject);
+		
+	}
+	
+	
+	/**
+	 * Add some paper of this researcher to existing project
+	 */
+	public void addPaperToProject() {
+		if(papers.isEmpty()) {
+			System.out.println("No papers");
+			return;
+		}
+		System.out.println("---------");
+		Vector<ResearchProject> projects = Database.getInstance().getProjects();
+		if(projects.isEmpty()) {
+			System.out.println("No projects");
+			return;
+		}
+		StaticMethods.printList(projects);
+		int projectChoice = StaticMethods.validate(projects.size());
+		if(projectChoice == 0) {
+			return;
+		}
+		ResearchProject project = projects.get(projectChoice-1);
+		System.out.println("---------");
+		StaticMethods.printList(papers);
+		
+		int paperChoice = StaticMethods.validate(1, papers.size());
+		
+		ResearchPaper paper = papers.get(paperChoice-1);
+		
+		project.addPaperToProject(paper);
+		
+		System.out.println(paper + " added to " + project);
+	}
+	
 	
 	/**
      * Views the menu for the researcher, providing options to view papers, create papers, view projects,
@@ -227,7 +287,13 @@ public class Researcher<T> implements Serializable {
 			else if(choice == 5) {
 				addPaperToJournal();
 			}
-			else if(choice==6) {
+			else if(choice == 6) {
+				createProject();
+			}
+			else if(choice == 7) {
+				addPaperToProject();
+			}
+			else if(choice==8) {
 				break;
 			}
 		}

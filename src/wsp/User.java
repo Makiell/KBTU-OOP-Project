@@ -82,7 +82,9 @@ public abstract class User implements Serializable {
 		System.out.println();
 	}
 	
-	
+	/**
+	 * Changes language of system for specific user.
+	 */
 	public void changeLanguage() {
 		System.out.println(" 1 - Русский\n 2 - Қазақша\n 3 - English");
 		
@@ -351,11 +353,8 @@ public abstract class User implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
 		User other = (User) obj;
-		return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName)
-				&& Objects.equals(password, other.password) && Objects.equals(username, other.username);
+		return Objects.equals(password, other.password) && Objects.equals(username, other.username);
 	}
 	
 	
