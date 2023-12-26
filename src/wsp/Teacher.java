@@ -34,7 +34,7 @@ public class Teacher extends Employee implements Serializable {
      * @param password    The password of the teacher.
      * @param firstName   The first name of the teacher.
      * @param lastName    The last name of the teacher.
-     * @param typeTeacher The title of the teacher (e.g., ASSISTANT, ASSOCIATE_PROFESSOR).
+     * @param typeTeacher The title of the teacher (e.g., TUTOR, PROFESSOR).
      * @param faculty     The faculty to which the teacher belongs.
      */
     public Teacher(String username, String password, String firstName, String lastName, TeacherTitle typeTeacher,

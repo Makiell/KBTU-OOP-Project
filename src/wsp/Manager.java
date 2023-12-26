@@ -26,7 +26,7 @@ public class Manager extends Employee{
      * @param password    The password of the manager.
      * @param firstName   The first name of the manager.
      * @param lastName    The last name of the manager.
-     * @param typeManager The type of manager (e.g., Academic Manager, Research Manager).
+     * @param typeManager The type of manager.
      */
 	public Manager(String username, String password, String firstName, String lastName, TypeManager typeManager) {
 		super(username, password, firstName, lastName);
